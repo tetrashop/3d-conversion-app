@@ -1,70 +1,26 @@
 name = "3d-conversion-app"
 compatibility_date = "2024-01-01"
-compatibility_flags = ["nodejs_compat"]
 
 [env.vars]
-# 🎯 تنظیمات اصلی برنامه
 APP_NAME = "3D Conversion App"
 APP_VERSION = "1.0.0"
 NODE_ENV = "production"
 DEBUG_MODE = "false"
 LOG_LEVEL = "info"
-
-# 🌐 تنظیمات URL
-FRONTEND_URL = "https://3d-conversion-app.pages.dev"
-API_BASE_URL = "https://f138bd36.3d-conversion-app11.pages.dev"
-CDN_URL = "https://cdn.3d-conversion.com"
-
-# ⚙️ تنظیمات تبدیل 3D
-DEFAULT_MODEL_QUALITY = "high"
-MAX_CONVERSION_TIME = "300"
-SUPPORTED_FORMATS = "gltf,obj,stl,fbx"
-MAX_FILE_SIZE = "10485760"
-TEXTURE_RESOLUTION = "2048"
-
-# 🔧 تنظیمات پردازش
-CONCURRENT_CONVERSIONS = "5"
-QUEUE_TIMEOUT = "600"
-RETRY_ATTEMPTS = "3"
-CACHE_DURATION = "3600"
-
-# 🔐 تنظیمات امنیتی (مقادیر تست - در Production تغییر دهید)
-JWT_SECRET = "3d-conversion-super-secret-key-2024-change-in-production"
-ENCRYPTION_KEY = "encryption-key-32-chars-long-2024!"
-BCRYPT_ROUNDS = "12"
+DEFAULT_MODEL_QUALITY = "medium"
+MAX_CONVERSION_TIME = "180"
+SUPPORTED_FORMATS = "gltf,obj,stl"
+MAX_FILE_SIZE = "5242880"
+CONCURRENT_CONVERSIONS = "3"
+JWT_SECRET = "development_only_no_real_secrets"
+ENCRYPTION_KEY = "development_key_no_secrets_here"
 CORS_ORIGIN = "*"
-
-# 💳 تنظیمات پرداخت (مقادیر تست)
-STRIPE_PUBLISHABLE_KEY = "pk_test_51ABC123XYZ456DEF"
-STRIPE_SECRET_KEY = "sk_test_123abc456def789ghi"
-STRIPE_WEBHOOK_SECRET = "whsec_test_20241028"
-
-# ☁️ تنظیمات ذخیره‌سازی (مقادیر تست)
-CLOUD_STORAGE_BUCKET = "3d-models-test-bucket"
-UPLOAD_DIR = "/tmp/uploads"
-BACKUP_ENABLED = "true"
-
-# 📧 تنظیمات ایمیل (مقادیر تست)
-EMAIL_PROVIDER = "sendgrid"
-SENDGRID_API_KEY = "SG.test_api_key_123456"
-FROM_EMAIL = "noreply@3dconversion.com"
-SUPPORT_EMAIL = "support@3dconversion.com"
-
-# 🔗 API Keys (مقادیر تست)
-THREEJS_API_KEY = "threejs_test_key_123"
-BLENDER_API_KEY = "blender_test_key_456"
-AUTODESK_CLIENT_ID = "autodesk_test_client_789"
+STRIPE_PUBLISHABLE_KEY = "pk_test_no_real_keys"
+STRIPE_SECRET_KEY = "sk_test_no_real_secrets_here"
+STRIPE_WEBHOOK_SECRET = "whsec_no_webhook_secrets"
+THREEJS_API_KEY = "threejs_no_api_key"
+BLENDER_API_KEY = "blender_no_api_key"
+SENDGRID_API_KEY = "SG_no_sendgrid_key"
 
 [env.production]
 pages_build_output_dir = "static"
-
-[env.production.vars]
-NODE_ENV = "production"
-LOG_LEVEL = "error"
-DEBUG_MODE = "false"
-CORS_ORIGIN = "https://3d-conversion-app.pages.dev"
-
-# 🔒 متغیرهای امنیتی Production (اینها را در Cloudflare Dash تنظیم کنید)
-# JWT_SECRET = "real-production-secret-key"
-# STRIPE_SECRET_KEY = "sk_live_..."
-# SENDGRID_API_KEY = "SG.live_api_key_..."
