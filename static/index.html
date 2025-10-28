@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Conversion App</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 40px; 
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        .status { 
+            color: green; 
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 3D Conversion App</h1>
+        <p class="status">✅ برنامه با موفقیت دیپلوی شد</p>
+        <p>این صفحه اصلی برنامه تبدیل 3D است.</p>
+        <p>آدرس فعلی: <code id="current-url"></code></p>
+        
+        <div style="margin-top: 30px;">
+            <h3>📋 وضعیت دیپلوی:</h3>
+            <ul>
+                <li>✅ Cloudflare Pages: فعال</li>
+                <li>✅ فایل‌های استاتیک: بارگذاری شده</li>
+                <li>✅ ساختار پروژه: صحیح</li>
+                <li>🚀 آماده برای توسعه بیشتر...</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('current-url').textContent = window.location.href;
+    </script>
+</body>
+</html>
