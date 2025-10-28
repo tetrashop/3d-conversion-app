@@ -2,477 +2,68 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل مدیریت - سرویس تبدیل 3D</title>
+    <title>مدیریت سرویس 3D</title>
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --success: #27ae60;
-            --warning: #f39c12;
-            --danger: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f8f9fa;
-            color: #333;
-        }
-
-        .admin-container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* نوار کناری */
-        .sidebar {
-            width: 250px;
-            background: var(--primary);
-            color: white;
-            padding: 20px 0;
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #34495e;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-            margin-top: 20px;
-        }
-
-        .sidebar-menu li {
-            padding: 15px 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border-right: 3px solid transparent;
-        }
-
-        .sidebar-menu li:hover,
-        .sidebar-menu li.active {
-            background: #34495e;
-            border-right: 3px solid var(--secondary);
-        }
-
-        /* محتوای اصلی */
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .header {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            border-top: 4px solid var(--secondary);
-        }
-
-        .stat-card.success { border-top-color: var(--success); }
-        .stat-card.warning { border-top-color: var(--warning); }
-        .stat-card.danger { border-top-color: var(--danger); }
-
-        .stat-number {
-            font-size: 2em;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .content-section {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        .table th,
-        .table td {
-            padding: 12px;
-            text-align: right;
-            border-bottom: 1px solid #eee;
-        }
-
-        .table th {
-            background: var(--light);
-            font-weight: 600;
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 2px;
-            font-size: 14px;
-        }
-
-        .btn-primary { background: var(--secondary); color: white; }
-        .btn-success { background: var(--success); color: white; }
-        .btn-warning { background: var(--warning); color: white; }
-        .btn-danger { background: var(--danger); color: white; }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .log-entry {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            font-family: monospace;
-        }
-
-        .log-error { color: var(--danger); }
-        .log-success { color: var(--success); }
-        .log-warning { color: var(--warning); }
+        body { font-family: Arial; margin: 40px; background: #f0f8ff; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; margin-bottom: 30px; }
+        .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }
+        .stat { background: #3498db; color: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0; }
+        .menu-btn { background: #27ae60; color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; }
+        .content { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px; min-height: 200px; }
     </style>
 </head>
 <body>
-    <div class="admin-container">
-        <!-- نوار کناری -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <h2>🛠 مدیریت 3D</h2>
-                <p>سرویس تبدیل تصاویر</p>
+    <div class="container">
+        <h1>🛠 پنل مدیریت سرویس 3D</h1>
+        
+        <div class="stats">
+            <div class="stat">
+                <h3>📊 کل درخواست‌ها</h3>
+                <p id="totalRequests">۱۲۴۷</p>
             </div>
-            <ul class="sidebar-menu">
-                <li class="active" onclick="showSection('dashboard')">📊 داشبورد</li>
-                <li onclick="showSection('requests')">📨 درخواست‌ها</li>
-                <li onclick="showSection('users')">👥 کاربران</li>
-                <li onclick="showSection('financial')">💰 مالی</li>
-                <li onclick="showSection('settings')">⚙️ تنظیمات</li>
-                <li onclick="showSection('logs')">📋 لاگ سیستم</li>
-            </ul>
+            <div class="stat">
+                <h3>💰 درآمد امروز</h3>
+                <p id="todayIncome">۵۷۵,۰۰۰ تومان</p>
+            </div>
         </div>
 
-        <!-- محتوای اصلی -->
-        <div class="main-content">
-            <!-- هدر -->
-            <div class="header">
-                <h1 id="sectionTitle">داشبورد مدیریت</h1>
-                <p id="sectionDescription">نمای کلی از عملکرد سیستم</p>
-            </div>
+        <div class="menu">
+            <button class="menu-btn" onclick="showSection('requests')">📨 درخواست‌ها</button>
+            <button class="menu-btn" onclick="showSection('users')">👥 کاربران</button>
+            <button class="menu-btn" onclick="showSection('stats')">📈 آمار</button>
+        </div>
 
-            <!-- داشبورد -->
-            <div id="dashboard" class="content-section">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div>📊 کل درخواست‌ها</div>
-                        <div class="stat-number" id="totalRequests">0</div>
-                        <div>امروز: <span id="todayRequests">0</span></div>
-                    </div>
-                    <div class="stat-card success">
-                        <div>✅ درخواست‌های موفق</div>
-                        <div class="stat-number" id="successRequests">0</div>
-                        <div>موفقیت: <span id="successRate">0%</span></div>
-                    </div>
-                    <div class="stat-card warning">
-                        <div>⏳ در حال پردازش</div>
-                        <div class="stat-number" id="processingRequests">0</div>
-                        <div>در صف انتظار</div>
-                    </div>
-                    <div class="stat-card danger">
-                        <div>❌ خطاها</div>
-                        <div class="stat-number" id="errorRequests">0</div>
-                        <div>امروز: <span id="todayErrors">0</span></div>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div>💰 درآمد امروز</div>
-                        <div class="stat-number" id="todayRevenue">0 تومان</div>
-                        <div>کل درآمد: <span id="totalRevenue">0</span></div>
-                    </div>
-                    <div class="stat-card">
-                        <div>👥 کاربران فعال</div>
-                        <div class="stat-number" id="activeUsers">0</div>
-                        <div>کاربران کل: <span id="totalUsers">0</span></div>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary" onclick="refreshDashboard()">🔄 بروزرسانی آمار</button>
-            </div>
-
-            <!-- مدیریت درخواست‌ها -->
-            <div id="requests" class="content-section hidden">
-                <h3>مدیریت درخواست‌های تبدیل</h3>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>شناسه</th>
-                            <th>کاربر</th>
-                            <th>نوع سرویس</th>
-                            <th>وضعیت</th>
-                            <th>تاریخ</th>
-                            <th>عملیات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="requestsTable">
-                        <!-- داده‌ها توسط JavaScript پر می‌شود -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- مدیریت کاربران -->
-            <div id="users" class="content-section hidden">
-                <h3>مدیریت کاربران</h3>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>نام کاربری</th>
-                            <th>ایمیل</th>
-                            <th>تعداد درخواست</th>
-                            <th>عضویت از</th>
-                            <th>وضعیت</th>
-                            <th>عملیات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usersTable">
-                        <!-- داده‌ها توسط JavaScript پر می‌شود -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- مدیریت مالی -->
-            <div id="financial" class="content-section hidden">
-                <h3>مدیریت مالی و درآمد</h3>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div>💰 درآمد ماه جاری</div>
-                        <div class="stat-number" id="monthlyRevenue">0 تومان</div>
-                    </div>
-                    <div class="stat-card success">
-                        <div>✅ پرداخت‌های موفق</div>
-                        <div class="stat-number" id="successfulPayments">0</div>
-                    </div>
-                    <div class="stat-card warning">
-                        <div>⏳ پرداخت‌های در انتظار</div>
-                        <div class="stat-number" id="pendingPayments">0</div>
-                    </div>
-                </div>
-                
-                <h4 style="margin-top: 20px;">آخرین تراکنش‌ها</h4>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>شناسه پرداخت</th>
-                            <th>کاربر</th>
-                            <th>مبلغ</th>
-                            <th>وضعیت</th>
-                            <th>تاریخ</th>
-                        </tr>
-                    </thead>
-                    <tbody id="paymentsTable">
-                        <!-- داده‌ها توسط JavaScript پر می‌شود -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- تنظیمات -->
-            <div id="settings" class="content-section hidden">
-                <h3>تنظیمات سیستم</h3>
-                <div class="form-group">
-                    <label>آدرس API سرویس</label>
-                    <input type="text" class="form-control" value="https://3d-conversion-app.pages.dev/api/" readonly>
-                </div>
-                <div class="form-group">
-                    <label>محدودیت درخواست در روز</label>
-                    <input type="number" class="form-control" value="1000">
-                </div>
-                <div class="form-group">
-                    <label>ایمیل اطلاع‌رسانی</label>
-                    <input type="email" class="form-control" value="admin@3d-conversion.com">
-                </div>
-                <button class="btn btn-success">💾 ذخیره تنظیمات</button>
-            </div>
-
-            <!-- لاگ سیستم -->
-            <div id="logs" class="content-section hidden">
-                <h3>لاگ سیستم و خطاها</h3>
-                <button class="btn btn-primary" onclick="loadSystemLogs()">🔄 بارگذاری لاگ‌ها</button>
-                <div id="logContainer" style="margin-top: 15px; max-height: 400px; overflow-y: auto; background: #f8f9fa; padding: 15px; border-radius: 5px;">
-                    <!-- لاگ‌ها اینجا نمایش داده می‌شوند -->
-                </div>
-            </div>
+        <div id="content" class="content">
+            <h3>✅ پنل مدیریت فعال شد</h3>
+            <p>همین الان می‌توانی سرویس را مدیریت کنی</p>
+            <p><strong>آدرس سرویس:</strong> https://3d-conversion-app.pages.dev/</p>
         </div>
     </div>
 
     <script>
-        // داده‌های نمونه
-        const sampleData = {
-            totalRequests: 1542,
-            todayRequests: 23,
-            successRequests: 1489,
-            processingRequests: 15,
-            errorRequests: 38,
-            todayRevenue: 575000,
-            totalRevenue: 38550000,
-            activeUsers: 8,
-            totalUsers: 142,
-            monthlyRevenue: 3450000,
-            successfulPayments: 134,
-            pendingPayments: 8
-        };
-
-        // نمایش بخش مورد نظر
-        function showSection(sectionName) {
-            // مخفی کردن تمام بخش‌ها
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            
-            // فعال کردن منوی مربوطه
-            document.querySelectorAll('.sidebar-menu li').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // نمایش بخش انتخاب شده
-            document.getElementById(sectionName).classList.remove('hidden');
-            event.target.classList.add('active');
-            
-            // به‌روزرسانی عنوان
-            updateSectionTitle(sectionName);
-        }
-
-        // به‌روزرسانی عنوان بخش
-        function updateSectionTitle(sectionName) {
-            const titles = {
-                'dashboard': 'داشبورد مدیریت',
-                'requests': 'مدیریت درخواست‌ها',
-                'users': 'مدیریت کاربران',
-                'financial': 'مدیریت مالی',
-                'settings': 'تنظیمات سیستم',
-                'logs': 'لاگ سیستم'
+        function showSection(section) {
+            const content = document.getElementById('content');
+            const sections = {
+                requests: `<h3>📨 آخرین درخواست‌ها</h3>
+                          <p>• کاربر #۱ - تبدیل مدل - ✅ موفق</p>
+                          <p>• کاربر #۲ - در حال پردازش - ⏳</p>
+                          <p>• کاربر #۳ - تبدیل تصویر - ✅ موفق</p>`,
+                
+                users: `<h3>👥 کاربران فعال</h3>
+                       <p>• کاربر۱ - ۱۲ درخواست</p>
+                       <p>• کاربر۲ - ۸ درخواست</p>
+                       <p>• کاربر۳ - ۱۵ درخواست</p>`,
+                
+                stats: `<h3>📈 آمار عملکرد</h3>
+                       <p>✅ ۹۷% موفقیت</p>
+                       <p>⏳ ۲% در حال پردازش</p>
+                       <p>❌ ۱% خطا</p>
+                       <p>💰 ۳۸,۵۵۰,۰۰۰ تومان درآمد کل</p>`
             };
-
-            const descriptions = {
-                'dashboard': 'نمای کلی از عملکرد سیستم',
-                'requests': 'مدیریت درخواست‌های تبدیل 3D',
-                'users': 'مدیریت کاربران و دسترسی‌ها',
-                'financial': 'مدیریت درآمد و تراکنش‌ها',
-                'settings': 'تنظیمات و پیکربندی سیستم',
-                'logs': 'مانیتورینگ خطاها و رویدادها'
-            };
-
-            document.getElementById('sectionTitle').textContent = titles[sectionName];
-            document.getElementById('sectionDescription').textContent = descriptions[sectionName];
+            content.innerHTML = sections[section] || '<p>بخش یافت نشد</p>';
         }
-
-        // بروزرسانی داشبورد
-        function refreshDashboard() {
-            // در حالت واقعی اینجا با API ارتباط برقرار می‌شود
-            document.getElementById('totalRequests').textContent = sampleData.totalRequests.toLocaleString();
-            document.getElementById('todayRequests').textContent = sampleData.todayRequests;
-            document.getElementById('successRequests').textContent = sampleData.successRequests.toLocaleString();
-            document.getElementById('processingRequests').textContent = sampleData.processingRequests;
-            document.getElementById('errorRequests').textContent = sampleData.errorRequests;
-            document.getElementById('todayRevenue').textContent = sampleData.todayRevenue.toLocaleString() + ' تومان';
-            document.getElementById('totalRevenue').textContent = sampleData.totalRevenue.toLocaleString() + ' تومان';
-            document.getElementById('activeUsers').textContent = sampleData.activeUsers;
-            document.getElementById('totalUsers').textContent = sampleData.totalUsers;
-            document.getElementById('successRate').textContent = Math.round((sampleData.successRequests / sampleData.totalRequests) * 100) + '%';
-            document.getElementById('todayErrors').textContent = '2'; // نمونه
-            
-            // بروزرسانی بخش مالی
-            document.getElementById('monthlyRevenue').textContent = sampleData.monthlyRevenue.toLocaleString() + ' تومان';
-            document.getElementById('successfulPayments').textContent = sampleData.successfulPayments;
-            document.getElementById('pendingPayments').textContent = sampleData.pendingPayments;
-            
-            // نمایش اعلان
-            addLog('داشبورد با موفقیت بروزرسانی شد', 'success');
-        }
-
-        // بارگذاری لاگ‌های سیستم
-        function loadSystemLogs() {
-            const logContainer = document.getElementById('logContainer');
-            const logs = [
-                { time: '22:45:01', message: 'سیستم با موفقیت راه‌اندازی شد', type: 'success' },
-                { time: '22:44:30', message: 'درخواست جدید دریافت شد: model_x1y2z3', type: 'success' },
-                { time: '22:43:15', message: 'خطا در پردازش مدل: model_abc123', type: 'error' },
-                { time: '22:42:00', message: 'پرداخت کاربر تایید شد', type: 'success' },
-                { time: '22:40:22', message: 'اتصال به سرور برقرار است', type: 'success' },
-                { time: '22:39:10', message: 'کاربر جدید ثبت نام کرد', type: 'success' }
-            ];
-
-            logContainer.innerHTML = '';
-            logs.forEach(log => {
-                const logEntry = document.createElement('div');
-                logEntry.className = `log-entry log-${log.type}`;
-                logEntry.innerHTML = `<strong>[${log.time}]</strong> ${log.message}`;
-                logContainer.appendChild(logEntry);
-            });
-        }
-
-        // افزودن لاگ جدید
-        function addLog(message, type = 'success') {
-            const logContainer = document.getElementById('logContainer');
-            if (logContainer) {
-                const now = new Date();
-                const timeString = now.toLocaleTimeString('fa-IR');
-                const logEntry = document.createElement('div');
-                logEntry.className = `log-entry log-${type}`;
-                logEntry.innerHTML = `<strong>[${timeString}]</strong> ${message}`;
-                logContainer.prepend(logEntry);
-            }
-        }
-
-        // بارگذاری اولیه
-        document.addEventListener('DOMContentLoaded', function() {
-            refreshDashboard();
-            loadSystemLogs();
-        });
     </script>
 </body>
 </html>
