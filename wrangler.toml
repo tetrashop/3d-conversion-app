@@ -15,12 +15,6 @@ CONCURRENT_CONVERSIONS = "3"
 JWT_SECRET = "development_only_no_real_secrets"
 ENCRYPTION_KEY = "development_key_no_secrets_here"
 CORS_ORIGIN = "*"
-STRIPE_PUBLISHABLE_KEY = "pk_test_no_real_keys"
-STRIPE_SECRET_KEY = "sk_test_no_real_secrets_here"
-STRIPE_WEBHOOK_SECRET = "whsec_no_webhook_secrets"
-THREEJS_API_KEY = "threejs_no_api_key"
-BLENDER_API_KEY = "blender_no_api_key"
-SENDGRID_API_KEY = "SG_no_sendgrid_key"
 
 [env.production]
 pages_build_output_dir = "static"
