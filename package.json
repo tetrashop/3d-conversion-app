@@ -1,0 +1,14 @@
+{
+  "name": "3d-conversion-app",
+  "version": "1.0.0",
+  "description": "3D Image Conversion Service with Real-time Financial Management",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler pages dev static",
+    "deploy": "wrangler pages publish static",
+    "build": "echo 'No build process needed'"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
