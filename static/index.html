@@ -3,48 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Conversion App</title>
+    <title>3D Conversion App - تست API</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 40px; 
-            background: #f5f5f5;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 { color: #333; }
-        .status { 
-            color: green; 
-            font-weight: bold;
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
+        button { background: #007cba; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #005a87; }
+        .result { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎯 3D Conversion App</h1>
-        <p class="status">✅ برنامه با موفقیت دیپلوی شد</p>
-        <p>این صفحه اصلی برنامه تبدیل 3D است.</p>
-        <p>آدرس فعلی: <code id="current-url"></code></p>
+        <h1>🎯 3D Conversion App - تست API</h1>
         
-        <div style="margin-top: 30px;">
-            <h3>📋 وضعیت دیپلوی:</h3>
-            <ul>
-                <li>✅ Cloudflare Pages: فعال</li>
-                <li>✅ فایل‌های استاتیک: بارگذاری شده</li>
-                <li>✅ ساختار پروژه: صحیح</li>
-                <li>🚀 آماده برای توسعه بیشتر...</li>
-            </ul>
+        <div>
+            <h3>تست API تبدیل:</h3>
+            <button onclick="testConvert()">تست /api/convert</button>
+            <button onclick="testDownload()">تست /api/download</button>
+            <button onclick="testHealth()">تست سلامت</button>
         </div>
+        
+        <div id="result" class="result"></div>
     </div>
 
     <script>
-        document.getElementById('current-url').textContent = window.location.href;
+        async function testConvert() {
+            const result = document.getElementById('result');
+            result.innerHTML = 'در حال ارسال درخواست...';
+            
+            try {
+                const response = await fetch('/api/convert/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        image_url: 'https://picsum.photos/400/300',
+                        order_type: 'standard'
+                    })
+                });
+                const data = await response.json();
+                result.innerHTML = '<strong>نتایج:</strong><br>' + JSON.stringify(data, null, 2);
+            } catch (error) {
+                result.innerHTML = '<strong>خطا:</strong> ' + error.message;
+            }
+        }
+
+        async function testDownload() {
+            const result = document.getElementById('result');
+            result.innerHTML = 'در حال تست دانلود...';
+            
+            try {
+                const response = await fetch('/api/download/test-model');
+                if (response.ok) {
+                    result.innerHTML = '✅ مسیر دانلود کار می‌کند';
+                } else {
+                    result.innerHTML = '❌ مشکل در مسیر دانلود';
+                }
+            } catch (error) {
+                result.innerHTML = '<strong>خطا:</strong> ' + error.message;
+            }
+        }
+
+        async function testHealth() {
+            const result = document.getElementById('result');
+            result.innerHTML = 'در حال بررسی سلامت...';
+            
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.text();
+                result.innerHTML = '✅ وضعیت سلامت: ' + data;
+            } catch (error) {
+                result.innerHTML = '❌ مشکل در سلامت سرویس';
+            }
+        }
     </script>
 </body>
 </html>
