@@ -4,39 +4,43 @@
     <title>3D Conversion App</title>
     <meta charset="utf-8">
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background: #f0f8ff; }
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f0f2f5; }
         .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         h1 { color: #2c3e50; text-align: center; }
-        .status { color: #27ae60; font-weight: bold; }
+        button { background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #2980b9; }
+        .result { background: #f8f9fa; padding: 15px; margin-top: 20px; border-radius: 5px; font-family: monospace; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🚀 3D Conversion App</h1>
-        <p class="status">✅ برنامه با موفقیت دیپلوی شد</p>
-        <p>این برنامه تبدیل تصاویر به مدل‌های سه بعدی است.</p>
+        <p>✅ برنامه تبدیل 3D با موفقیت دیپلوی شد</p>
         
-        <h3>🎯 تست API‌ها:</h3>
-        <button onclick="testHealth()">تست سلامت</button>
-        <button onclick="testConvert()">تست تبدیل</button>
+        <h3>🧪 تست API‌ها:</h3>
+        <button onclick="testHealth()">تست سلامت سیستم</button>
+        <button onclick="testConvert()">تست تبدیل 3D</button>
+        <button onclick="testDownload()">تست دانلود</button>
         
-        <div id="result" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px;"></div>
+        <div id="result" class="result">
+            نتایج تست‌ها اینجا نمایش داده می‌شود...
+        </div>
     </div>
 
     <script>
         async function testHealth() {
+            showResult('🔄 در حال بررسی سلامت سیستم...');
             try {
                 const response = await fetch('/api/health');
                 const data = await response.json();
-                document.getElementById('result').innerHTML = 
-                    '<strong>✅ سلامت سیستم:</strong><br>' + JSON.stringify(data, null, 2);
+                showResult('✅ سلامت سیستم:\n' + JSON.stringify(data, null, 2));
             } catch (error) {
-                document.getElementById('result').innerHTML = 
-                    '<strong>❌ خطا:</strong> ' + error.message;
+                showResult('❌ خطا در سلامت سیستم: ' + error.message);
             }
         }
 
         async function testConvert() {
+            showResult('🔄 در حال تست تبدیل 3D...');
             try {
                 const response = await fetch('/api/convert/', {
                     method: 'POST',
@@ -47,12 +51,28 @@
                     })
                 });
                 const data = await response.json();
-                document.getElementById('result').innerHTML = 
-                    '<strong>✅ نتیجه تبدیل:</strong><br>' + JSON.stringify(data, null, 2);
+                showResult('✅ نتیجه تبدیل:\n' + JSON.stringify(data, null, 2));
             } catch (error) {
-                document.getElementById('result').innerHTML = 
-                    '<strong>❌ خطا:</strong> ' + error.message;
+                showResult('❌ خطا در تبدیل: ' + error.message);
             }
+        }
+
+        async function testDownload() {
+            showResult('🔄 در حال تست دانلود...');
+            try {
+                const response = await fetch('/api/download/test-model');
+                if (response.ok) {
+                    showResult('✅ مسیر دانلود کار می‌کند');
+                } else {
+                    showResult('⚠️ مشکل در مسیر دانلود');
+                }
+            } catch (error) {
+                showResult('❌ خطا در دانلود: ' + error.message);
+            }
+        }
+
+        function showResult(message) {
+            document.getElementById('result').textContent = message;
         }
     </script>
 </body>
