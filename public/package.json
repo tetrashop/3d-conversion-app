@@ -1,8 +1,0 @@
-{
-  "name": "3d-conversion-pages",
-  "version": "1.0.0",
-  "description": "3D Conversion App - Cloudflare Pages",
-  "scripts": {
-    "build": "echo 'No build process needed'"
-  }
-}
