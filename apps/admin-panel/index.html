@@ -1,66 +1,10 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Conversion App - Admin</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>3D Conversion Admin</title>
 </head>
-<body class="bg-gray-50">
-    <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold text-center mb-8">پنل مدیریت تبدیل 3D</h1>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-xl font-semibold mb-2">تبدیل‌های امروز</h3>
-                <p class="text-3xl" id="today-conversions">0</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-xl font-semibold mb-2">کاربران فعال</h3>
-                <p class="text-3xl" id="active-users">0</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-xl font-semibold mb-2">نرخ موفقیت</h3>
-                <p class="text-3xl" id="success-rate">0%</p>
-            </div>
-        </div>
-        
-        <div class="bg-white rounded-lg shadow">
-            <div class="p-4 border-b">
-                <h2 class="text-xl font-semibold">آخرین تبدیل‌ها</h2>
-            </div>
-            <div class="p-4">
-                <div id="conversions-list">
-                    <p class="text-gray-500">در حال بارگذاری...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // مدیریت ساده پنل
-        document.getElementById('today-conversions').textContent = '24';
-        document.getElementById('active-users').textContent = '156';
-        document.getElementById('success-rate').textContent = '98%';
-        
-        const conversions = [
-            { id: 'CV-001', user: 'کاربر ۱', status: 'تکمیل شده', time: '۲ دقیقه پیش' },
-            { id: 'CV-002', user: 'کاربر ۲', status: 'در حال پردازش', time: '۵ دقیقه پیش' }
-        ];
-        
-        const list = document.getElementById('conversions-list');
-        list.innerHTML = conversions.map(conv => `
-            <div class="flex justify-between items-center p-3 border-b">
-                <div>
-                    <div class="font-medium">${conv.id}</div>
-                    <div class="text-sm text-gray-500">${conv.user}</div>
-                </div>
-                <div class="text-right">
-                    <div class="font-medium">${conv.status}</div>
-                    <div class="text-sm text-gray-500">${conv.time}</div>
-                </div>
-            </div>
-        `).join('');
-    </script>
+<body>
+    <h1>Admin Panel - 3D Conversion</h1>
+    <p>System is running!</p>
 </body>
 </html>

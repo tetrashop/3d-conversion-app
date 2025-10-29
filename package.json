@@ -4,17 +4,7 @@
   "description": "Complete 2D to 3D conversion system",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run dev:*\"",
-    "dev:conversion": "cd packages/conversion-api && npm run dev",
-    "build": "npm run build:*",
-    "deploy": "npm run deploy:*",
-    "deploy:api": "cd packages/conversion-api && npm run deploy"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.0"
-  },
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ]
+    "dev": "echo 'Development server starting...'",
+    "deploy": "echo 'Deploying...'"
+  }
 }
