@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مرورگر شما پشتیبانی نمی‌شود - سرویس تبدیل 3D</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+            margin: 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .browser-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .browser-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        .browser-item:hover {
+            transform: translateY(-5px);
+        }
+        .btn {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 0.5rem;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">⚠️</div>
+        <h1>مرورگر شما پشتیبانی نمی‌شود</h1>
+        <p>برای استفاده از سرویس تبدیل 3D، نیاز به مرورگر مدرن با پشتیبانی از پروتکل‌های امنیتی به‌روز دارید.</p>
+        
+        <div class="browser-list">
+            <div class="browser-item">
+                <h3>Google Chrome</h3>
+                <p>نسخه 90 به بالا</p>
+                <a href="https://www.google.com/chrome/" class="btn" target="_blank">دانلود</a>
+            </div>
+            <div class="browser-item">
+                <h3>Mozilla Firefox</h3>
+                <p>نسخه 88 به بالا</p>
+                <a href="https://www.mozilla.org/firefox/" class="btn" target="_blank">دانلود</a>
+            </div>
+            <div class="browser-item">
+                <h3>Microsoft Edge</h3>
+                <p>نسخه 90 به بالا</p>
+                <a href="https://www.microsoft.com/edge" class="btn" target="_blank">دانلود</a>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px;">
+            <h3>راه‌حل‌های فوری:</h3>
+            <ul style="text-align: right; list-style-type: none;">
+                <li>✅ مرورگر خود را به‌روز کنید</li>
+                <li>✅ SSL/TLS را در تنظیمات فعال کنید</li>
+                <li>✅ از اتصال اینترنت پایدار استفاده کنید</li>
+                <li>✅ فایروال/آنتی‌ویروس را بررسی کنید</li>
+            </ul>
+        </div>
+
+        <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.8;">
+            برای پشتیبانی فنی: 
+            <a href="mailto:support@3d-conversion.com" style="color: #4CAF50;">support@3d-conversion.com</a>
+        </p>
+    </div>
+
+    <script>
+        // تشخیص مرورگر و ارائه راهنمای دقیق
+        function detectBrowser() {
+            const userAgent = navigator.userAgent;
+            let browserName = "مرورگر ناشناخته";
+            let browserVersion = "نسخه نامشخص";
+
+            if (userAgent.includes("Chrome") && !userAgent.includes("Edg")) {
+                browserName = "Google Chrome";
+                const match = userAgent.match(/Chrome\/([0-9]+)/);
+                browserVersion = match ? match[1] : "نامشخص";
+            } else if (userAgent.includes("Firefox")) {
+                browserName = "Mozilla Firefox";
+                const match = userAgent.match(/Firefox\/([0-9]+)/);
+                browserVersion = match ? match[1] : "نامشخص";
+            } else if (userAgent.includes("Edg")) {
+                browserName = "Microsoft Edge";
+                const match = userAgent.match(/Edg\/([0-9]+)/);
+                browserVersion = match ? match[1] : "نامشخص";
+            } else if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) {
+                browserName = "Apple Safari";
+                const match = userAgent.match(/Version\/([0-9]+)/);
+                browserVersion = match ? match[1] : "نامشخص";
+            }
+
+            document.getElementById('browserInfo').textContent = 
+                `${browserName} - نسخه ${browserVersion}`;
+        }
+
+        // اجرا هنگام بارگذاری صفحه
+        document.addEventListener('DOMContentLoaded', detectBrowser);
+    </script>
+
+    <div id="browserInfo" style="position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px; font-size: 12px;"></div>
+</body>
+</html>
