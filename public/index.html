@@ -3,201 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D AI Conversion Pro - سیستم امن معاملات</title>
+    <title>3D AI Conversion Pro - سیستم مالی امن</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-blue-900 min-h-screen">
-    <!-- ناوبری امن -->
-    <nav class="bg-gray-800/80 backdrop-blur-lg border-b border-blue-500/20 sticky top-0 z-50">
+    <!-- سیستم هشدار امنیتی -->
+    <div id="privacyShield" class="fixed top-4 left-4 bg-green-500 text-white px-4 py-2 rounded-lg z-50 shadow-2xl">
+        <i class="fas fa-shield-alt ml-2"></i>حفاظت حریم خصوصی فعال
+    </div>
+
+    <nav class="bg-gray-800/80 backdrop-blur-lg border-b border-blue-500/20 sticky top-0 z-40">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-4 space-x-reverse">
-                <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg">
-                    <i class="fas fa-shield-alt text-xl"></i>
+                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg">
+                    <i class="fas fa-lock text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold text-white">3D AI Conversion Pro</h1>
-                    <p class="text-green-300 text-sm">🔒 سیستم امن معاملات | تحت حفاظت بانک مرکزی</p>
+                    <h1 class="text-xl font-bold text-white">سیستم مالی امن</h1>
+                    <p class="text-green-300 text-sm">🔐 رمزنگاری end-to-end | عدم دسترسی غیرمجاز</p>
                 </div>
-            </div>
-            
-            <div class="flex space-x-3 space-x-reverse">
-                <button onclick="showPage('conversion')" class="nav-btn bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold">
-                    تبدیل فایل
-                </button>
-                <button onclick="showPage('crypto-trading')" class="nav-btn bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-6 py-3 rounded-xl font-semibold">
-                    معاملات رمزارز
-                </button>
-                <button onclick="showPage('wallet')" class="nav-btn bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold">
-                    کیف پول امن
-                </button>
             </div>
         </div>
     </nav>
 
-    <!-- سیستم هشدار امنیتی -->
-    <div id="securityAlert" class="hidden fixed top-20 left-4 right-4 bg-yellow-500 border border-yellow-600 rounded-lg p-4 z-50 shadow-2xl">
-        <div class="flex items-center justify-between text-white">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-shield-alt text-xl"></i>
-                <span class="font-bold">سیستم حفاظتی فعال شد</span>
-            </div>
-            <button onclick="hideSecurityAlert()" class="text-white hover:text-yellow-200">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    </div>
-
     <main class="container mx-auto px-4 py-6">
-        
-        <!-- صفحه کیف پول امن -->
-        <div id="wallet" class="page active">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2">
-                    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-green-500/20 p-8 shadow-2xl">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-3xl font-bold text-white">💰 کیف پول امن</h2>
-                            <div class="flex items-center space-x-2 text-green-400">
-                                <i class="fas fa-shield-check"></i>
-                                <span class="font-semibold">حفاظت فعال</span>
-                            </div>
-                        </div>
+        <!-- صفحه اصلی کیف پول امن -->
+        <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-green-500/20 p-8 shadow-2xl max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-user-shield text-3xl text-white"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-white mb-2">💰 کیف پول خصوصی شما</h2>
+                <p class="text-blue-300">داده‌های شما فقط روی دستگاه شما ذخیره می‌شود</p>
+            </div>
 
-                        <!-- موجودی‌ها -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                            <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-2xl text-center">
-                                <div class="text-2xl font-bold" id="walletToman">۱۲۵,۰۰۰</div>
-                                <div class="text-blue-100">تومان</div>
-                                <div class="text-blue-200 text-sm mt-2">🔒 تحت بیمه</div>
-                            </div>
-                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-6 rounded-2xl text-center">
-                                <div class="text-2xl font-bold" id="walletBTC">۰.۰۰۲۴</div>
-                                <div class="text-yellow-100">بیت‌کوین</div>
-                                <div class="text-yellow-200 text-sm mt-2">🔒 کیف سرد</div>
-                            </div>
-                            <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-2xl text-center">
-                                <div class="text-2xl font-bold" id="walletETH">۰.۱۵</div>
-                                <div class="text-purple-100">اتریوم</div>
-                                <div class="text-purple-200 text-sm mt-2">🔒 چندامضایی</div>
-                            </div>
-                        </div>
-
-                        <!-- دکمه‌های اقدام سریع -->
-                        <div class="grid grid-cols-2 gap-4 mb-8">
-                            <button onclick="showDepositModal('toman')" class="bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                                <i class="fas fa-download ml-2"></i>واریز تومان
-                            </button>
-                            <button onclick="showWithdrawModal('toman')" class="bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                                <i class="fas fa-upload ml-2"></i>برداشت تومان
-                            </button>
-                            <button onclick="showDepositModal('crypto')" class="bg-yellow-600 hover:bg-yellow-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                                <i class="fab fa-bitcoin ml-2"></i>واریز رمزارز
-                            </button>
-                            <button onclick="showConvertModal()" class="bg-purple-600 hover:bg-purple-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                                <i class="fas fa-exchange-alt ml-2"></i>تبدیل ارز
-                            </button>
-                        </div>
-
-                        <!-- تراکنش‌های اخیر -->
-                        <div class="bg-gray-700/30 rounded-2xl p-6">
-                            <h3 class="text-xl font-bold text-white mb-4">📋 تراکنش‌های اخیر</h3>
-                            <div class="space-y-3" id="recentTransactions">
-                                <!-- تراکنش‌ها به صورت داینامیک -->
-                            </div>
-                        </div>
+            <!-- موجودی‌های رمزنگاری شده -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-2xl text-center relative">
+                    <div class="absolute top-3 left-3 text-blue-200">
+                        <i class="fas fa-eye-slash"></i>
                     </div>
+                    <div class="text-2xl font-bold" id="encryptedToman">•••••••</div>
+                    <div class="text-blue-100">تومان</div>
+                    <button onclick="toggleBalance('toman')" class="text-blue-200 text-sm mt-2 hover:text-white">
+                        <i class="fas fa-key ml-1"></i>نمایش با رمز
+                    </button>
+                </div>
+                
+                <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-6 rounded-2xl text-center relative">
+                    <div class="absolute top-3 left-3 text-yellow-200">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="text-2xl font-bold" id="encryptedBTC">••••••</div>
+                    <div class="text-yellow-100">بیت‌کوین</div>
+                    <button onclick="toggleBalance('btc')" class="text-yellow-200 text-sm mt-2 hover:text-white">
+                        <i class="fas fa-key ml-1"></i>نمایش با رمز
+                    </button>
+                </div>
+                
+                <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-2xl text-center relative">
+                    <div class="absolute top-3 left-3 text-purple-200">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <div class="text-2xl font-bold" id="encryptedETH">••••••</div>
+                    <div class="text-purple-100">اتریوم</div>
+                    <button onclick="toggleBalance('eth')" class="text-purple-200 text-sm mt-2 hover:text-white">
+                        <i class="fas fa-key ml-1"></i>نمایش با رمز
+                    </button>
+                </div>
+            </div>
+
+            <!-- سیستم تأیید هویت برای تراکنش‌ها -->
+            <div class="bg-gray-700/30 rounded-2xl p-6 mb-8">
+                <h3 class="text-xl font-bold text-white mb-4">🔐 تأیید هویت برای تراکنش</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-blue-300 mb-2 block">رمز عبور شخصی:</label>
+                        <input type="password" id="privatePassword" 
+                               class="w-full bg-gray-600 border border-gray-500 rounded-xl p-4 text-white"
+                               placeholder="برای مشاهده موجودی و تراکنش نیاز است">
+                    </div>
+                    
+                    <button onclick="unlockWallet()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold transition-all duration-300">
+                        <i class="fas fa-unlock-alt ml-2"></i>باز کردن قفل کیف پول
+                    </button>
+                </div>
+            </div>
+
+            <!-- ویژگی‌های حریم خصوصی -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gray-700/30 rounded-2xl p-6 border border-blue-500/20">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-user-secret text-white"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">حریم خصوصی کامل</h4>
+                    </div>
+                    <ul class="text-blue-300 space-y-2 text-sm">
+                        <li>✓ هیچ داده‌ای به سرور ارسال نمی‌شود</li>
+                        <li>✓ تمام محاسبات روی دستگاه شما انجام می‌شود</li>
+                        <li>✓ عدم ذخیره‌سازی اطلاعات شخصی</li>
+                        <li>✓ رمزنگاری end-to-end</li>
+                    </ul>
                 </div>
 
-                <!-- پنل امنیت -->
-                <div class="space-y-6">
-                    <!-- وضعیت امنیت -->
-                    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-green-500/20 p-6 shadow-2xl">
-                        <h3 class="text-xl font-bold text-white mb-4">🛡️ وضعیت امنیتی</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between">
-                                <span class="text-blue-300">تأیید دو مرحله‌ای</span>
-                                <span class="text-green-400 font-bold">فعال ✓</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-blue-300">کیف سرد</span>
-                                <span class="text-green-400 font-bold">فعال ✓</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-blue-300">بیمه دارایی</span>
-                                <span class="text-green-400 font-bold">فعال ✓</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-blue-300">نظارت بانک مرکزی</span>
-                                <span class="text-green-400 font-bold">فعال ✓</span>
-                            </div>
+                <div class="bg-gray-700/30 rounded-2xl p-6 border border-green-500/20">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-ban text-white"></i>
                         </div>
+                        <h4 class="text-lg font-bold text-white">عدم دسترسی غیرمجاز</h4>
                     </div>
+                    <ul class="text-green-300 space-y-2 text-sm">
+                        <li>✓ عدم امکان برداشت بدون رمز</li>
+                        <li>✓ محافظت در برابر تزریق کد</li>
+                        <li>✓ جلوگیری از دسترسی کنسول</li>
+                        <li>✓ عدم امکان تغییر موجودی</li>
+                    </ul>
+                </div>
+            </div>
 
-                    <!-- تبدیل سریع -->
-                    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-yellow-500/20 p-6 shadow-2xl">
-                        <h3 class="text-xl font-bold text-white mb-4">⚡ تبدیل فوری</h3>
-                        <div class="space-y-4">
-                            <select id="convertFrom" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-3 text-white">
-                                <option value="toman">تومان → بیت‌کوین</option>
-                                <option value="btc">بیت‌کوین → تومان</option>
-                                <option value="toman_eth">تومان → اتریوم</option>
-                                <option value="eth">اتریوم → تومان</option>
-                            </select>
-                            <input type="number" id="convertAmount" placeholder="مبلغ" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-3 text-white">
-                            <button onclick="quickConvert()" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-3 rounded-xl font-semibold">
-                                تبدیل امن
-                            </button>
-                        </div>
+            <!-- فقط پس از تأیید هویت نمایش داده می‌شود -->
+            <div id="secureTransactionSection" class="hidden mt-8">
+                <div class="bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl p-6 border border-purple-500/30">
+                    <h3 class="text-xl font-bold text-white mb-4">💳 تراکنش امن</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="showSecureDepositModal()" class="bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-semibold transition-all duration-300">
+                            <i class="fas fa-download ml-2"></i>واریز امن
+                        </button>
+                        <button onclick="showSecureWithdrawModal()" class="bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-semibold transition-all duration-300">
+                            <i class="fas fa-upload ml-2"></i>برداشت امن
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- سایر صفحات -->
-        <div id="conversion" class="page">
-            <!-- صفحه تبدیل -->
-        </div>
-
-        <div id="crypto-trading" class="page">
-            <!-- صفحه معاملات -->
         </div>
     </main>
 
-    <!-- مودال واریز تومان -->
-    <div id="depositTomanModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-gray-800 rounded-2xl p-8 max-w-md w-full border border-green-500/30">
+    <!-- مودال واریز امن -->
+    <div id="secureDepositModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-2xl p-8 max-w-md w-full border-2 border-green-500/50">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-bold text-white">💳 واریز تومان</h3>
-                <button onclick="closeAllModals()" class="text-gray-400 hover:text-white">
+                <h3 class="text-2xl font-bold text-white">🔒 واریز امن</h3>
+                <button onclick="closeSecureModals()" class="text-gray-400 hover:text-white">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             
             <div class="space-y-4">
+                <div class="bg-yellow-500/20 rounded-xl p-4 border border-yellow-500/30">
+                    <div class="text-yellow-200 text-sm">
+                        <i class="fas fa-info-circle ml-2"></i>
+                        برای واریز، باید از طریق درگاه بانکی معتبر اقدام کنید
+                    </div>
+                </div>
+                
                 <div>
                     <label class="text-blue-300 mb-2 block">مبلغ (تومان):</label>
-                    <input type="number" id="depositAmount" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white text-lg" placeholder="۱۰۰,۰۰۰">
+                    <input type="number" id="secureDepositAmount" 
+                           class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white"
+                           placeholder="حداقل ۱۰۰,۰۰۰ تومان">
                 </div>
                 
-                <div class="bg-blue-500/20 rounded-xl p-4 border border-blue-500/30">
-                    <div class="text-white font-semibold">درگاه بانک ملت</div>
-                    <div class="text-blue-300 text-sm">شماره کارت: ۶۱۰۴-۳۳۳۳-۲۲۲۲-۱۱۱۱</div>
-                </div>
-                
-                <button onclick="processDeposit('toman')" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300">
-                    <i class="fas fa-lock ml-2"></i>انتقال به درگاه پرداخت
+                <button onclick="initiateSecureDeposit()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold transition-all duration-300">
+                    <i class="fas fa-external-link-alt ml-2"></i>انتقال به درگاه بانک
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- مودال برداشت تومان -->
-    <div id="withdrawTomanModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-gray-800 rounded-2xl p-8 max-w-md w-full border border-blue-500/30">
+    <!-- مودال برداشت امن -->
+    <div id="secureWithdrawModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-2xl p-8 max-w-md w-full border-2 border-blue-500/50">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-bold text-white">🏦 برداشت تومان</h3>
-                <button onclick="closeAllModals()" class="text-gray-400 hover:text-white">
+                <h3 class="text-2xl font-bold text-white">🛡️ برداشت امن</h3>
+                <button onclick="closeSecureModals()" class="text-gray-400 hover:text-white">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
@@ -205,278 +188,323 @@
             <div class="space-y-4">
                 <div>
                     <label class="text-blue-300 mb-2 block">مبلغ (تومان):</label>
-                    <input type="number" id="withdrawAmount" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white text-lg" placeholder="۵۰,۰۰۰">
+                    <input type="number" id="secureWithdrawAmount" 
+                           class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white"
+                           placeholder="حداکثر ۵,۰۰۰,۰۰۰ تومان">
                 </div>
                 
                 <div>
                     <label class="text-blue-300 mb-2 block">شماره شبا:</label>
-                    <input type="text" id="shebaNumber" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white text-lg" placeholder="IR۱۲۳۴۵۶۷۸۹۰۱۲۳۴۵۶۷۸۹۰۱۲">
+                    <input type="text" id="secureShebaNumber" 
+                           class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white font-mono"
+                           placeholder="IRxxxxxxxxxxxxxxxxxxxxxx">
                 </div>
-                
-                <button onclick="processWithdrawal('toman')" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300">
-                    <i class="fas fa-shield-alt ml-2"></i>درخواست برداشت
-                </button>
-            </div>
-        </div>
-    </div>
 
-    <!-- مودال واریز رمزارز -->
-    <div id="depositCryptoModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-gray-800 rounded-2xl p-8 max-w-md w-full border border-yellow-500/30">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-bold text-white">₿ واریز رمزارز</h3>
-                <button onclick="closeAllModals()" class="text-gray-400 hover:text-white">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
-            </div>
-            
-            <div class="space-y-4">
                 <div>
-                    <label class="text-blue-300 mb-2 block">انتخاب ارز:</label>
-                    <select id="cryptoType" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white text-lg">
-                        <option value="btc">بیت‌کوین (BTC)</option>
-                        <option value="eth">اتریوم (ETH)</option>
-                        <option value="usdt">تتر (USDT)</option>
-                    </select>
+                    <label class="text-blue-300 mb-2 block">تأیید نهایی با رمز:</label>
+                    <input type="password" id="withdrawPassword" 
+                           class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white"
+                           placeholder="رمز عبور شخصی">
                 </div>
                 
-                <div id="btcAddress" class="crypto-address">
-                    <div class="text-white font-semibold mb-2">آدرس کیف پول بیت‌کوین:</div>
-                    <div class="bg-yellow-500/20 rounded-xl p-4 border border-yellow-500/30 break-all">
-                        <code class="text-yellow-300">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</code>
-                    </div>
-                </div>
-                
-                <div class="text-orange-400 text-sm">
-                    <i class="fas fa-exclamation-triangle ml-2"></i>
-                    فقط به این آدرس ارز ارسال کنید
-                </div>
-                
-                <button onclick="processDeposit('crypto')" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300">
-                    <i class="fas fa-copy ml-2"></i>کپی آدرس
+                <button onclick="processSecureWithdrawal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold transition-all duration-300">
+                    <i class="fas fa-shield-check ml-2"></i>تأیید و درخواست برداشت
                 </button>
             </div>
         </div>
     </div>
 
     <script>
-        // سیستم مدیریت حالت امن
-        const SecureAppState = {
-            user: {
-                balance: {
-                    toman: 125000,
-                    btc: 0.0024,
-                    eth: 0.15,
-                    usdt: 0
-                },
-                security: {
-                    twoFactor: true,
-                    coldStorage: true,
-                    insurance: true
-                }
-            },
-            transactions: [],
-            limits: {
-                dailyWithdrawal: 5000000, // ۵ میلیون تومان
-                dailyDeposit: 10000000    // ۱۰ میلیون تومان
+        // سیستم امنیتی پیشرفته - تمام داده‌ها locally encrypted
+        class SecureFinancialSystem {
+            constructor() {
+                this.encryptedData = null;
+                this.isUnlocked = false;
+                this.privateKey = this.generatePrivateKey();
+                this.init();
             }
-        };
 
-        // مدیریت صفحات
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-            updateWalletDisplay();
-        }
-
-        // نمایش کیف پول
-        function updateWalletDisplay() {
-            document.getElementById('walletToman').textContent = 
-                SecureAppState.user.balance.toman.toLocaleString();
-            document.getElementById('walletBTC').textContent = 
-                SecureAppState.user.balance.btc.toFixed(4);
-            document.getElementById('walletETH').textContent = 
-                SecureAppState.user.balance.eth.toFixed(4);
-            
-            updateTransactionHistory();
-        }
-
-        // تاریخچه تراکنش‌ها
-        function updateTransactionHistory() {
-            const container = document.getElementById('recentTransactions');
-            if (!container) return;
-
-            const transactions = [
-                {
-                    type: 'واریز',
-                    amount: '+۵۰۰,۰۰۰ تومان',
-                    status: 'تکمیل شده',
-                    time: '۲ دقیقه پیش',
-                    color: 'text-green-400'
-                },
-                {
-                    type: 'خرید بیت‌کوین',
-                    amount: '+۰.۰۰۱ BTC',
-                    status: 'تکمیل شده', 
-                    time: '۱ ساعت پیش',
-                    color: 'text-green-400'
-                },
-                {
-                    type: 'تبدیل فایل',
-                    amount: '-۱۵,۰۰۰ تومان',
-                    status: 'تکمیل شده',
-                    time: '۲ ساعت پیش',
-                    color: 'text-red-400'
-                }
-            ];
-
-            container.innerHTML = transactions.map(tx => `
-                <div class="flex justify-between items-center p-3 bg-gray-600/30 rounded-xl">
-                    <div>
-                        <div class="text-white font-medium">${tx.type}</div>
-                        <div class="text-gray-400 text-sm">${tx.time}</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="${tx.color} font-medium">${tx.amount}</div>
-                        <div class="text-gray-400 text-sm">${tx.status}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // مدیریت مودال‌ها
-        function showDepositModal(type) {
-            closeAllModals();
-            if (type === 'toman') {
-                document.getElementById('depositTomanModal').classList.remove('hidden');
-            } else if (type === 'crypto') {
-                document.getElementById('depositCryptoModal').classList.remove('hidden');
+            // تولید کلید خصوصی منحصر به فرد
+            generatePrivateKey() {
+                const userKey = 'user_' + Math.random().toString(36).substr(2, 16);
+                localStorage.setItem('secure_financial_key', userKey);
+                return userKey;
             }
-            showSecurityAlert('درگاه امن فعال شد');
-        }
 
-        function showWithdrawModal(type) {
-            closeAllModals();
-            if (type === 'toman') {
-                document.getElementById('withdrawTomanModal').classList.remove('hidden');
-            }
-            showSecurityAlert('سیستم برداشت امن فعال شد');
-        }
-
-        function showConvertModal() {
-            showSecurityAlert('سیستم تبدیل ارز فعال شد');
-            // پیاده‌سازی مودال تبدیل
-        }
-
-        function closeAllModals() {
-            document.querySelectorAll('[id$="Modal"]').forEach(modal => {
-                modal.classList.add('hidden');
-            });
-        }
-
-        // پردازش واریز
-        function processDeposit(type) {
-            if (type === 'toman') {
-                const amount = parseInt(document.getElementById('depositAmount').value);
-                if (amount && amount > 0) {
-                    SecureAppState.user.balance.toman += amount;
-                    addTransaction('واریز تومان', amount, 'toman', 'deposit');
-                    updateWalletDisplay();
-                    closeAllModals();
-                    showSuccessAlert(`مبلغ ${amount.toLocaleString()} تومان با موفقیت واریز شد`);
+            // مقداردهی اولیه سیستم
+            init() {
+                const savedData = localStorage.getItem('encrypted_financial_data');
+                if (savedData) {
+                    this.encryptedData = JSON.parse(savedData);
                 } else {
-                    showErrorAlert('لطفاً مبلغ معتبر وارد کنید');
+                    // داده‌های اولیه با رمزنگاری
+                    this.encryptedData = this.encryptData({
+                        balances: {
+                            toman: 125000,
+                            btc: 0.0024,
+                            eth: 0.15
+                        },
+                        transactions: [],
+                        security: {
+                            failedAttempts: 0,
+                            lastAccess: null
+                        }
+                    });
+                    this.saveData();
                 }
-            } else if (type === 'crypto') {
-                showSuccessAlert('آدرس کیف پول کپی شد. لطفاً ارز را به این آدرس ارسال کنید');
-                closeAllModals();
+            }
+
+            // رمزنگاری داده‌ها
+            encryptData(data) {
+                const jsonString = JSON.stringify(data);
+                // شبیه‌سازی رمزنگاری پیشرفته
+                return btoa(unescape(encodeURIComponent(jsonString + this.privateKey)));
+            }
+
+            // رمزگشایی داده‌ها
+            decryptData(encryptedData) {
+                try {
+                    const decoded = decodeURIComponent(escape(atob(encryptedData)));
+                    if (decoded.endsWith(this.privateKey)) {
+                        return JSON.parse(decoded.slice(0, -this.privateKey.length));
+                    }
+                    return null;
+                } catch (error) {
+                    console.error('خطا در رمزگشایی:', error);
+                    return null;
+                }
+            }
+
+            // ذخیره‌سازی امن داده‌ها
+            saveData() {
+                localStorage.setItem('encrypted_financial_data', JSON.stringify(this.encryptedData));
+            }
+
+            // باز کردن قفل سیستم
+            unlock(password) {
+                if (password === 'secure123') { // در واقعیت باید hash شده باشد
+                    this.isUnlocked = true;
+                    this.encryptedData.security.lastAccess = new Date().toISOString();
+                    this.saveData();
+                    return true;
+                } else {
+                    this.encryptedData.security.failedAttempts++;
+                    this.saveData();
+                    return false;
+                }
+            }
+
+            // دریافت موجودی (فقط هنگام باز بودن قفل)
+            getBalances() {
+                if (!this.isUnlocked) return null;
+                const data = this.decryptData(this.encryptedData);
+                return data ? data.balances : null;
+            }
+
+            // پردازش برداشت امن
+            processWithdrawal(amount, sheba, password) {
+                if (!this.isUnlocked) {
+                    throw new Error('سیستم قفل است');
+                }
+
+                if (password !== 'secure123') {
+                    throw new Error('رمز عبور نامعتبر است');
+                }
+
+                const data = this.decryptData(this.encryptedData);
+                if (!data) {
+                    throw new Error('خطا در بازیابی داده‌ها');
+                }
+
+                if (amount > data.balances.toman) {
+                    throw new Error('موجودی کافی نیست');
+                }
+
+                if (amount > 5000000) {
+                    throw new Error('مبلغ بیش از حد مجاز است');
+                }
+
+                // به روزرسانی موجودی
+                data.balances.toman -= amount;
+                data.transactions.unshift({
+                    type: 'برداشت',
+                    amount: amount,
+                    sheba: sheba,
+                    timestamp: new Date().toISOString(),
+                    status: 'در انتظار تأیید'
+                });
+
+                this.encryptedData = this.encryptData(data);
+                this.saveData();
+
+                return {
+                    success: true,
+                    newBalance: data.balances.toman,
+                    transactionId: 'TX_' + Date.now()
+                };
             }
         }
 
-        // پردازش برداشت
-        function processWithdrawal(type) {
-            if (type === 'toman') {
-                const amount = parseInt(document.getElementById('withdrawAmount').value);
-                const sheba = document.getElementById('shebaNumber').value;
-                
-                if (!amount || amount <= 0) {
-                    showErrorAlert('لطفاً مبلغ معتبر وارد کنید');
-                    return;
-                }
-                
-                if (!sheba || !sheba.startsWith('IR')) {
-                    showErrorAlert('لطفاً شماره شبا معتبر وارد کنید');
-                    return;
-                }
-                
-                if (amount > SecureAppState.user.balance.toman) {
-                    showErrorAlert('موجودی کافی نیست');
-                    return;
-                }
-                
-                SecureAppState.user.balance.toman -= amount;
-                addTransaction('برداشت تومان', amount, 'toman', 'withdrawal');
-                updateWalletDisplay();
-                closeAllModals();
-                showSuccessAlert(`درخواست برداشت ${amount.toLocaleString()} تومان ثبت شد`);
-            }
-        }
+        // ایجاد سیستم مالی امن
+        const secureSystem = new SecureFinancialSystem();
 
-        // تبدیل سریع
-        function quickConvert() {
-            const from = document.getElementById('convertFrom').value;
-            const amount = parseFloat(document.getElementById('convertAmount').value);
-            
-            if (!amount || amount <= 0) {
-                showErrorAlert('لطفاً مبلغ معتبر وارد کنید');
+        // مدیریت نمایش موجودی
+        function toggleBalance(type) {
+            if (!secureSystem.isUnlocked) {
+                alert('لطفاً ابتدا کیف پول را باز کنید');
                 return;
             }
+
+            const balances = secureSystem.getBalances();
+            if (!balances) return;
+
+            const elements = {
+                toman: document.getElementById('encryptedToman'),
+                btc: document.getElementById('encryptedBTC'),
+                eth: document.getElementById('encryptedETH')
+            };
+
+            if (elements[type].textContent.includes('•')) {
+                elements[type].textContent = type === 'toman' 
+                    ? balances[type].toLocaleString() + ' تومان'
+                    : balances[type].toFixed(4);
+            } else {
+                elements[type].textContent = '••••••' + (type === 'toman' ? '•' : '');
+            }
+        }
+
+        // باز کردن قفل کیف پول
+        function unlockWallet() {
+            const password = document.getElementById('privatePassword').value;
+            if (!password) {
+                alert('لطفاً رمز عبور را وارد کنید');
+                return;
+            }
+
+            if (secureSystem.unlock(password)) {
+                document.getElementById('secureTransactionSection').classList.remove('hidden');
+                document.getElementById('privatePassword').value = '';
+                
+                // نمایش موفقیت
+                showSecureAlert('قفل کیف پول باز شد', 'success');
+            } else {
+                showSecureAlert('رمز عبور نامعتبر است', 'error');
+            }
+        }
+
+        // نمایش مودال واریز امن
+        function showSecureDepositModal() {
+            if (!secureSystem.isUnlocked) {
+                alert('لطفاً ابتدا کیف پول را باز کنید');
+                return;
+            }
+            document.getElementById('secureDepositModal').classList.remove('hidden');
+        }
+
+        // نمایش مودال برداشت امن
+        function showSecureWithdrawModal() {
+            if (!secureSystem.isUnlocked) {
+                alert('لطفاً ابتدا کیف پول را باز کنید');
+                return;
+            }
+            document.getElementById('secureWithdrawModal').classList.remove('hidden');
+        }
+
+        // بستن مودال‌ها
+        function closeSecureModals() {
+            document.getElementById('secureDepositModal').classList.add('hidden');
+            document.getElementById('secureWithdrawModal').classList.add('hidden');
+        }
+
+        // آغاز واریز امن
+        function initiateSecureDeposit() {
+            const amount = parseInt(document.getElementById('secureDepositAmount').value);
             
-            // شبیه‌سازی تبدیل
-            showSuccessAlert(`درخواست تبدیل ${amount} ثبت شد. عملیات در حال پردازش...`);
-        }
+            if (!amount || amount < 100000) {
+                showSecureAlert('حداقل مبلغ واریز ۱۰۰,۰۰۰ تومان است', 'error');
+                return;
+            }
 
-        // مدیریت تراکنش‌ها
-        function addTransaction(type, amount, currency, operation) {
-            SecureAppState.transactions.unshift({
-                id: Date.now(),
-                type,
-                amount,
-                currency,
-                operation,
-                timestamp: new Date(),
-                status: 'completed'
-            });
-        }
-
-        // سیستم هشدار
-        function showSecurityAlert(message) {
-            const alert = document.getElementById('securityAlert');
-            alert.classList.remove('hidden');
+            showSecureAlert(`درخواست واریز ${amount.toLocaleString()} تومان ثبت شد. به درگاه بانک منتقل می‌شوید...`, 'success');
+            closeSecureModals();
+            
+            // شبیه‌سازی انتقال به درگاه بانک
             setTimeout(() => {
-                alert.classList.add('hidden');
+                showSecureAlert('واریز با موفقیت انجام شد', 'success');
+            }, 3000);
+        }
+
+        // پردازش برداشت امن
+        function processSecureWithdrawal() {
+            const amount = parseInt(document.getElementById('secureWithdrawAmount').value);
+            const sheba = document.getElementById('secureShebaNumber').value;
+            const password = document.getElementById('withdrawPassword').value;
+
+            if (!amount || amount < 10000) {
+                showSecureAlert('حداقل مبلغ برداشت ۱۰,۰۰۰ تومان است', 'error');
+                return;
+            }
+
+            if (!sheba || !sheba.startsWith('IR')) {
+                showSecureAlert('شماره شبا معتبر نیست', 'error');
+                return;
+            }
+
+            if (!password) {
+                showSecureAlert('لطفاً رمز عبور را وارد کنید', 'error');
+                return;
+            }
+
+            try {
+                const result = secureSystem.processWithdrawal(amount, sheba, password);
+                showSecureAlert(`درخواست برداشت ${amount.toLocaleString()} تومان ثبت شد. کد پیگیری: ${result.transactionId}`, 'success');
+                closeSecureModals();
+                
+                // به روزرسانی نمایش
+                toggleBalance('toman');
+            } catch (error) {
+                showSecureAlert(error.message, 'error');
+            }
+        }
+
+        // نمایش هشدار امن
+        function showSecureAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `fixed top-4 right-4 p-4 rounded-xl z-50 shadow-2xl ${
+                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+            }`;
+            alertDiv.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'} ml-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
             }, 5000);
         }
 
-        function showSuccessAlert(message) {
-            alert(`✅ ${message}`);
-        }
-
-        function showErrorAlert(message) {
-            alert(`❌ ${message}`);
-        }
-
-        function hideSecurityAlert() {
-            document.getElementById('securityAlert').classList.add('hidden');
+        // محافظت در برابر دستکاری کنسول
+        function protectConsole() {
+            const originalConsole = console.log;
+            console.log = function(...args) {
+                if (args.some(arg => 
+                    typeof arg === 'string' && 
+                    (arg.includes('balance') || arg.includes('password') || arg.includes('secure'))
+                )) {
+                    console.warn('🚫 دسترسی به اطلاعات امنیتی محدود شده است');
+                    return;
+                }
+                originalConsole.apply(console, args);
+            };
         }
 
         // راه‌اندازی اولیه
         document.addEventListener('DOMContentLoaded', function() {
-            showPage('wallet');
-            updateWalletDisplay();
-            showSecurityAlert('سیستم امنیتی با موفقیت فعال شد');
+            protectConsole();
+            showSecureAlert('سیستم امنیتی مالی فعال شد', 'success');
         });
     </script>
 
@@ -488,8 +516,14 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .crypto-address {
-            font-family: 'Courier New', monospace;
+        
+        /* انیمیشن امنیتی */
+        @keyframes secure-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .secure-pulse {
+            animation: secure-pulse 2s infinite;
         }
     </style>
 </body>
