@@ -3,59 +3,380 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Conversion System - سلامت سیستم</title>
+    <title>3D Conversion System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .active {
+            display: block;
+        }
+        .nav-btn {
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
-    <div class="text-center max-w-2xl mx-auto p-6">
-        <!-- لوگو -->
-        <div class="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-            <i class="fas fa-shield-check text-4xl"></i>
-        </div>
-        
-        <h1 class="text-4xl font-bold mb-4">3D Conversion System</h1>
-        <p class="text-xl text-gray-300 mb-8">سیستم تبدیل تصاویر 2D به مدل‌های 3D</p>
-        
-        <!-- وضعیت سیستم -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div class="bg-gray-800 p-4 rounded-lg">
-                <div class="text-2xl text-green-400 mb-2">🟢</div>
-                <div>API Service</div>
-                <div class="text-sm text-gray-400">Online</div>
+<body class="bg-gray-50">
+    <!-- ناوبری اصلی -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <h1 class="text-xl font-bold text-gray-800">3D Conversion System</h1>
             </div>
-            <div class="bg-gray-800 p-4 rounded-lg">
-                <div class="text-2xl text-green-400 mb-2">🟢</div>
-                <div>Database</div>
-                <div class="text-sm text-gray-400">Online</div>
-            </div>
-            <div class="bg-gray-800 p-4 rounded-lg">
-                <div class="text-2xl text-green-400 mb-2">🟢</div>
-                <div>Storage</div>
-                <div class="text-sm text-gray-400">Online</div>
+            <div class="flex space-x-2 space-x-reverse">
+                <button onclick="showPage('home')" class="nav-btn bg-blue-500 text-white px-4 py-2 rounded-lg">
+                    <i class="fas fa-home ml-2"></i>صفحه اصلی
+                </button>
+                <button onclick="showPage('admin-login')" class="nav-btn bg-green-500 text-white px-4 py-2 rounded-lg">
+                    <i class="fas fa-lock ml-2"></i>ورود مدیر
+                </button>
+                <button onclick="showPage('admin-panel')" class="nav-btn bg-purple-500 text-white px-4 py-2 rounded-lg">
+                    <i class="fas fa-chart-bar ml-2"></i>پنل مدیریت
+                </button>
+                <button onclick="showPage('finance')" class="nav-btn bg-orange-500 text-white px-4 py-2 rounded-lg">
+                    <i class="fas fa-coins ml-2"></i>پنل مالی
+                </button>
             </div>
         </div>
+    </nav>
 
-        <!-- دکمه‌های ناوبری -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <a href="/admin-login/" class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg transition duration-300 block">
-                <i class="fas fa-lock ml-2"></i>
-                ورود مدیر سیستم
-            </a>
-            <a href="/admin-panel/" class="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg transition duration-300 block">
-                <i class="fas fa-chart-bar ml-2"></i>
-                پنل مدیریت
-            </a>
-            <a href="/finance-panel/" class="bg-purple-600 hover:bg-purple-700 text-white py-3 px-6 rounded-lg transition duration-300 block">
-                <i class="fas fa-coins ml-2"></i>
-                پنل مالی
-            </a>
-        </div>
+    <!-- صفحه اصلی - سلامت سیستم -->
+    <div id="home" class="page active">
+        <div class="container mx-auto max-w-4xl text-center py-16">
+            <div class="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-8">
+                <i class="fas fa-shield-check text-5xl text-white"></i>
+            </div>
+            
+            <h1 class="text-5xl font-bold text-gray-800 mb-4">سیستم سلامت 3D Conversion</h1>
+            <p class="text-xl text-gray-600 mb-12">سیستم تبدیل تصاویر 2D به مدل‌های 3D - آماده سرویس‌دهی</p>
 
-        <!-- اطلاعات سیستم -->
-        <div class="text-gray-400 text-sm">
-            <p>🔄 Uptime: 99.98% | ⚡ Response: 142ms | 👥 Users: 156</p>
+            <!-- کارت‌های وضعیت -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-green-200">
+                    <div class="text-4xl text-green-500 mb-4">🟢</div>
+                    <h3 class="text-xl font-semibold mb-2">API Service</h3>
+                    <p class="text-gray-600">سرویس تبدیل فعال</p>
+                    <div class="mt-4 text-sm text-green-500">Online</div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-green-200">
+                    <div class="text-4xl text-green-500 mb-4">🟢</div>
+                    <h3 class="text-xl font-semibold mb-2">Database</h3>
+                    <p class="text-gray-600">دیتابیس متصل</p>
+                    <div class="mt-4 text-sm text-green-500">Online</div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-green-200">
+                    <div class="text-4xl text-green-500 mb-4">🟢</div>
+                    <h3 class="text-xl font-semibold mb-2">Storage</h3>
+                    <p class="text-gray-600">ذخیره‌سازی فعال</p>
+                    <div class="mt-4 text-sm text-green-500">Online</div>
+                </div>
+            </div>
+
+            <!-- آمار سیستم -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
+                <h3 class="text-2xl font-semibold mb-6">📊 آمار سیستم</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <div class="text-3xl font-bold text-blue-600" id="uptime">99.98%</div>
+                        <div class="text-gray-500">Uptime</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-green-600" id="response-time">142ms</div>
+                        <div class="text-gray-500">Response Time</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-purple-600" id="active-users">156</div>
+                        <div class="text-gray-500">Active Users</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-orange-600" id="total-conversions">2,847</div>
+                        <div class="text-gray-500">Total Conversions</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- صفحه ورود مدیر -->
+    <div id="admin-login" class="page">
+        <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 to-purple-600">
+            <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-lock text-3xl text-blue-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">ورود مدیر سیستم</h2>
+                    <p class="text-gray-600">لطفا اطلاعات ورود را وارد کنید</p>
+                </div>
+
+                <form id="loginForm" class="space-y-6">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">نام کاربری</label>
+                        <input type="text" id="username" 
+                               class="w-full p-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="admin" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">رمز عبور</label>
+                        <input type="password" id="password" 
+                               class="w-full p-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" 
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-semibold text-lg transition duration-300">
+                        <i class="fas fa-sign-in-alt ml-2"></i>
+                        ورود به سیستم
+                    </button>
+                </form>
+
+                <div id="loginError" class="hidden mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center">
+                    <i class="fas fa-exclamation-triangle ml-2"></i>
+                    <span>نام کاربری یا رمز عبور نامعتبر است</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- پنل مدیریت -->
+    <div id="admin-panel" class="page">
+        <div class="container mx-auto p-6">
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">پنل مدیریت 3D Conversion</h2>
+                <p class="text-gray-600">مدیریت کامل سیستم تبدیل تصاویر 2D به 3D</p>
+            </div>
+
+            <!-- آمار -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-2xl shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-3xl font-bold">۲۴</div>
+                            <div class="text-blue-100">تبدیل‌های امروز</div>
+                        </div>
+                        <i class="fas fa-exchange-alt text-2xl"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-2xl shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-3xl font-bold">۱۵۶</div>
+                            <div class="text-green-100">کاربران فعال</div>
+                        </div>
+                        <i class="fas fa-users text-2xl"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-6 rounded-2xl shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-3xl font-bold">۱.۲۵M</div>
+                            <div class="text-yellow-100">درآمد امروز</div>
+                        </div>
+                        <i class="fas fa-credit-card text-2xl"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-red-500 to-red-600 text-white p-6 rounded-2xl shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-3xl font-bold">۲.۱٪</div>
+                            <div class="text-red-100">نرخ خطا</div>
+                        </div>
+                        <i class="fas fa-exclamation-triangle text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- جدول تبدیل‌ها -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="p-6 border-b">
+                    <h3 class="text-xl font-semibold">آخرین تبدیل‌ها</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="py-4 px-6 text-right font-semibold">شناسه</th>
+                                <th class="py-4 px-6 text-right font-semibold">کاربر</th>
+                                <th class="py-4 px-6 text-right font-semibold">فایل ورودی</th>
+                                <th class="py-4 px-6 text-right font-semibold">وضعیت</th>
+                                <th class="py-4 px-6 text-right font-semibold">زمان</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">#CV-7845</td>
+                                <td class="py-4 px-6">علی محمدی</td>
+                                <td class="py-4 px-6">blueprint.png</td>
+                                <td class="py-4 px-6">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">تکمیل شده</span>
+                                </td>
+                                <td class="py-4 px-6 text-gray-500">۲ دقیقه پیش</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">#CV-7844</td>
+                                <td class="py-4 px-6">شرکت طراحی</td>
+                                <td class="py-4 px-6">design.jpg</td>
+                                <td class="py-4 px-6">
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">در حال پردازش</span>
+                                </td>
+                                <td class="py-4 px-6 text-gray-500">۵ دقیقه پیش</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- پنل مالی -->
+    <div id="finance" class="page">
+        <div class="container mx-auto p-6">
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">پنل مدیریت مالی</h2>
+                <p class="text-gray-600">مدیریت درآمد، رمزارز و تراکنش‌ها</p>
+            </div>
+
+            <!-- موجودی‌ها -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-2xl shadow-lg border">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-green-600">۱۲.۴۵M</div>
+                            <div class="text-gray-600">تومان</div>
+                        </div>
+                        <i class="fas fa-wallet text-2xl text-green-500"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg border">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-orange-600">۰.۰۴۵</div>
+                            <div class="text-gray-600">بیت‌کوین</div>
+                        </div>
+                        <i class="fab fa-bitcoin text-2xl text-orange-500"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg border">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-purple-600">۰.۸۵</div>
+                            <div class="text-gray-600">اتریوم</div>
+                        </div>
+                        <i class="fab fa-ethereum text-2xl text-purple-500"></i>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg border">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-2xl font-bold text-blue-600">۱۸.۵٪</div>
+                            <div class="text-gray-600">سود ماهانه</div>
+                        </div>
+                        <i class="fas fa-chart-line text-2xl text-blue-500"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تراکنش‌ها -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="p-6 border-b">
+                    <h3 class="text-xl font-semibold">تاریخچه تراکنش‌ها</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="py-4 px-6 text-right font-semibold">تاریخ</th>
+                                <th class="py-4 px-6 text-right font-semibold">نوع</th>
+                                <th class="py-4 px-6 text-right font-semibold">مبلغ</th>
+                                <th class="py-4 px-6 text-right font-semibold">وضعیت</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6">۱۴۰۲/۰۸/۰۶</td>
+                                <td class="py-4 px-6">واریز تومان</td>
+                                <td class="py-4 px-6 font-medium">+۵,۰۰۰,۰۰۰</td>
+                                <td class="py-4 px-6">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">موفق</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6">۱۴۰۲/۰۸/۰۵</td>
+                                <td class="py-4 px-6">خرید BTC</td>
+                                <td class="py-4 px-6 font-medium">-۰.۰۲</td>
+                                <td class="py-4 px-6">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">موفق</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // مدیریت نمایش صفحات
+        function showPage(pageId) {
+            // مخفی کردن همه صفحات
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            // نمایش صفحه انتخاب شده
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // مدیریت فرم ورود
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+
+            if (username === 'admin' && password === 'SecurePass123!') {
+                showPage('admin-panel');
+                errorDiv.classList.add('hidden');
+            } else {
+                errorDiv.classList.remove('hidden');
+                document.getElementById('password').value = '';
+            }
+        });
+
+        // شبیه‌سازی آمار زنده
+        function updateLiveStats() {
+            const responseTime = 140 + Math.random() * 20;
+            const activeUsers = 150 + Math.floor(Math.random() * 20);
+            
+            document.getElementById('response-time').textContent = Math.floor(responseTime) + 'ms';
+            document.getElementById('active-users').textContent = activeUsers;
+        }
+
+        // به‌روزرسانی هر 3 ثانیه
+        setInterval(updateLiveStats, 3000);
+        updateLiveStats();
+
+        // نمایش صفحه اصلی به صورت پیش‌فرض
+        showPage('home');
+    </script>
 </body>
 </html>
