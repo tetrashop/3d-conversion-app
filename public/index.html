@@ -6,10 +6,16 @@
     <title>3D AI Conversion Pro - سیستم تبدیل هوشمند</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<<<<<<< HEAD
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-blue-900 min-h-screen">
     <!-- Navigation -->
+=======
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-blue-900 min-h-screen">
+    <!-- سیستم اصلی -->
+>>>>>>> dedac2c (feat: Complete 3D Conversion System)
     <nav class="bg-gray-800/80 backdrop-blur-lg border-b border-blue-500/20 sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-4 space-x-reverse">
@@ -23,6 +29,7 @@
             </div>
             
             <div class="flex space-x-3 space-x-reverse">
+<<<<<<< HEAD
                 <button onclick="showPage('conversion')" class="nav-btn bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
                     <i class="fas fa-magic ml-2"></i>تبدیل فایل
                 </button>
@@ -34,11 +41,22 @@
                 </button>
                 <button onclick="showPage('admin-login')" class="nav-btn bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
                     <i class="fas fa-shield-alt ml-2"></i>پنل مدیریت
+=======
+                <button onclick="showPage('conversion')" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold">
+                    تبدیل فایل
+                </button>
+                <button onclick="showPage('wallet')" class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold">
+                    کیف پول
+                </button>
+                <button onclick="showPage('admin-login')" class="bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-6 py-3 rounded-xl font-semibold">
+                    پنل مدیریت
+>>>>>>> dedac2c (feat: Complete 3D Conversion System)
                 </button>
             </div>
         </div>
     </nav>
 
+<<<<<<< HEAD
     <!-- سیستم وضعیت آنلاین -->
     <div class="container mx-auto px-4 py-2">
         <div class="bg-green-500/20 border border-green-500/30 rounded-lg p-3 mb-4 backdrop-blur-sm">
@@ -166,11 +184,51 @@
                         <div class="space-y-3" id="conversionHistory">
                             <!-- دیتای داینامیک -->
                         </div>
+=======
+    <main class="container mx-auto px-4 py-6">
+        <!-- صفحه تبدیل -->
+        <div id="conversion" class="page active">
+            <div class="bg-gray-800/50 rounded-2xl border border-blue-500/20 p-8">
+                <h2 class="text-3xl font-bold text-white mb-4">تبدیل هوشمند 2D به 3D</h2>
+                
+                <div id="uploadZone" class="border-2 border-dashed border-blue-400 rounded-2xl p-12 text-center mb-8 cursor-pointer">
+                    <i class="fas fa-cloud-upload-alt text-6xl text-blue-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-white mb-2">فایل خود را اینجا رها کنید</h3>
+                    <input type="file" id="fileInput" class="hidden">
+                    <button onclick="document.getElementById('fileInput').click()" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold">
+                        انتخاب فایل
+                    </button>
+                </div>
+
+                <button onclick="startConversion()" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-4 rounded-2xl font-bold text-lg">
+                    شروع تبدیل - ۱۵,۰۰۰ تومان
+                </button>
+            </div>
+        </div>
+
+        <!-- صفحه کیف پول -->
+        <div id="wallet" class="page">
+            <div class="bg-gray-800/50 rounded-2xl border border-purple-500/20 p-8">
+                <h2 class="text-3xl font-bold text-white mb-4">💰 کیف پول شما</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gray-700 p-6 rounded-2xl text-center">
+                        <div class="text-2xl font-bold text-white">۱۲۵,۰۰۰</div>
+                        <div class="text-blue-300">تومان</div>
+                    </div>
+                    <div class="bg-gray-700 p-6 rounded-2xl text-center">
+                        <div class="text-2xl font-bold text-white">۰.۰۰۲۴</div>
+                        <div class="text-green-300">بیت‌کوین</div>
+                    </div>
+                    <div class="bg-gray-700 p-6 rounded-2xl text-center">
+                        <div class="text-2xl font-bold text-white">۰.۱۵</div>
+                        <div class="text-purple-300">اتریوم</div>
+>>>>>>> dedac2c (feat: Complete 3D Conversion System)
                     </div>
                 </div>
             </div>
         </div>
 
+<<<<<<< HEAD
         <!-- سایر صفحات -->
         <div id="marketplace" class="page">
             <!-- محتوای فروشگاه -->
@@ -179,6 +237,20 @@
         <div id="wallet" class="page">
             <!-- محتوای کیف پول -->
         </div>
+=======
+        <!-- صفحه مدیریت -->
+        <div id="admin-login" class="page">
+            <div class="bg-gray-800/50 rounded-2xl border border-blue-500/20 p-8 max-w-md mx-auto">
+                <h2 class="text-3xl font-bold text-white mb-4">ورود مدیر</h2>
+                <input type="text" placeholder="نام کاربری" class="w-full p-4 rounded-xl mb-4 bg-gray-700 text-white">
+                <input type="password" placeholder="رمز عبور" class="w-full p-4 rounded-xl mb-4 bg-gray-700 text-white">
+                <button class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold">
+                    ورود به سیستم
+                </button>
+            </div>
+        </div>
+    </main>
+>>>>>>> dedac2c (feat: Complete 3D Conversion System)
 
         <div id="admin-login" class="page">
             <!-- محتوای لاگین ادمین -->
@@ -213,6 +285,7 @@
             updateNavigation(pageId);
         }
 
+<<<<<<< HEAD
         function updateNavigation(activePage) {
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'border-blue-400');
@@ -412,7 +485,29 @@
             updateBalanceDisplay();
             setInterval(updateLiveStats, 5000);
             showPage('conversion');
+=======
+        // سیستم تبدیل
+        function startConversion() {
+            alert('سیستم تبدیل فعال شد! فایل خود را انتخاب کنید.');
+            document.getElementById('fileInput').click();
+        }
+
+        // راه‌اندازی اولیه
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('conversion');
+            
+            document.getElementById('fileInput').addEventListener('change', function(e) {
+                if (e.target.files[0]) {
+                    alert('فایل انتخاب شد: ' + e.target.files[0].name);
+                }
+            });
+>>>>>>> dedac2c (feat: Complete 3D Conversion System)
         });
     </script>
+
+    <style>
+        .page { display: none; }
+        .page.active { display: block; }
+    </style>
 </body>
                         </html>
