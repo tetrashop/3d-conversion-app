@@ -1,9 +1,27 @@
 {
   "name": "conversion-api",
-  "version": "1.0.0", 
+  "version": "1.0.0",
+  "description": "3D Conversion API - Convert 2D images to 3D models",
   "main": "src/main.js",
+  "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
-  }
+    "deploy": "wrangler deploy",
+    "test": "echo 'No tests yet' && exit 0"
+  },
+  "dependencies": {
+    "itty-router": "^4.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "keywords": [
+    "3d",
+    "conversion",
+    "api",
+    "cloudflare",
+    "workers"
+  ],
+  "author": "Tetrashop",
+  "license": "MIT"
 }
