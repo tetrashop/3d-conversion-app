@@ -3,14 +3,27 @@ compatibility_date = "2023-10-01"
 compatibility_flags = ["nodejs_compat"]
 
 [env.production]
-workers_dev = true  # اول روی workers.dev تست می‌کنیم
+account_id = "${CLOUDFLARE_ACCOUNT_ID}"
+workers_dev = true
 
 [vars]
-API_VERSION = "1.0.0"
+NODE_ENV = "production"
+APP_VERSION = "2.0.0"
 MAX_FILE_SIZE = "104857600"
-CONVERSION_TIMEOUT = "300"
-SERVICE_NAME = "3D Conversion API"
 
 [env.production.vars]
 NODE_ENV = "production"
 LOG_LEVEL = "info"
+
+[env.production.d1_databases]
+binding = "DB"
+database_name = "3d-conversion-db"
+database_id = "your_database_id_here"
+
+[env.production.r2_buckets]
+binding = "FILE_BUCKET"
+bucket_name = "3d-conversion-files"
+
+[env.production.queues]
+binding = "CONVERSION_QUEUE"
+queue_name = "conversion-queue"

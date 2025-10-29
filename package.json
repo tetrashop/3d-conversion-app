@@ -1,10 +1,36 @@
 {
   "name": "3d-conversion-app",
-  "version": "1.0.0",
-  "description": "Complete 2D to 3D conversion system",
+  "version": "2.0.0",
+  "description": "Commercial 2D to 3D conversion platform",
   "type": "module",
   "scripts": {
-    "dev": "echo 'Development server starting...'",
-    "deploy": "echo 'Deploying...'"
-  }
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:admin\"",
+    "dev:api": "cd packages/conversion-api && npm run dev",
+    "dev:admin": "cd apps/admin-panel && npm run dev",
+    "build": "npm run build:api && npm run build:apps",
+    "build:api": "cd packages/conversion-api && npm run build",
+    "build:apps": "cd apps && npm run build",
+    "deploy": "./scripts/deploy.sh",
+    "deploy:api": "cd packages/conversion-api && npm run deploy",
+    "test": "npm run test:api && npm run test:apps",
+    "test:api": "cd packages/conversion-api && npm run test",
+    "db:migrate": "cd packages/conversion-api && npx wrangler d1 execute 3d-conversion-db --file=../../infrastructure/database-schema.sql"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "keywords": [
+    "3d",
+    "conversion",
+    "api",
+    "cloudflare",
+    "crypto",
+    "payments"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
 }
