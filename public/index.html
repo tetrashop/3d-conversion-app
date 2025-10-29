@@ -3,527 +3,589 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D AI Conversion Pro - سیستم مالی امن</title>
+    <title>سرویس تبدیل حرفه‌ای 3D - تحت مجوز رسمی</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gradient-to-br from-gray-900 to-blue-900 min-h-screen">
-    <!-- سیستم هشدار امنیتی -->
-    <div id="privacyShield" class="fixed top-4 left-4 bg-green-500 text-white px-4 py-2 rounded-lg z-50 shadow-2xl">
-        <i class="fas fa-shield-alt ml-2"></i>حفاظت حریم خصوصی فعال
-    </div>
-
-    <nav class="bg-gray-800/80 backdrop-blur-lg border-b border-blue-500/20 sticky top-0 z-40">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg">
-                    <i class="fas fa-lock text-xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold text-white">سیستم مالی امن</h1>
-                    <p class="text-green-300 text-sm">🔐 رمزنگاری end-to-end | عدم دسترسی غیرمجاز</p>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main class="container mx-auto px-4 py-6">
-        <!-- صفحه اصلی کیف پول امن -->
-        <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-green-500/20 p-8 shadow-2xl max-w-4xl mx-auto">
-            <div class="text-center mb-8">
-                <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-user-shield text-3xl text-white"></i>
-                </div>
-                <h2 class="text-3xl font-bold text-white mb-2">💰 کیف پول خصوصی شما</h2>
-                <p class="text-blue-300">داده‌های شما فقط روی دستگاه شما ذخیره می‌شود</p>
-            </div>
-
-            <!-- موجودی‌های رمزنگاری شده -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-2xl text-center relative">
-                    <div class="absolute top-3 left-3 text-blue-200">
-                        <i class="fas fa-eye-slash"></i>
+<body class="bg-gradient-to-br from-slate-900 to-blue-900 min-h-screen">
+    <!-- هدر رسمی -->
+    <header class="bg-white/10 backdrop-blur-lg border-b border-blue-500/20">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-600 to-green-600 rounded-xl flex items-center justify-center text-white">
+                        <i class="fas fa-cube text-xl"></i>
                     </div>
-                    <div class="text-2xl font-bold" id="encryptedToman">•••••••</div>
-                    <div class="text-blue-100">تومان</div>
-                    <button onclick="toggleBalance('toman')" class="text-blue-200 text-sm mt-2 hover:text-white">
-                        <i class="fas fa-key ml-1"></i>نمایش با رمز
-                    </button>
-                </div>
-                
-                <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-6 rounded-2xl text-center relative">
-                    <div class="absolute top-3 left-3 text-yellow-200">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="text-2xl font-bold" id="encryptedBTC">••••••</div>
-                    <div class="text-yellow-100">بیت‌کوین</div>
-                    <button onclick="toggleBalance('btc')" class="text-yellow-200 text-sm mt-2 hover:text-white">
-                        <i class="fas fa-key ml-1"></i>نمایش با رمز
-                    </button>
-                </div>
-                
-                <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-2xl text-center relative">
-                    <div class="absolute top-3 left-3 text-purple-200">
-                        <i class="fas fa-fingerprint"></i>
-                    </div>
-                    <div class="text-2xl font-bold" id="encryptedETH">••••••</div>
-                    <div class="text-purple-100">اتریوم</div>
-                    <button onclick="toggleBalance('eth')" class="text-purple-200 text-sm mt-2 hover:text-white">
-                        <i class="fas fa-key ml-1"></i>نمایش با رمز
-                    </button>
-                </div>
-            </div>
-
-            <!-- سیستم تأیید هویت برای تراکنش‌ها -->
-            <div class="bg-gray-700/30 rounded-2xl p-6 mb-8">
-                <h3 class="text-xl font-bold text-white mb-4">🔐 تأیید هویت برای تراکنش</h3>
-                
-                <div class="space-y-4">
                     <div>
-                        <label class="text-blue-300 mb-2 block">رمز عبور شخصی:</label>
-                        <input type="password" id="privatePassword" 
-                               class="w-full bg-gray-600 border border-gray-500 rounded-xl p-4 text-white"
-                               placeholder="برای مشاهده موجودی و تراکنش نیاز است">
+                        <h1 class="text-xl font-bold text-white">سرویس تبدیل 3D حرفه‌ای</h1>
+                        <p class="text-green-300 text-sm">📜 دارای مجوز رسمی از مراجع ذیصلاح</p>
                     </div>
-                    
-                    <button onclick="unlockWallet()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold transition-all duration-300">
-                        <i class="fas fa-unlock-alt ml-2"></i>باز کردن قفل کیف پول
-                    </button>
                 </div>
-            </div>
-
-            <!-- ویژگی‌های حریم خصوصی -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-gray-700/30 rounded-2xl p-6 border border-blue-500/20">
-                    <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
-                            <i class="fas fa-user-secret text-white"></i>
-                        </div>
-                        <h4 class="text-lg font-bold text-white">حریم خصوصی کامل</h4>
-                    </div>
-                    <ul class="text-blue-300 space-y-2 text-sm">
-                        <li>✓ هیچ داده‌ای به سرور ارسال نمی‌شود</li>
-                        <li>✓ تمام محاسبات روی دستگاه شما انجام می‌شود</li>
-                        <li>✓ عدم ذخیره‌سازی اطلاعات شخصی</li>
-                        <li>✓ رمزنگاری end-to-end</li>
-                    </ul>
-                </div>
-
-                <div class="bg-gray-700/30 rounded-2xl p-6 border border-green-500/20">
-                    <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mr-3">
-                            <i class="fas fa-ban text-white"></i>
-                        </div>
-                        <h4 class="text-lg font-bold text-white">عدم دسترسی غیرمجاز</h4>
-                    </div>
-                    <ul class="text-green-300 space-y-2 text-sm">
-                        <li>✓ عدم امکان برداشت بدون رمز</li>
-                        <li>✓ محافظت در برابر تزریق کد</li>
-                        <li>✓ جلوگیری از دسترسی کنسول</li>
-                        <li>✓ عدم امکان تغییر موجودی</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- فقط پس از تأیید هویت نمایش داده می‌شود -->
-            <div id="secureTransactionSection" class="hidden mt-8">
-                <div class="bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl p-6 border border-purple-500/30">
-                    <h3 class="text-xl font-bold text-white mb-4">💳 تراکنش امن</h3>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <button onclick="showSecureDepositModal()" class="bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-semibold transition-all duration-300">
-                            <i class="fas fa-download ml-2"></i>واریز امن
-                        </button>
-                        <button onclick="showSecureWithdrawModal()" class="bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-semibold transition-all duration-300">
-                            <i class="fas fa-upload ml-2"></i>برداشت امن
-                        </button>
-                    </div>
+                <div class="text-white text-sm">
+                    <i class="fas fa-shield-check text-green-400 ml-2"></i>
+                    مطابق با قوانین جمهوری اسلامی ایران
                 </div>
             </div>
         </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- بخش خدمات ما -->
+        <section id="services" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-white mb-4">خدمات تخصصی ما</h2>
+                <p class="text-blue-300 text-lg">تبدیل حرفه‌ای تصاویر 2D به مدل‌های سه‌بعدی با کیفیت استودیویی</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-blue-500/20">
+                    <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center text-white mb-4">
+                        <i class="fas fa-cogs text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">خروجی چندفرمی</h3>
+                    <p class="text-blue-200">پشتیبانی از تمام فرمت‌های استاندارد صنعت</p>
+                    <div class="mt-4 space-y-2">
+                        <div class="flex items-center text-green-300">
+                            <i class="fas fa-check ml-2"></i>
+                            <span>GLTF</span>
+                        </div>
+                        <div class="flex items-center text-green-300">
+                            <i class="fas fa-check ml-2"></i>
+                            <span>OBJ + MTL</span>
+                        </div>
+                        <div class="flex items-center text-green-300">
+                            <i class="fas fa-check ml-2"></i>
+                            <span>STL</span>
+                        </div>
+                        <div class="flex items-center text-green-300">
+                            <i class="fas fa-check ml-2"></i>
+                            <span>FBX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-green-500/20">
+                    <div class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center text-white mb-4">
+                        <i class="fas fa-cloud text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">پردازش ابری</h3>
+                    <p class="text-green-200">استفاده از سرورهای قدرتمند ابری داخلی</p>
+                    <div class="mt-4 space-y-2">
+                        <div class="flex items-center text-green-300">
+                            <i class="fas fa-bolt ml-2"></i>
+                            <span>پردازش فوق سریع</span>
+                        </div>
+                        <div class="flex items-center text-green-300">
+                            <i class="fas fa-shield-alt ml-2"></i>
+                            <span>امنیت داده‌ها</span>
+                        </div>
+                        <div class="flex items-center text-green-300">
+                            <i class="fas fa-sync ml-2"></i>
+                            <span>پشتیبان‌گیری خودکار</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/20">
+                    <div class="w-16 h-16 bg-purple-500 rounded-xl flex items-center justify-center text-white mb-4">
+                        <i class="fas fa-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">API حرفه‌ای</h3>
+                    <p class="text-purple-200">یکپارچه‌سازی آسان با سیستم‌های شما</p>
+                    <div class="mt-4 space-y-2">
+                        <div class="flex items-center text-green-300">
+                            <i class="fas fa-plug ml-2"></i>
+                            <span>REST API کامل</span>
+                        </div>
+                        <div class="flex items-center text-green-300">
+                            <i class="fas fa-book ml-2"></i>
+                            <span>مستندات فارسی</span>
+                        </div>
+                        <div class="flex items-center text-green-300">
+                            <i class="fas fa-headset ml-2"></i>
+                            <span>پشتیبانی فنی</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- بخش تعرفه‌ها -->
+        <section id="pricing" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-white mb-4">تعرفه خدمات</h2>
+                <p class="text-blue-300">انتخاب پلن مناسب بر اساس نیاز شما</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- پلن استاندارد -->
+                <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-blue-500/30 transform hover:scale-105 transition-all duration-300">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-white mb-2">پلن استاندارد</h3>
+                        <div class="text-3xl font-bold text-blue-300">۱,۲۵۰,۰۰۰ تومان</div>
+                        <div class="text-green-300">⏱ ۵ ساعت پردازش</div>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center text-white">
+                            <i class="fas fa-check text-green-400 ml-2"></i>
+                            کیفیت بالا
+                        </li>
+                        <li class="flex items-center text-white">
+                            <i class="fas fa-check text-green-400 ml-2"></i>
+                            پشتیبانی کامل
+                        </li>
+                        <li class="flex items-center text-white">
+                            <i class="fas fa-check text-green-400 ml-2"></i>
+                            تمام فرمت‌ها
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-times text-red-400 ml-2"></i>
+                            اولویت پردازش
+                        </li>
+                    </ul>
+                    <button onclick="selectPlan('standard')" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition-all duration-300">
+                        انتخاب پلن
+                    </button>
+                </div>
+
+                <!-- پلن پریمیوم -->
+                <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-green-500/50 transform hover:scale-105 transition-all duration-300 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-green-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                            پرفروش
+                        </span>
+                    </div>
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-white mb-2">پلن پریمیوم</h3>
+                        <div class="text-3xl font-bold text-green-300">۲,۵۰۰,۰۰۰ تومان</div>
+                        <div class="text-green-300">⏱ ۲ ساعت پردازش</div>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center text-white">
+                            <i class="fas fa-check text-green-400 ml-2"></i>
+                            کیفیت عالی
+                        </li>
+                        <li class="flex items-center text-white">
+                            <i class="fas fa-check text-green-400 ml-2"></i>
+                            اولویت پردازش
+                        </li>
+                        <li class="flex items-center text-white">
+                            <i class="fas fa-check text-green-400 ml-2"></i>
+                            تمام فرمت‌ها
+                        </li>
+                        <li class="flex items-center text-white">
+                            <i class="fas fa-check text-green-400 ml-2"></i>
+                            پشتیبانی VIP
+                        </li>
+                    </ul>
+                    <button onclick="selectPlan('premium')" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition-all duration-300">
+                        انتخاب پلن
+                    </button>
+                </div>
+
+                <!-- پلن اکسیرس -->
+                <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-purple-500/30 transform hover:scale-105 transition-all duration-300">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-white mb-2">پلن اکسیرس</h3>
+                        <div class="text-3xl font-bold text-purple-300">۳,۷۵۰,۰۰۰ تومان</div>
+                        <div class="text-green-300">⏱ ۱ ساعت پردازش</div>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center text-white">
+                            <i class="fas fa-check text-green-400 ml-2"></i>
+                            فوری
+                        </li>
+                        <li class="flex items-center text-white">
+                            <i class="fas fa-check text-green-400 ml-2"></i>
+                            بالاترین کیفیت
+                        </li>
+                        <li class="flex items-center text-white">
+                            <i class="fas fa-check text-green-400 ml-2"></i>
+                            اولویت مطلق
+                        </li>
+                        <li class="flex items-center text-white">
+                            <i class="fas fa-check text-green-400 ml-2"></i>
+                            پشتیبانی ۲۴/۷
+                        </li>
+                    </ul>
+                    <button onclick="selectPlan('exclusive')" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-xl font-semibold transition-all duration-300">
+                        انتخاب پلن
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- بخش تبدیل فایل -->
+        <section id="conversion" class="mb-12">
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-yellow-500/20">
+                <h2 class="text-3xl font-bold text-white mb-6 text-center">آغاز فرآیند تبدیل</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- ثبت نام و احراز هویت -->
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-bold text-white mb-4">👤 ثبت نام و احراز هویت</h3>
+                        
+                        <div id="authSection">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-blue-300 mb-2 block">شماره موبایل:</label>
+                                    <input type="tel" id="phoneNumber" 
+                                           class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white"
+                                           placeholder="۰۹۱۲XXX XXX">
+                                </div>
+                                
+                                <button onclick="sendVerificationCode()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-semibold transition-all duration-300">
+                                    ارسال کد تأیید
+                                </button>
+                            </div>
+
+                            <div id="verifySection" class="hidden space-y-4 mt-4">
+                                <div>
+                                    <label class="text-green-300 mb-2 block">کد تأیید:</label>
+                                    <input type="number" id="verificationCode" 
+                                           class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white"
+                                           placeholder="XXXXX">
+                                </div>
+                                
+                                <button onclick="verifyCode()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-semibold transition-all duration-300">
+                                    تأیید و ادامه
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- اطلاعات کاربر -->
+                        <div id="userInfoSection" class="hidden space-y-4">
+                            <div>
+                                <label class="text-blue-300 mb-2 block">نام و نام خانوادگی:</label>
+                                <input type="text" id="fullName" 
+                                       class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white"
+                                       placeholder="برای صدور فاکتور رسمی">
+                            </div>
+                            
+                            <div>
+                                <label class="text-blue-300 mb-2 block">کد ملی:</label>
+                                <input type="number" id="nationalCode" 
+                                       class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white"
+                                       placeholder="۱۰ رقمی">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- آپلود فایل -->
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-bold text-white mb-4">📤 آپلود فایل</h3>
+                        
+                        <div id="uploadSection" class="hidden">
+                            <div class="border-2 border-dashed border-yellow-400/50 rounded-2xl p-8 text-center cursor-pointer hover:border-yellow-400 transition-all duration-300 bg-yellow-500/10"
+                                 onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-yellow-400 mb-4"></i>
+                                <h4 class="text-lg font-semibold text-white mb-2">فایل تصویری خود را اینجا رها کنید</h4>
+                                <p class="text-yellow-300 mb-4">یا برای انتخاب فایل کلیک کنید</p>
+                                <input type="file" id="fileInput" class="hidden" accept=".jpg,.jpeg,.png,.bmp,.webp">
+                                <button class="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300">
+                                    <i class="fas fa-folder-open ml-2"></i>انتخاب فایل
+                                </button>
+                            </div>
+
+                            <div id="filePreview" class="hidden mt-4">
+                                <div class="bg-gray-700/50 rounded-2xl p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="text-white font-semibold">فایل انتخاب شده</h4>
+                                        <button onclick="clearFile()" class="text-red-400 hover:text-red-300">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="flex items-center space-x-4 space-x-reverse">
+                                        <img id="previewImage" src="" class="w-16 h-16 object-cover rounded-lg">
+                                        <div>
+                                            <div class="text-white" id="fileName"></div>
+                                            <div class="text-gray-400 text-sm" id="fileSize"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- دکمه پرداخت -->
+                <div id="paymentSection" class="hidden mt-8 text-center">
+                    <button onclick="proceedToPayment()" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-credit-card ml-2"></i>
+                        پرداخت و آغاز تبدیل
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- بخش وضعیت سیستم -->
+        <section id="systemStatus" class="mb-12">
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-green-500/20">
+                <h2 class="text-2xl font-bold text-white mb-4 text-center">وضعیت سیستم</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-check text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mb-2">سرویس سالم و فعال</h3>
+                        <p class="text-green-300">سیستم تبدیل 3D در حال حاضر کاملاً فعال است</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-bolt text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mb-2">تست دانلود</h3>
+                        <p class="text-blue-300">نمونه خروجی برای تست کیفیت</p>
+                        <button onclick="downloadSample()" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm">
+                            دانلود نمونه
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- بخش تماس با ما -->
+        <section id="contact">
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-blue-500/20">
+                <h2 class="text-3xl font-bold text-white mb-6 text-center">تماس با ما</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-envelope text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">پشتیبانی ایمیلی</h3>
+                        <p class="text-blue-300 mb-2">۲۴/۷ پاسخگویی</p>
+                        <a href="mailto:support@3d-conversion.com" class="text-white hover:text-blue-300 font-semibold">
+                            support@3d-conversion.com
+                        </a>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-whatsapp text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">پشتیبانی واتساپ</h3>
+                        <p class="text-green-300 mb-2">پاسخگویی فوری</p>
+                        <div class="text-white font-semibold">XXX XXX XXX</div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- مودال واریز امن -->
-    <div id="secureDepositModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <!-- مودال پرداخت -->
+    <div id="paymentModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
         <div class="bg-gray-800 rounded-2xl p-8 max-w-md w-full border-2 border-green-500/50">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-bold text-white">🔒 واریز امن</h3>
-                <button onclick="closeSecureModals()" class="text-gray-400 hover:text-white">
+                <h3 class="text-2xl font-bold text-white">💳 پرداخت امن</h3>
+                <button onclick="closePaymentModal()" class="text-gray-400 hover:text-white">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             
             <div class="space-y-4">
-                <div class="bg-yellow-500/20 rounded-xl p-4 border border-yellow-500/30">
-                    <div class="text-yellow-200 text-sm">
-                        <i class="fas fa-info-circle ml-2"></i>
-                        برای واریز، باید از طریق درگاه بانکی معتبر اقدام کنید
+                <div class="bg-blue-500/20 rounded-xl p-4 border border-blue-500/30">
+                    <div class="text-white font-semibold text-center" id="selectedPlanName">پلن استاندارد</div>
+                    <div class="text-blue-300 text-center text-lg font-bold" id="selectedPlanPrice">۱,۲۵۰,۰۰۰ تومان</div>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-white mb-4">انتقال به درگاه پرداخت بانک</p>
+                    <div class="flex justify-center space-x-4 space-x-reverse mb-4">
+                        <div class="w-12 h-8 bg-blue-600 rounded"></div>
+                        <div class="w-12 h-8 bg-green-600 rounded"></div>
+                        <div class="w-12 h-8 bg-red-600 rounded"></div>
                     </div>
                 </div>
                 
-                <div>
-                    <label class="text-blue-300 mb-2 block">مبلغ (تومان):</label>
-                    <input type="number" id="secureDepositAmount" 
-                           class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white"
-                           placeholder="حداقل ۱۰۰,۰۰۰ تومان">
-                </div>
-                
-                <button onclick="initiateSecureDeposit()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold transition-all duration-300">
-                    <i class="fas fa-external-link-alt ml-2"></i>انتقال به درگاه بانک
+                <button onclick="processPayment()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300">
+                    <i class="fas fa-lock ml-2"></i>انتقال به درگاه بانک
                 </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- مودال برداشت امن -->
-    <div id="secureWithdrawModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="bg-gray-800 rounded-2xl p-8 max-w-md w-full border-2 border-blue-500/50">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-bold text-white">🛡️ برداشت امن</h3>
-                <button onclick="closeSecureModals()" class="text-gray-400 hover:text-white">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
-            </div>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="text-blue-300 mb-2 block">مبلغ (تومان):</label>
-                    <input type="number" id="secureWithdrawAmount" 
-                           class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white"
-                           placeholder="حداکثر ۵,۰۰۰,۰۰۰ تومان">
-                </div>
                 
-                <div>
-                    <label class="text-blue-300 mb-2 block">شماره شبا:</label>
-                    <input type="text" id="secureShebaNumber" 
-                           class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white font-mono"
-                           placeholder="IRxxxxxxxxxxxxxxxxxxxxxx">
-                </div>
-
-                <div>
-                    <label class="text-blue-300 mb-2 block">تأیید نهایی با رمز:</label>
-                    <input type="password" id="withdrawPassword" 
-                           class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white"
-                           placeholder="رمز عبور شخصی">
-                </div>
-                
-                <button onclick="processSecureWithdrawal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold transition-all duration-300">
-                    <i class="fas fa-shield-check ml-2"></i>تأیید و درخواست برداشت
-                </button>
+                <p class="text-gray-400 text-sm text-center">
+                    <i class="fas fa-shield-alt ml-2"></i>
+                    پرداخت شما توسط درگاه‌های معتبر ایرانی محافظت می‌شود
+                </p>
             </div>
         </div>
     </div>
 
     <script>
-        // سیستم امنیتی پیشرفته - تمام داده‌ها locally encrypted
-        class SecureFinancialSystem {
-            constructor() {
-                this.encryptedData = null;
-                this.isUnlocked = false;
-                this.privateKey = this.generatePrivateKey();
-                this.init();
+        // سیستم مدیریت کاربران و پرداخت
+        const AppSystem = {
+            currentUser: null,
+            selectedPlan: null,
+            plans: {
+                standard: { name: 'استاندارد', price: 1250000, time: '۵ ساعت' },
+                premium: { name: 'پریمیوم', price: 2500000, time: '۲ ساعت' },
+                exclusive: { name: 'اکسیرس', price: 3750000, time: '۱ ساعت' }
+            },
+            isVerified: false
+        };
+
+        // انتخاب پلن
+        function selectPlan(planType) {
+            AppSystem.selectedPlan = AppSystem.plans[planType];
+            
+            // آپدیت نمایش مودال پرداخت
+            document.getElementById('selectedPlanName').textContent = `پلن ${AppSystem.selectedPlan.name}`;
+            document.getElementById('selectedPlanPrice').textContent = 
+                AppSystem.selectedPlan.price.toLocaleString() + ' تومان';
+            
+            // نمایش مودال پرداخت
+            document.getElementById('paymentModal').classList.remove('hidden');
+        }
+
+        // بستن مودال پرداخت
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.add('hidden');
+        }
+
+        // ارسال کد تأیید
+        function sendVerificationCode() {
+            const phone = document.getElementById('phoneNumber').value;
+            if (!phone || phone.length !== 11) {
+                alert('لطفاً شماره موبایل معتبر وارد کنید');
+                return;
             }
+            
+            // شبیه‌سازی ارسال کد
+            document.getElementById('verifySection').classList.remove('hidden');
+            alert(`کد تأیید به شماره ${phone} ارسال شد (کد تست: 12345)`);
+        }
 
-            // تولید کلید خصوصی منحصر به فرد
-            generatePrivateKey() {
-                const userKey = 'user_' + Math.random().toString(36).substr(2, 16);
-                localStorage.setItem('secure_financial_key', userKey);
-                return userKey;
-            }
-
-            // مقداردهی اولیه سیستم
-            init() {
-                const savedData = localStorage.getItem('encrypted_financial_data');
-                if (savedData) {
-                    this.encryptedData = JSON.parse(savedData);
-                } else {
-                    // داده‌های اولیه با رمزنگاری
-                    this.encryptedData = this.encryptData({
-                        balances: {
-                            toman: 125000,
-                            btc: 0.0024,
-                            eth: 0.15
-                        },
-                        transactions: [],
-                        security: {
-                            failedAttempts: 0,
-                            lastAccess: null
-                        }
-                    });
-                    this.saveData();
-                }
-            }
-
-            // رمزنگاری داده‌ها
-            encryptData(data) {
-                const jsonString = JSON.stringify(data);
-                // شبیه‌سازی رمزنگاری پیشرفته
-                return btoa(unescape(encodeURIComponent(jsonString + this.privateKey)));
-            }
-
-            // رمزگشایی داده‌ها
-            decryptData(encryptedData) {
-                try {
-                    const decoded = decodeURIComponent(escape(atob(encryptedData)));
-                    if (decoded.endsWith(this.privateKey)) {
-                        return JSON.parse(decoded.slice(0, -this.privateKey.length));
-                    }
-                    return null;
-                } catch (error) {
-                    console.error('خطا در رمزگشایی:', error);
-                    return null;
-                }
-            }
-
-            // ذخیره‌سازی امن داده‌ها
-            saveData() {
-                localStorage.setItem('encrypted_financial_data', JSON.stringify(this.encryptedData));
-            }
-
-            // باز کردن قفل سیستم
-            unlock(password) {
-                if (password === 'secure123') { // در واقعیت باید hash شده باشد
-                    this.isUnlocked = true;
-                    this.encryptedData.security.lastAccess = new Date().toISOString();
-                    this.saveData();
-                    return true;
-                } else {
-                    this.encryptedData.security.failedAttempts++;
-                    this.saveData();
-                    return false;
-                }
-            }
-
-            // دریافت موجودی (فقط هنگام باز بودن قفل)
-            getBalances() {
-                if (!this.isUnlocked) return null;
-                const data = this.decryptData(this.encryptedData);
-                return data ? data.balances : null;
-            }
-
-            // پردازش برداشت امن
-            processWithdrawal(amount, sheba, password) {
-                if (!this.isUnlocked) {
-                    throw new Error('سیستم قفل است');
-                }
-
-                if (password !== 'secure123') {
-                    throw new Error('رمز عبور نامعتبر است');
-                }
-
-                const data = this.decryptData(this.encryptedData);
-                if (!data) {
-                    throw new Error('خطا در بازیابی داده‌ها');
-                }
-
-                if (amount > data.balances.toman) {
-                    throw new Error('موجودی کافی نیست');
-                }
-
-                if (amount > 5000000) {
-                    throw new Error('مبلغ بیش از حد مجاز است');
-                }
-
-                // به روزرسانی موجودی
-                data.balances.toman -= amount;
-                data.transactions.unshift({
-                    type: 'برداشت',
-                    amount: amount,
-                    sheba: sheba,
-                    timestamp: new Date().toISOString(),
-                    status: 'در انتظار تأیید'
-                });
-
-                this.encryptedData = this.encryptData(data);
-                this.saveData();
-
-                return {
-                    success: true,
-                    newBalance: data.balances.toman,
-                    transactionId: 'TX_' + Date.now()
-                };
+        // تأیید کد
+        function verifyCode() {
+            const code = document.getElementById('verificationCode').value;
+            if (code === '12345') { // کد تست
+                AppSystem.isVerified = true;
+                document.getElementById('userInfoSection').classList.remove('hidden');
+                document.getElementById('uploadSection').classList.remove('hidden');
+                alert('شماره موبایل با موفقیت تأیید شد');
+            } else {
+                alert('کد تأیید نامعتبر است');
             }
         }
 
-        // ایجاد سیستم مالی امن
-        const secureSystem = new SecureFinancialSystem();
+        // مدیریت آپلود فایل
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                handleFileSelection(file);
+            }
+        });
 
-        // مدیریت نمایش موجودی
-        function toggleBalance(type) {
-            if (!secureSystem.isUnlocked) {
-                alert('لطفاً ابتدا کیف پول را باز کنید');
+        function handleFileSelection(file) {
+            if (!file.type.match('image.*')) {
+                alert('لطفاً فقط فایل تصویری انتخاب کنید');
                 return;
             }
 
-            const balances = secureSystem.getBalances();
-            if (!balances) return;
-
-            const elements = {
-                toman: document.getElementById('encryptedToman'),
-                btc: document.getElementById('encryptedBTC'),
-                eth: document.getElementById('encryptedETH')
+            const preview = document.getElementById('filePreview');
+            const img = document.getElementById('previewImage');
+            const fileName = document.getElementById('fileName');
+            const fileSize = document.getElementById('fileSize');
+            
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                img.src = e.target.result;
+                preview.classList.remove('hidden');
+                document.getElementById('paymentSection').classList.remove('hidden');
             };
-
-            if (elements[type].textContent.includes('•')) {
-                elements[type].textContent = type === 'toman' 
-                    ? balances[type].toLocaleString() + ' تومان'
-                    : balances[type].toFixed(4);
-            } else {
-                elements[type].textContent = '••••••' + (type === 'toman' ? '•' : '');
-            }
+            reader.readAsDataURL(file);
         }
 
-        // باز کردن قفل کیف پول
-        function unlockWallet() {
-            const password = document.getElementById('privatePassword').value;
-            if (!password) {
-                alert('لطفاً رمز عبور را وارد کنید');
-                return;
-            }
-
-            if (secureSystem.unlock(password)) {
-                document.getElementById('secureTransactionSection').classList.remove('hidden');
-                document.getElementById('privatePassword').value = '';
-                
-                // نمایش موفقیت
-                showSecureAlert('قفل کیف پول باز شد', 'success');
-            } else {
-                showSecureAlert('رمز عبور نامعتبر است', 'error');
-            }
+        function clearFile() {
+            document.getElementById('filePreview').classList.add('hidden');
+            document.getElementById('fileInput').value = '';
+            document.getElementById('paymentSection').classList.add('hidden');
         }
 
-        // نمایش مودال واریز امن
-        function showSecureDepositModal() {
-            if (!secureSystem.isUnlocked) {
-                alert('لطفاً ابتدا کیف پول را باز کنید');
-                return;
-            }
-            document.getElementById('secureDepositModal').classList.remove('hidden');
-        }
-
-        // نمایش مودال برداشت امن
-        function showSecureWithdrawModal() {
-            if (!secureSystem.isUnlocked) {
-                alert('لطفاً ابتدا کیف پول را باز کنید');
-                return;
-            }
-            document.getElementById('secureWithdrawModal').classList.remove('hidden');
-        }
-
-        // بستن مودال‌ها
-        function closeSecureModals() {
-            document.getElementById('secureDepositModal').classList.add('hidden');
-            document.getElementById('secureWithdrawModal').classList.add('hidden');
-        }
-
-        // آغاز واریز امن
-        function initiateSecureDeposit() {
-            const amount = parseInt(document.getElementById('secureDepositAmount').value);
+        // ادامه به پرداخت
+        function proceedToPayment() {
+            const fullName = document.getElementById('fullName').value;
+            const nationalCode = document.getElementById('nationalCode').value;
             
-            if (!amount || amount < 100000) {
-                showSecureAlert('حداقل مبلغ واریز ۱۰۰,۰۰۰ تومان است', 'error');
+            if (!fullName || !nationalCode || nationalCode.length !== 10) {
+                alert('لطفاً اطلاعات هویتی را کامل و صحیح وارد کنید');
                 return;
             }
-
-            showSecureAlert(`درخواست واریز ${amount.toLocaleString()} تومان ثبت شد. به درگاه بانک منتقل می‌شوید...`, 'success');
-            closeSecureModals();
             
-            // شبیه‌سازی انتقال به درگاه بانک
-            setTimeout(() => {
-                showSecureAlert('واریز با موفقیت انجام شد', 'success');
-            }, 3000);
+            if (!AppSystem.selectedPlan) {
+                alert('لطفاً یک پلن خدمات انتخاب کنید');
+                return;
+            }
+            
+            selectPlan(Object.keys(AppSystem.plans).find(key => 
+                AppSystem.plans[key].name === AppSystem.selectedPlan.name.toLowerCase()));
         }
 
-        // پردازش برداشت امن
-        function processSecureWithdrawal() {
-            const amount = parseInt(document.getElementById('secureWithdrawAmount').value);
-            const sheba = document.getElementById('secureShebaNumber').value;
-            const password = document.getElementById('withdrawPassword').value;
-
-            if (!amount || amount < 10000) {
-                showSecureAlert('حداقل مبلغ برداشت ۱۰,۰۰۰ تومان است', 'error');
-                return;
-            }
-
-            if (!sheba || !sheba.startsWith('IR')) {
-                showSecureAlert('شماره شبا معتبر نیست', 'error');
-                return;
-            }
-
-            if (!password) {
-                showSecureAlert('لطفاً رمز عبور را وارد کنید', 'error');
-                return;
-            }
-
-            try {
-                const result = secureSystem.processWithdrawal(amount, sheba, password);
-                showSecureAlert(`درخواست برداشت ${amount.toLocaleString()} تومان ثبت شد. کد پیگیری: ${result.transactionId}`, 'success');
-                closeSecureModals();
-                
-                // به روزرسانی نمایش
-                toggleBalance('toman');
-            } catch (error) {
-                showSecureAlert(error.message, 'error');
-            }
-        }
-
-        // نمایش هشدار امن
-        function showSecureAlert(message, type) {
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `fixed top-4 right-4 p-4 rounded-xl z-50 shadow-2xl ${
-                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-            }`;
-            alertDiv.innerHTML = `
-                <div class="flex items-center">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'} ml-2"></i>
-                    <span>${message}</span>
-                </div>
-            `;
-            document.body.appendChild(alertDiv);
+        // پردازش پرداخت
+        function processPayment() {
+            // شبیه‌سازی پرداخت موفق
+            closePaymentModal();
             
             setTimeout(() => {
-                alertDiv.remove();
-            }, 5000);
+                alert('✅ پرداخت با موفقیت انجام شد! فرآیند تبدیل آغاز گردید.');
+                
+                // نمایش نتیجه موفق
+                document.getElementById('conversion').innerHTML = `
+                    <div class="bg-green-500/20 rounded-2xl p-8 border border-green-500/30 text-center">
+                        <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-check text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">تبدیل با موفقیت آغاز شد</h3>
+                        <p class="text-green-300 mb-4">فایل شما در حال پردازش است. پس از اتمام، لینک دانلود برای شما ارسال خواهد شد.</p>
+                        <div class="text-white">
+                            <div>زمان预估ی: ${AppSystem.selectedPlan.time}</div>
+                            <div>کد پیگیری: TRK-${Date.now()}</div>
+                        </div>
+                    </div>
+                `;
+            }, 2000);
         }
 
-        // محافظت در برابر دستکاری کنسول
-        function protectConsole() {
-            const originalConsole = console.log;
-            console.log = function(...args) {
-                if (args.some(arg => 
-                    typeof arg === 'string' && 
-                    (arg.includes('balance') || arg.includes('password') || arg.includes('secure'))
-                )) {
-                    console.warn('🚫 دسترسی به اطلاعات امنیتی محدود شده است');
-                    return;
-                }
-                originalConsole.apply(console, args);
-            };
+        // دانلود نمونه
+        function downloadSample() {
+            alert('نمونه فایل 3D برای تست کیفیت آماده دانلود است');
+            // در حالت واقعی لینک دانلود قرار می‌گیرد
+        }
+
+        // ابزارهای کمکی
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
         // راه‌اندازی اولیه
         document.addEventListener('DOMContentLoaded', function() {
-            protectConsole();
-            showSecureAlert('سیستم امنیتی مالی فعال شد', 'success');
+            console.log('سیستم خدمات 3D با موفقیت راه‌اندازی شد');
         });
     </script>
 
     <style>
-        .page { display: none; }
-        .page.active { display: block; }
         .glass {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        /* انیمیشن امنیتی */
-        @keyframes secure-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .secure-pulse {
-            animation: secure-pulse 2s infinite;
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
         }
     </style>
 </body>
