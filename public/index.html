@@ -3,359 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D AI Conversion Pro - سیستم معاملات رمزارز</title>
+    <title>3D AI Conversion Pro - سیستم امن معاملات</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-blue-900 min-h-screen">
-    <!-- ناوبری حرفه‌ای -->
+    <!-- ناوبری امن -->
     <nav class="bg-gray-800/80 backdrop-blur-lg border-b border-blue-500/20 sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-4 space-x-reverse">
                 <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg">
-                    <i class="fas fa-cube text-xl"></i>
+                    <i class="fas fa-shield-alt text-xl"></i>
                 </div>
                 <div>
                     <h1 class="text-xl font-bold text-white">3D AI Conversion Pro</h1>
-                    <p class="text-blue-300 text-sm">تبدیل هوشمند 2D به 3D | معاملات رمزارز</p>
+                    <p class="text-green-300 text-sm">🔒 سیستم امن معاملات | تحت حفاظت بانک مرکزی</p>
                 </div>
             </div>
             
             <div class="flex space-x-3 space-x-reverse">
-                <button onclick="showPage('conversion')" class="nav-btn bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    <i class="fas fa-magic ml-2"></i>تبدیل فایل
+                <button onclick="showPage('conversion')" class="nav-btn bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold">
+                    تبدیل فایل
                 </button>
-                <button onclick="showPage('crypto-trading')" class="nav-btn bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    <i class="fas fa-chart-line ml-2"></i>معاملات رمزارز
+                <button onclick="showPage('crypto-trading')" class="nav-btn bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-6 py-3 rounded-xl font-semibold">
+                    معاملات رمزارز
                 </button>
-                <button onclick="showPage('wallet')" class="nav-btn bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    <i class="fas fa-wallet ml-2"></i>کیف پول
-                </button>
-                <button onclick="showPage('admin-login')" class="nav-btn bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    <i class="fas fa-shield-alt ml-2"></i>پنل مدیریت
+                <button onclick="showPage('wallet')" class="nav-btn bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold">
+                    کیف پول امن
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- سیستم وضعیت بازار -->
-    <div class="container mx-auto px-4 py-2">
-        <div class="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 rounded-lg p-3 mb-4 backdrop-blur-sm">
-            <div class="flex items-center justify-between text-white">
-                <div class="flex items-center space-x-4 space-x-reverse">
-                    <div class="flex items-center space-x-2 space-x-reverse">
-                        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                        <span class="font-semibold">بازار رمزارز فعال</span>
-                    </div>
-                    <div class="text-sm">
-                        <span class="text-blue-300" id="btc-price">BTC: $64,280</span>
-                        <span class="mx-2">•</span>
-                        <span class="text-green-300" id="eth-price">ETH: $3,450</span>
-                        <span class="mx-2">•</span>
-                        <span class="text-yellow-300" id="market-trend">روند: صعودی ↗️</span>
-                    </div>
-                </div>
-                <div class="text-sm text-green-300" id="live-stats">
-                    📊 ۲۴ کاربر در حال معامله
-                </div>
+    <!-- سیستم هشدار امنیتی -->
+    <div id="securityAlert" class="hidden fixed top-20 left-4 right-4 bg-yellow-500 border border-yellow-600 rounded-lg p-4 z-50 shadow-2xl">
+        <div class="flex items-center justify-between text-white">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-shield-alt text-xl"></i>
+                <span class="font-bold">سیستم حفاظتی فعال شد</span>
             </div>
+            <button onclick="hideSecurityAlert()" class="text-white hover:text-yellow-200">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
     </div>
 
     <main class="container mx-auto px-4 py-6">
         
-        <!-- صفحه تبدیل فایل -->
-        <div id="conversion" class="page active">
+        <!-- صفحه کیف پول امن -->
+        <div id="wallet" class="page active">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2">
-                    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-blue-500/20 p-8 shadow-2xl">
-                        <h2 class="text-3xl font-bold text-white mb-2">🎯 تبدیل هوشمند 2D به 3D</h2>
-                        <p class="text-blue-300 mb-8">تصاویر خود را آپلود کنید و مدل‌های 3D حرفه‌ای دریافت کنید</p>
-
-                        <div id="uploadZone" class="border-2 border-dashed border-blue-400/50 rounded-2xl p-12 text-center mb-8 cursor-pointer hover:border-blue-400 transition-all duration-300 bg-blue-500/10">
-                            <i class="fas fa-cloud-upload-alt text-6xl text-blue-400 mb-4"></i>
-                            <h3 class="text-xl font-semibold text-white mb-2">فایل‌های خود را اینجا رها کنید</h3>
-                            <p class="text-blue-300 mb-4">یا برای انتخاب فایل کلیک کنید</p>
-                            <input type="file" id="fileInput" class="hidden" accept=".jpg,.jpeg,.png,.bmp,.webp">
-                            <button onclick="document.getElementById('fileInput').click()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300">
-                                <i class="fas fa-folder-open ml-2"></i>انتخاب فایل
-                            </button>
-                        </div>
-
-                        <div id="filePreview" class="hidden mb-8">
-                            <div class="bg-gray-700/50 rounded-2xl p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <h4 class="text-lg font-semibold text-white">فایل انتخاب شده</h4>
-                                    <button onclick="clearFile()" class="text-red-400 hover:text-red-300">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                                <div class="flex items-center space-x-4 space-x-reverse">
-                                    <img id="previewImage" src="" class="w-20 h-20 object-cover rounded-lg">
-                                    <div class="flex-1">
-                                        <div class="text-white font-medium" id="fileName"></div>
-                                        <div class="text-gray-400 text-sm" id="fileSize"></div>
-                                    </div>
-                                </div>
+                    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-green-500/20 p-8 shadow-2xl">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-3xl font-bold text-white">💰 کیف پول امن</h2>
+                            <div class="flex items-center space-x-2 text-green-400">
+                                <i class="fas fa-shield-check"></i>
+                                <span class="font-semibold">حفاظت فعال</span>
                             </div>
                         </div>
-
-                        <button onclick="startConversion()" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl">
-                            <i class="fas fa-bolt ml-2"></i>
-                            شروع تبدیل - ۱۵,۰۰۰ تومان
-                        </button>
-                    </div>
-                </div>
-
-                <!-- پنل جانبی -->
-                <div class="space-y-6">
-                    <!-- وضعیت حساب -->
-                    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-purple-500/20 p-6 shadow-2xl">
-                        <h3 class="text-xl font-bold text-white mb-4">💰 وضعیت حساب</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center">
-                                <span class="text-blue-300">تومان:</span>
-                                <span class="text-white font-bold" id="balanceToman">۱۲۵,۰۰۰ تومان</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-blue-300">بیت‌کوین:</span>
-                                <span class="text-white font-bold" id="balanceBTC">۰.۰۰۲۴ BTC</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-blue-300">اتریوم:</span>
-                                <span class="text-white font-bold" id="balanceETH">۰.۱۵ ETH</span>
-                            </div>
-                        </div>
-                        <button onclick="showPage('wallet')" class="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-xl font-semibold transition-all duration-300">
-                            <i class="fas fa-plus ml-2"></i>افزایش اعتبار
-                        </button>
-                    </div>
-
-                    <!-- تبدیل سریع رمزارز -->
-                    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-yellow-500/20 p-6 shadow-2xl">
-                        <h3 class="text-xl font-bold text-white mb-4">⚡ تبدیل سریع</h3>
-                        <div class="space-y-3">
-                            <select class="w-full bg-gray-700 border border-gray-600 rounded-xl p-3 text-white">
-                                <option>تومان به بیت‌کوین</option>
-                                <option>بیت‌کوین به تومان</option>
-                                <option>تومان به اتریوم</option>
-                                <option>اتریوم به تومان</option>
-                            </select>
-                            <input type="number" placeholder="مبلغ" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-3 text-white">
-                            <button class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-3 rounded-xl font-semibold">
-                                تبدیل فوری
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- صفحه معاملات رمزارز -->
-        <div id="crypto-trading" class="page">
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <!-- چارت قیمت -->
-                <div class="lg:col-span-3">
-                    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-blue-500/20 p-6 shadow-2xl">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-3xl font-bold text-white">📈 نمودار زنده بیت‌کوین</h2>
-                            <div class="flex space-x-2 space-x-reverse">
-                                <button class="bg-blue-600 text-white px-4 py-2 rounded-xl">۱h</button>
-                                <button class="bg-gray-700 text-white px-4 py-2 rounded-xl">۲۴h</button>
-                                <button class="bg-gray-700 text-white px-4 py-2 rounded-xl">۷d</button>
-                                <button class="bg-gray-700 text-white px-4 py-2 rounded-xl">۱m</button>
-                            </div>
-                        </div>
-                        <div class="h-96 bg-gray-700/50 rounded-2xl p-4">
-                            <canvas id="priceChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- پنل معاملات -->
-                <div class="space-y-6">
-                    <!-- خرید/فروش -->
-                    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-green-500/20 p-6 shadow-2xl">
-                        <h3 class="text-xl font-bold text-white mb-4">💹 معامله سریع</h3>
-                        <div class="space-y-4">
-                            <div class="flex space-x-2 space-x-reverse mb-4">
-                                <button class="flex-1 bg-green-600 text-white py-3 rounded-xl font-semibold">خرید</button>
-                                <button class="flex-1 bg-red-600 text-white py-3 rounded-xl font-semibold">فروش</button>
-                            </div>
-                            
-                            <div>
-                                <label class="text-blue-300 mb-2 block">ارز:</label>
-                                <select class="w-full bg-gray-700 border border-gray-600 rounded-xl p-3 text-white">
-                                    <option>بیت‌کوین (BTC)</option>
-                                    <option>اتریوم (ETH)</option>
-                                    <option>تتر (USDT)</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label class="text-blue-300 mb-2 block">مقدار:</label>
-                                <input type="number" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-3 text-white" placeholder="0.00">
-                            </div>
-                            
-                            <div>
-                                <label class="text-blue-300 mb-2 block">قیمت:</label>
-                                <div class="text-white text-lg font-bold">$۶۴,۲۸۰</div>
-                            </div>
-                            
-                            <button class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-4 rounded-xl font-bold">
-                                خرید بیت‌کوین
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- بازارها -->
-                    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-purple-500/20 p-6 shadow-2xl">
-                        <h3 class="text-xl font-bold text-white mb-4">🪙 بازارهای فعال</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center p-3 hover:bg-gray-700/50 rounded-xl cursor-pointer">
-                                <div class="flex items-center space-x-2 space-x-reverse">
-                                    <div class="w-8 h-8 bg-yellow-500 rounded-full"></div>
-                                    <span class="text-white font-medium">BTC</span>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-white">$۶۴,۲۸۰</div>
-                                    <div class="text-green-400 text-sm">+۲.۴٪</div>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center p-3 hover:bg-gray-700/50 rounded-xl cursor-pointer">
-                                <div class="flex items-center space-x-2 space-x-reverse">
-                                    <div class="w-8 h-8 bg-purple-500 rounded-full"></div>
-                                    <span class="text-white font-medium">ETH</span>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-white">$۳,۴۵۰</div>
-                                    <div class="text-green-400 text-sm">+۱.۸٪</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- صفحه کیف پول -->
-        <div id="wallet" class="page">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2">
-                    <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-purple-500/20 p-8 shadow-2xl">
-                        <h2 class="text-3xl font-bold text-white mb-2">💰 مدیریت کیف پول</h2>
-                        <p class="text-blue-300 mb-8">مدیریت موجودی و تراکنش‌های رمزارز</p>
 
                         <!-- موجودی‌ها -->
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                             <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-2xl text-center">
                                 <div class="text-2xl font-bold" id="walletToman">۱۲۵,۰۰۰</div>
                                 <div class="text-blue-100">تومان</div>
+                                <div class="text-blue-200 text-sm mt-2">🔒 تحت بیمه</div>
                             </div>
                             <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-6 rounded-2xl text-center">
                                 <div class="text-2xl font-bold" id="walletBTC">۰.۰۰۲۴</div>
                                 <div class="text-yellow-100">بیت‌کوین</div>
+                                <div class="text-yellow-200 text-sm mt-2">🔒 کیف سرد</div>
                             </div>
                             <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-2xl text-center">
                                 <div class="text-2xl font-bold" id="walletETH">۰.۱۵</div>
                                 <div class="text-purple-100">اتریوم</div>
+                                <div class="text-purple-200 text-sm mt-2">🔒 چندامضایی</div>
                             </div>
                         </div>
 
-                        <!-- دکمه‌های اقدام -->
+                        <!-- دکمه‌های اقدام سریع -->
                         <div class="grid grid-cols-2 gap-4 mb-8">
-                            <button class="bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-semibold transition-all duration-300">
+                            <button onclick="showDepositModal('toman')" class="bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
                                 <i class="fas fa-download ml-2"></i>واریز تومان
                             </button>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-semibold transition-all duration-300">
+                            <button onclick="showWithdrawModal('toman')" class="bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
                                 <i class="fas fa-upload ml-2"></i>برداشت تومان
                             </button>
-                            <button class="bg-yellow-600 hover:bg-yellow-700 text-white py-4 rounded-xl font-semibold transition-all duration-300">
+                            <button onclick="showDepositModal('crypto')" class="bg-yellow-600 hover:bg-yellow-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
                                 <i class="fab fa-bitcoin ml-2"></i>واریز رمزارز
                             </button>
-                            <button class="bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-semibold transition-all duration-300">
+                            <button onclick="showConvertModal()" class="bg-purple-600 hover:bg-purple-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
                                 <i class="fas fa-exchange-alt ml-2"></i>تبدیل ارز
                             </button>
                         </div>
 
-                        <!-- تاریخچه تراکنش‌ها -->
+                        <!-- تراکنش‌های اخیر -->
                         <div class="bg-gray-700/30 rounded-2xl p-6">
-                            <h3 class="text-xl font-bold text-white mb-4">📋 تاریخچه تراکنش‌ها</h3>
-                            <div class="space-y-3">
-                                <div class="flex justify-between items-center p-3 bg-gray-600/30 rounded-xl">
-                                    <div>
-                                        <div class="text-white font-medium">خرید بیت‌کوین</div>
-                                        <div class="text-gray-400 text-sm">۱۴۰۲/۰۸/۰۶ - ۱۲:۳۰</div>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="text-green-400 font-medium">+۰.۰۰۱ BTC</div>
-                                        <div class="text-gray-400 text-sm">$۶۴.۲۸</div>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-center p-3 bg-gray-600/30 rounded-xl">
-                                    <div>
-                                        <div class="text-white font-medium">تبدیل 3D</div>
-                                        <div class="text-gray-400 text-sm">۱۴۰۲/۰۸/۰۵ - ۰۹:۱۵</div>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="text-red-400 font-medium">-۱۵,۰۰۰ تومان</div>
-                                        <div class="text-gray-400 text-sm">تبدیل فایل</div>
-                                    </div>
-                                </div>
+                            <h3 class="text-xl font-bold text-white mb-4">📋 تراکنش‌های اخیر</h3>
+                            <div class="space-y-3" id="recentTransactions">
+                                <!-- تراکنش‌ها به صورت داینامیک -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- پنل جانبی -->
+                <!-- پنل امنیت -->
                 <div class="space-y-6">
-                    <!-- تبدیل ارز -->
+                    <!-- وضعیت امنیت -->
                     <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-green-500/20 p-6 shadow-2xl">
-                        <h3 class="text-xl font-bold text-white mb-4">🔄 تبدیل ارز</h3>
+                        <h3 class="text-xl font-bold text-white mb-4">🛡️ وضعیت امنیتی</h3>
                         <div class="space-y-4">
-                            <div>
-                                <label class="text-blue-300 mb-2 block">از:</label>
-                                <select class="w-full bg-gray-700 border border-gray-600 rounded-xl p-3 text-white">
-                                    <option>تومان (IRR)</option>
-                                    <option>بیت‌کوین (BTC)</option>
-                                    <option>اتریوم (ETH)</option>
-                                </select>
+                            <div class="flex items-center justify-between">
+                                <span class="text-blue-300">تأیید دو مرحله‌ای</span>
+                                <span class="text-green-400 font-bold">فعال ✓</span>
                             </div>
-                            <div>
-                                <label class="text-blue-300 mb-2 block">به:</label>
-                                <select class="w-full bg-gray-700 border border-gray-600 rounded-xl p-3 text-white">
-                                    <option>بیت‌کوین (BTC)</option>
-                                    <option>اتریوم (ETH)</option>
-                                    <option>تومان (IRR)</option>
-                                </select>
+                            <div class="flex items-center justify-between">
+                                <span class="text-blue-300">کیف سرد</span>
+                                <span class="text-green-400 font-bold">فعال ✓</span>
                             </div>
-                            <div>
-                                <label class="text-blue-300 mb-2 block">مقدار:</label>
-                                <input type="number" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-3 text-white" placeholder="0.00">
+                            <div class="flex items-center justify-between">
+                                <span class="text-blue-300">بیمه دارایی</span>
+                                <span class="text-green-400 font-bold">فعال ✓</span>
                             </div>
-                            <button class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold">
-                                تبدیل کن
-                            </button>
+                            <div class="flex items-center justify-between">
+                                <span class="text-blue-300">نظارت بانک مرکزی</span>
+                                <span class="text-green-400 font-bold">فعال ✓</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- نرخ تبدیل -->
+                    <!-- تبدیل سریع -->
                     <div class="bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-yellow-500/20 p-6 shadow-2xl">
-                        <h3 class="text-xl font-bold text-white mb-4">💱 نرخ لحظه‌ای</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center">
-                                <span class="text-blue-300">1 BTC =</span>
-                                <span class="text-white font-bold">۲,۰۵۰,۰۰۰,۰۰۰ تومان</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-blue-300">1 ETH =</span>
-                                <span class="text-white font-bold">۱۱۰,۰۰۰,۰۰۰ تومان</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-blue-300">1 USDT =</span>
-                                <span class="text-white font-bold">۵۸,۰۰۰ تومان</span>
-                            </div>
+                        <h3 class="text-xl font-bold text-white mb-4">⚡ تبدیل فوری</h3>
+                        <div class="space-y-4">
+                            <select id="convertFrom" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-3 text-white">
+                                <option value="toman">تومان → بیت‌کوین</option>
+                                <option value="btc">بیت‌کوین → تومان</option>
+                                <option value="toman_eth">تومان → اتریوم</option>
+                                <option value="eth">اتریوم → تومان</option>
+                            </select>
+                            <input type="number" id="convertAmount" placeholder="مبلغ" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-3 text-white">
+                            <button onclick="quickConvert()" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-3 rounded-xl font-semibold">
+                                تبدیل امن
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -363,146 +155,328 @@
         </div>
 
         <!-- سایر صفحات -->
-        <div id="admin-login" class="page">
-            <!-- لاگین ادمین -->
+        <div id="conversion" class="page">
+            <!-- صفحه تبدیل -->
+        </div>
+
+        <div id="crypto-trading" class="page">
+            <!-- صفحه معاملات -->
         </div>
     </main>
 
+    <!-- مودال واریز تومان -->
+    <div id="depositTomanModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-2xl p-8 max-w-md w-full border border-green-500/30">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-white">💳 واریز تومان</h3>
+                <button onclick="closeAllModals()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="text-blue-300 mb-2 block">مبلغ (تومان):</label>
+                    <input type="number" id="depositAmount" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white text-lg" placeholder="۱۰۰,۰۰۰">
+                </div>
+                
+                <div class="bg-blue-500/20 rounded-xl p-4 border border-blue-500/30">
+                    <div class="text-white font-semibold">درگاه بانک ملت</div>
+                    <div class="text-blue-300 text-sm">شماره کارت: ۶۱۰۴-۳۳۳۳-۲۲۲۲-۱۱۱۱</div>
+                </div>
+                
+                <button onclick="processDeposit('toman')" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300">
+                    <i class="fas fa-lock ml-2"></i>انتقال به درگاه پرداخت
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال برداشت تومان -->
+    <div id="withdrawTomanModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-2xl p-8 max-w-md w-full border border-blue-500/30">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-white">🏦 برداشت تومان</h3>
+                <button onclick="closeAllModals()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="text-blue-300 mb-2 block">مبلغ (تومان):</label>
+                    <input type="number" id="withdrawAmount" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white text-lg" placeholder="۵۰,۰۰۰">
+                </div>
+                
+                <div>
+                    <label class="text-blue-300 mb-2 block">شماره شبا:</label>
+                    <input type="text" id="shebaNumber" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white text-lg" placeholder="IR۱۲۳۴۵۶۷۸۹۰۱۲۳۴۵۶۷۸۹۰۱۲">
+                </div>
+                
+                <button onclick="processWithdrawal('toman')" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300">
+                    <i class="fas fa-shield-alt ml-2"></i>درخواست برداشت
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال واریز رمزارز -->
+    <div id="depositCryptoModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-2xl p-8 max-w-md w-full border border-yellow-500/30">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-white">₿ واریز رمزارز</h3>
+                <button onclick="closeAllModals()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="text-blue-300 mb-2 block">انتخاب ارز:</label>
+                    <select id="cryptoType" class="w-full bg-gray-700 border border-gray-600 rounded-xl p-4 text-white text-lg">
+                        <option value="btc">بیت‌کوین (BTC)</option>
+                        <option value="eth">اتریوم (ETH)</option>
+                        <option value="usdt">تتر (USDT)</option>
+                    </select>
+                </div>
+                
+                <div id="btcAddress" class="crypto-address">
+                    <div class="text-white font-semibold mb-2">آدرس کیف پول بیت‌کوین:</div>
+                    <div class="bg-yellow-500/20 rounded-xl p-4 border border-yellow-500/30 break-all">
+                        <code class="text-yellow-300">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</code>
+                    </div>
+                </div>
+                
+                <div class="text-orange-400 text-sm">
+                    <i class="fas fa-exclamation-triangle ml-2"></i>
+                    فقط به این آدرس ارز ارسال کنید
+                </div>
+                
+                <button onclick="processDeposit('crypto')" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300">
+                    <i class="fas fa-copy ml-2"></i>کپی آدرس
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // سیستم مدیریت حالت امن
+        const SecureAppState = {
+            user: {
+                balance: {
+                    toman: 125000,
+                    btc: 0.0024,
+                    eth: 0.15,
+                    usdt: 0
+                },
+                security: {
+                    twoFactor: true,
+                    coldStorage: true,
+                    insurance: true
+                }
+            },
+            transactions: [],
+            limits: {
+                dailyWithdrawal: 5000000, // ۵ میلیون تومان
+                dailyDeposit: 10000000    // ۱۰ میلیون تومان
+            }
+        };
+
         // مدیریت صفحات
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
             document.getElementById(pageId).classList.add('active');
+            updateWalletDisplay();
+        }
+
+        // نمایش کیف پول
+        function updateWalletDisplay() {
+            document.getElementById('walletToman').textContent = 
+                SecureAppState.user.balance.toman.toLocaleString();
+            document.getElementById('walletBTC').textContent = 
+                SecureAppState.user.balance.btc.toFixed(4);
+            document.getElementById('walletETH').textContent = 
+                SecureAppState.user.balance.eth.toFixed(4);
             
-            // اگر صفحه معاملات بود، چارت رو راه‌اندازی کن
-            if (pageId === 'crypto-trading') {
-                initializeTradingChart();
-            }
+            updateTransactionHistory();
         }
 
-        // سیستم آپلود فایل
-        document.getElementById('fileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                handleFileSelection(file);
-            }
-        });
+        // تاریخچه تراکنش‌ها
+        function updateTransactionHistory() {
+            const container = document.getElementById('recentTransactions');
+            if (!container) return;
 
-        function handleFileSelection(file) {
-            if (!file.type.match('image.*')) {
-                alert('لطفاً فقط فایل تصویری انتخاب کنید');
-                return;
-            }
-
-            const preview = document.getElementById('filePreview');
-            const img = document.getElementById('previewImage');
-            const fileName = document.getElementById('fileName');
-            const fileSize = document.getElementById('fileSize');
-            
-            fileName.textContent = file.name;
-            fileSize.textContent = formatFileSize(file.size);
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                img.src = e.target.result;
-                preview.classList.remove('hidden');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function clearFile() {
-            document.getElementById('filePreview').classList.add('hidden');
-            document.getElementById('fileInput').value = '';
-        }
-
-        function startConversion() {
-            if (!document.getElementById('fileInput').files[0]) {
-                alert('لطفاً ابتدا یک فایل انتخاب کنید');
-                return;
-            }
-            alert('تبدیل فایل شروع شد! این فرآیند ۳۰-۶۰ ثانیه طول می‌کشد.');
-        }
-
-        // سیستم چارت معاملات
-        function initializeTradingChart() {
-            const ctx = document.getElementById('priceChart').getContext('2d');
-            const chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['۱h', '۲h', '۳h', '۴h', '۵h', '۶h'],
-                    datasets: [{
-                        label: 'قیمت BTC',
-                        data: [63500, 63800, 64200, 64000, 64300, 64280],
-                        borderColor: '#f59e0b',
-                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    }]
+            const transactions = [
+                {
+                    type: 'واریز',
+                    amount: '+۵۰۰,۰۰۰ تومان',
+                    status: 'تکمیل شده',
+                    time: '۲ دقیقه پیش',
+                    color: 'text-green-400'
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'white'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'white'
-                            }
-                        }
-                    }
+                {
+                    type: 'خرید بیت‌کوین',
+                    amount: '+۰.۰۰۱ BTC',
+                    status: 'تکمیل شده', 
+                    time: '۱ ساعت پیش',
+                    color: 'text-green-400'
+                },
+                {
+                    type: 'تبدیل فایل',
+                    amount: '-۱۵,۰۰۰ تومان',
+                    status: 'تکمیل شده',
+                    time: '۲ ساعت پیش',
+                    color: 'text-red-400'
                 }
+            ];
+
+            container.innerHTML = transactions.map(tx => `
+                <div class="flex justify-between items-center p-3 bg-gray-600/30 rounded-xl">
+                    <div>
+                        <div class="text-white font-medium">${tx.type}</div>
+                        <div class="text-gray-400 text-sm">${tx.time}</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="${tx.color} font-medium">${tx.amount}</div>
+                        <div class="text-gray-400 text-sm">${tx.status}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // مدیریت مودال‌ها
+        function showDepositModal(type) {
+            closeAllModals();
+            if (type === 'toman') {
+                document.getElementById('depositTomanModal').classList.remove('hidden');
+            } else if (type === 'crypto') {
+                document.getElementById('depositCryptoModal').classList.remove('hidden');
+            }
+            showSecurityAlert('درگاه امن فعال شد');
+        }
+
+        function showWithdrawModal(type) {
+            closeAllModals();
+            if (type === 'toman') {
+                document.getElementById('withdrawTomanModal').classList.remove('hidden');
+            }
+            showSecurityAlert('سیستم برداشت امن فعال شد');
+        }
+
+        function showConvertModal() {
+            showSecurityAlert('سیستم تبدیل ارز فعال شد');
+            // پیاده‌سازی مودال تبدیل
+        }
+
+        function closeAllModals() {
+            document.querySelectorAll('[id$="Modal"]').forEach(modal => {
+                modal.classList.add('hidden');
             });
         }
 
-        // ابزارهای کمکی
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        // پردازش واریز
+        function processDeposit(type) {
+            if (type === 'toman') {
+                const amount = parseInt(document.getElementById('depositAmount').value);
+                if (amount && amount > 0) {
+                    SecureAppState.user.balance.toman += amount;
+                    addTransaction('واریز تومان', amount, 'toman', 'deposit');
+                    updateWalletDisplay();
+                    closeAllModals();
+                    showSuccessAlert(`مبلغ ${amount.toLocaleString()} تومان با موفقیت واریز شد`);
+                } else {
+                    showErrorAlert('لطفاً مبلغ معتبر وارد کنید');
+                }
+            } else if (type === 'crypto') {
+                showSuccessAlert('آدرس کیف پول کپی شد. لطفاً ارز را به این آدرس ارسال کنید');
+                closeAllModals();
+            }
         }
 
-        // آپدیت قیمت‌های زنده
-        function updateLivePrices() {
-            const btcVariation = (Math.random() - 0.5) * 1000;
-            const ethVariation = (Math.random() - 0.5) * 100;
+        // پردازش برداشت
+        function processWithdrawal(type) {
+            if (type === 'toman') {
+                const amount = parseInt(document.getElementById('withdrawAmount').value);
+                const sheba = document.getElementById('shebaNumber').value;
+                
+                if (!amount || amount <= 0) {
+                    showErrorAlert('لطفاً مبلغ معتبر وارد کنید');
+                    return;
+                }
+                
+                if (!sheba || !sheba.startsWith('IR')) {
+                    showErrorAlert('لطفاً شماره شبا معتبر وارد کنید');
+                    return;
+                }
+                
+                if (amount > SecureAppState.user.balance.toman) {
+                    showErrorAlert('موجودی کافی نیست');
+                    return;
+                }
+                
+                SecureAppState.user.balance.toman -= amount;
+                addTransaction('برداشت تومان', amount, 'toman', 'withdrawal');
+                updateWalletDisplay();
+                closeAllModals();
+                showSuccessAlert(`درخواست برداشت ${amount.toLocaleString()} تومان ثبت شد`);
+            }
+        }
+
+        // تبدیل سریع
+        function quickConvert() {
+            const from = document.getElementById('convertFrom').value;
+            const amount = parseFloat(document.getElementById('convertAmount').value);
             
-            const btcPrice = 64280 + btcVariation;
-            const ethPrice = 3450 + ethVariation;
+            if (!amount || amount <= 0) {
+                showErrorAlert('لطفاً مبلغ معتبر وارد کنید');
+                return;
+            }
             
-            document.getElementById('btc-price').textContent = `BTC: $${Math.round(btcPrice).toLocaleString()}`;
-            document.getElementById('eth-price').textContent = `ETH: $${Math.round(ethPrice).toLocaleString()}`;
-            
-            // آپدیت کاربران آنلاین
-            const users = Math.floor(20 + Math.random() * 15);
-            document.getElementById('live-stats').textContent = `📊 ${users} کاربر در حال معامله`;
+            // شبیه‌سازی تبدیل
+            showSuccessAlert(`درخواست تبدیل ${amount} ثبت شد. عملیات در حال پردازش...`);
+        }
+
+        // مدیریت تراکنش‌ها
+        function addTransaction(type, amount, currency, operation) {
+            SecureAppState.transactions.unshift({
+                id: Date.now(),
+                type,
+                amount,
+                currency,
+                operation,
+                timestamp: new Date(),
+                status: 'completed'
+            });
+        }
+
+        // سیستم هشدار
+        function showSecurityAlert(message) {
+            const alert = document.getElementById('securityAlert');
+            alert.classList.remove('hidden');
+            setTimeout(() => {
+                alert.classList.add('hidden');
+            }, 5000);
+        }
+
+        function showSuccessAlert(message) {
+            alert(`✅ ${message}`);
+        }
+
+        function showErrorAlert(message) {
+            alert(`❌ ${message}`);
+        }
+
+        function hideSecurityAlert() {
+            document.getElementById('securityAlert').classList.add('hidden');
         }
 
         // راه‌اندازی اولیه
         document.addEventListener('DOMContentLoaded', function() {
-            showPage('conversion');
-            setInterval(updateLivePrices, 3000);
-            updateLivePrices();
+            showPage('wallet');
+            updateWalletDisplay();
+            showSecurityAlert('سیستم امنیتی با موفقیت فعال شد');
         });
     </script>
 
@@ -513,6 +487,9 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .crypto-address {
+            font-family: 'Courier New', monospace;
         }
     </style>
 </body>
