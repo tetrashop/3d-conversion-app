@@ -1,14 +1,20 @@
 {
   "name": "3d-conversion-app",
   "version": "1.0.0",
+  "description": "Complete 2D to 3D conversion system",
+  "type": "module",
   "scripts": {
-    "build": "echo 'No build step required for static site'",
-    "deploy": "wrangler pages publish ."
-  },
-  "dependencies": {
-    "stripe": "^14.0.0"
+    "dev": "concurrently \"npm run dev:*\"",
+    "dev:conversion": "cd packages/conversion-api && npm run dev",
+    "build": "npm run build:*",
+    "deploy": "npm run deploy:*",
+    "deploy:api": "cd packages/conversion-api && npm run deploy"
   },
   "devDependencies": {
-    "wrangler": "^3.0.0"
-  }
+    "concurrently": "^8.2.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
 }

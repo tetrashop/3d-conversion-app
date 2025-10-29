@@ -1,0 +1,15 @@
+{
+  "name": "@3d-conversion/conversion-api",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "itty-router": "^4.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
