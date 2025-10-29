@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Conversion - پنل مدیریت</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar {
+            transition: all 0.3s;
+        }
+        .stat-card {
+            transition: transform 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- نوار کناری -->
+        <div class="sidebar w-64 bg-gray-800 text-white">
+            <div class="p-4 border-b border-gray-700">
+                <h1 class="text-xl font-bold">3D Conversion</h1>
+                <p class="text-gray-400 text-sm">پنل مدیریت</p>
+            </div>
+            <nav class="mt-6">
+                <a href="#dashboard" class="menu-item active">
+                    <i class="fas fa-chart-line ml-3"></i>
+                    داشبورد
+                </a>
+                <a href="#conversions" class="menu-item">
+                    <i class="fas fa-exchange-alt ml-3"></i>
+                    تبدیل‌ها
+                </a>
+                <a href="#users" class="menu-item">
+                    <i class="fas fa-users ml-3"></i>
+                    کاربران
+                </a>
+                <a href="#settings" class="menu-item">
+                    <i class="fas fa-cog ml-3"></i>
+                    تنظیمات
+                </a>
+            </nav>
+        </div>
+
+        <!-- محتوای اصلی -->
+        <div class="flex-1 overflow-auto">
+            <!-- هدر -->
+            <header class="bg-white shadow-sm border-b">
+                <div class="px-6 py-4">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-semibold text-gray-800" id="page-title">داشبورد</h2>
+                        <div class="flex items-center space-x-4 space-x-reverse">
+                            <div class="text-right">
+                                <div class="font-medium">مدیر سیستم</div>
+                                <div class="text-sm text-gray-500">admin@3dconvert.com</div>
+                            </div>
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-6">
+                <!-- آمار کلی -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="stat-card bg-white rounded-lg shadow-sm p-6 border">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 text-blue-600 rounded-lg ml-4">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold" id="today-conversions">۲۴</div>
+                                <div class="text-gray-600">تبدیل‌های امروز</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card bg-white rounded-lg shadow-sm p-6 border">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 text-green-600 rounded-lg ml-4">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold" id="active-users">۱۵۶</div>
+                                <div class="text-gray-600">کاربران فعال</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card bg-white rounded-lg shadow-sm p-6 border">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-yellow-100 text-yellow-600 rounded-lg ml-4">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold" id="today-revenue">۱,۲۵۰,۰۰۰</div>
+                                <div class="text-gray-600">درآمد امروز (تومان)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card bg-white rounded-lg shadow-sm p-6 border">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-red-100 text-red-600 rounded-lg ml-4">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold" id="error-rate">۲.۱٪</div>
+                                <div class="text-gray-600">نرخ خطا</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تبدیل‌های اخیر -->
+                <div class="bg-white rounded-lg shadow-sm border mb-6">
+                    <div class="p-4 border-b flex justify-between items-center">
+                        <h3 class="text-lg font-semibold">آخرین تبدیل‌ها</h3>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm">
+                            <i class="fas fa-plus ml-2"></i>
+                            تبدیل جدید
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="text-right py-3 px-4">شناسه</th>
+                                        <th class="text-right py-3 px-4">کاربر</th>
+                                        <th class="text-right py-3 px-4">فایل ورودی</th>
+                                        <th class="text-right py-3 px-4">قالب خروجی</th>
+                                        <th class="text-right py-3 px-4">وضعیت</th>
+                                        <th class="text-right py-3 px-4">زمان</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="conversions-table">
+                                    <!-- داده‌ها با JavaScript پر می‌شوند -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- آمار استفاده -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg shadow-sm border p-6">
+                        <h3 class="text-lg font-semibold mb-4">آمار استفاده از قالب‌ها</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span>STL</span>
+                                    <span>۴۵٪</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span>OBJ</span>
+                                    <span>۳۰٪</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 30%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-sm border p-6">
+                        <h3 class="text-lg font-semibold mb-4">عملکرد سیستم</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>میانگین زمان پردازش</span>
+                                <span class="font-medium">۲.۴ ثانیه</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>تبدیل‌های موفق</span>
+                                <span class="font-medium">۹۷.۹٪</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>کاربران آنلاین</span>
+                                <span class="font-medium">۲۳</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // داده‌های نمونه
+        const conversions = [
+            { id: 'CV-7845', user: 'علی محمدی', input: 'blueprint.png', output: 'STL', status: 'completed', time: '۲ دقیقه پیش' },
+            { id: 'CV-7844', user: 'شرکت طراحی', input: 'design.jpg', output: 'OBJ', status: 'processing', time: '۵ دقیقه پیش' },
+            { id: 'CV-7843', user: 'فاطمه کریمی', input: 'sketch.png', output: 'STL', status: 'completed', time: '۱۰ دقیقه پیش' },
+            { id: 'CV-7842', user: 'رضا احمدی', input: 'diagram.jpg', output: 'GLB', status: 'failed', time: '۱۵ دقیقه پیش' }
+        ];
+
+        // تابع برای ایجاد badge وضعیت
+        function getStatusBadge(status) {
+            const statusClasses = {
+                completed: 'bg-green-100 text-green-800',
+                processing: 'bg-yellow-100 text-yellow-800',
+                failed: 'bg-red-100 text-red-800'
+            };
+            
+            const statusText = {
+                completed: 'تکمیل شده',
+                processing: 'در حال پردازش',
+                failed: 'ناموفق'
+            };
+            
+            return `<span class="px-2 py-1 rounded-full text-xs ${statusClasses[status]}">${statusText[status]}</span>`;
+        }
+
+        // پر کردن جدول تبدیل‌ها
+        function loadConversionsTable() {
+            const table = document.getElementById('conversions-table');
+            table.innerHTML = conversions.map(conv => `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="py-3 px-4 font-medium">${conv.id}</td>
+                    <td class="py-3 px-4">${conv.user}</td>
+                    <td class="py-3 px-4">${conv.input}</td>
+                    <td class="py-3 px-4">${conv.output}</td>
+                    <td class="py-3 px-4">${getStatusBadge(conv.status)}</td>
+                    <td class="py-3 px-4 text-gray-500">${conv.time}</td>
+                </tr>
+            `).join('');
+        }
+
+        // مدیریت منو
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                const page = this.getAttribute('href').substring(1);
+                document.getElementById('page-title').textContent = 
+                    page === 'dashboard' ? 'داشبورد' :
+                    page === 'conversions' ? 'مدیریت تبدیل‌ها' :
+                    page === 'users' ? 'مدیریت کاربران' : 'تنظیمات';
+            });
+        });
+
+        // استایل منو
+        const style = document.createElement('style');
+        style.textContent = `
+            .menu-item {
+                display: block;
+                padding: 12px 20px;
+                color: #d1d5db;
+                text-decoration: none;
+                transition: all 0.3s;
+                border-right: 3px solid transparent;
+            }
+            .menu-item:hover {
+                background-color: #374151;
+                color: white;
+            }
+            .menu-item.active {
+                background-color: #374151;
+                color: white;
+                border-right-color: #3b82f6;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // بارگذاری اولیه
+        loadConversionsTable();
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+/ /health-dashboard/index.html 200
+/health-dashboard/* /health-dashboard/index.html 200
+/admin-login/* /admin-login/index.html 200
+/admin-panel/* /admin-panel/index.html 200
+/finance-panel/* /finance-panel/index.html 200
+/* /health-dashboard/index.html 404
