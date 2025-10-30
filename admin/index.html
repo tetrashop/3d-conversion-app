@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت بلادرنگ - سرویس تبدیل 3D</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h2>🚀 پنل بلادرنگ</h2>
+            <p>سرویس تبدیل 3D</p>
+        </div>
+        
+        <nav class="nav-links">
+            <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
+                📊 داشبورد زنده
+            </a>
+            <a href="#sales" class="nav-link" onclick="showSection('sales')">
+                📈 فروش لحظه‌ای
+            </a>
+            <a href="#crypto" class="nav-link" onclick="showSection('crypto')">
+                ₿ رمزارز زنده
+            </a>
+            <a href="#transactions" class="nav-link" onclick="showSection('transactions')">
+                💳 تراکنش‌های لحظه‌ای
+            </a>
+            <a href="#system" class="nav-link" onclick="showSection('system')">
+                ⚙️ مانیتورینگ سیستم
+            </a>
+        </nav>
+
+        <div class="system-status">
+            <div class="status-item">
+                <span class="status-dot online"></span>
+                <span>اتصال بلادرنگ: <span id="connectionStatus">متصل</span></span>
+            </div>
+            <div class="status-item">
+                <span class="status-dot" id="updateIndicator"></span>
+                <span>آخرین بروزرسانی: <span id="lastUpdate">هم اکنون</span></span>
+            </div>
+            <div class="user-info">
+                <span>👤 مدیر سیستم</span>
+                <span class="real-time-badge">بلادرنگ</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header class="top-bar">
+            <div class="header-title">
+                <h1 id="pageTitle">داشبورد بلادرنگ</h1>
+                <div class="live-indicator">
+                    <span class="pulse"></span>
+                    <span>زنده</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="auto-refresh">
+                    <label>بروزرسانی خودکار:</label>
+                    <select id="refreshRate" onchange="changeRefreshRate()">
+                        <option value="5000">۵ ثانیه</option>
+                        <option value="10000" selected>۱۰ ثانیه</option>
+                        <option value="30000">۳۰ ثانیه</option>
+                        <option value="60000">۱ دقیقه</option>
+                        <option value="0">غیرفعال</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="forceRefresh()">
+                    🔄 بروزرسانی
+                </button>
+                <div class="datetime" id="currentDateTime"></div>
+            </div>
+        </header>
+
+        <main class="content">
+            <!-- داشبورد بلادرنگ -->
+            <section id="dashboard-section" class="section active">
+                <div class="summary-cards">
+                    <div class="card real-time">
+                        <div class="card-icon sales">
+                            💰
+                        </div>
+                        <div class="card-info">
+                            <h3 id="totalRevenue">0 تومان</h3>
+                            <p>درآمد لحظه‌ای</p>
+                            <div class="trend up" id="revenueTrend">+2.5%</div>
+                        </div>
+                    </div>
+
+                    <div class="card real-time">
+                        <div class="card-icon conversions">
+                            🎯
+                        </div>
+                        <div class="card-info">
+                            <h3 id="totalConversions">0</h3>
+                            <p>تبدیل‌های فعال</p>
+                            <div class="trend up" id="conversionsTrend">+1.2%</div>
+                        </div>
+                    </div>
+
+                    <div class="card real-time">
+                        <div class="card-icon crypto">
+                            ₿
+                        </div>
+                        <div class="card-info">
+                            <h3 id="cryptoBalance">0 BTC</h3>
+                            <p>ارزش رمزارز</p>
+                            <div class="trend" id="cryptoTrend">0%</div>
+                        </div>
+                    </div>
+
+                    <div class="card real-time">
+                        <div class="card-icon users">
+                            👥
+                        </div>
+                        <div class="card-info">
+                            <h3 id="activeUsers">0</h3>
+                            <p>کاربران آنلاین</p>
+                            <div class="trend up" id="usersTrend">+0.8%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3>📊 تبدیل‌های 3D زنده</h3>
+                        <div class="chart-header">
+                            <span>آخرین ۶۰ دقیقه</span>
+                            <span class="live-badge">LIVE</span>
+                        </div>
+                        <canvas id="conversionsChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>💸 درآمد لحظه‌ای</h3>
+                        <div class="chart-header">
+                            <span>آخرین ۲۴ ساعت</span>
+                            <span class="live-badge">LIVE</span>
+                        </div>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- فعالیت‌های اخیر -->
+                <div class="recent-activity">
+                    <h3>📝 فعالیت‌های اخیر</h3>
+                    <div class="activity-feed" id="activityFeed">
+                        <!-- فعالیت‌ها به صورت بلادرنگ اضافه می‌شوند -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش فروش لحظه‌ای -->
+            <section id="sales-section" class="section">
+                <h2>📈 فروش لحظه‌ای</h2>
+                <div class="real-time-stats">
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="minuteSales">0</div>
+                            <div class="stat-label">فروش این دقیقه</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="hourlySales">0</div>
+                            <div class="stat-label">فروش این ساعت</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="dailySales">0</div>
+                            <div class="stat-label">فروش امروز</div>
+                        </div>
+                    </div>
+                    
+                    <div class="live-transactions">
+                        <h3>💳 تراکنش‌های زنده</h3>
+                        <div class="transactions-stream" id="transactionsStream">
+                            <!-- تراکنش‌های لحظه‌ای -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش رمزارز زنده -->
+            <section id="crypto-section" class="section">
+                <h2>₿ بازار رمزارز زنده</h2>
+                <div class="crypto-live">
+                    <div class="crypto-tickers">
+                        <h3>📊 قیمت‌های لحظه‌ای</h3>
+                        <div class="ticker-container" id="cryptoTickers">
+                            <!-- تیکرهای قیمت -->
+                        </div>
+                    </div>
+                    
+                    <div class="crypto-charts">
+                        <h3>📈 نمودار زنده BTC</h3>
+                        <canvas id="btcChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش مانیتورینگ سیستم -->
+            <section id="system-section" class="section">
+                <h2>⚙️ مانیتورینگ بلادرنگ سیستم</h2>
+                <div class="system-metrics">
+                    <div class="metric-cards">
+                        <div class="metric-card">
+                            <div class="metric-title">CPU استفاده</div>
+                            <div class="metric-value" id="cpuUsage">0%</div>
+                            <div class="metric-gauge">
+                                <div class="gauge-fill" id="cpuGauge"></div>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">RAM استفاده</div>
+                            <div class="metric-value" id="ramUsage">0%</div>
+                            <div class="metric-gauge">
+                                <div class="gauge-fill" id="ramGauge"></div>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">مصرف پهنای باند</div>
+                            <div class="metric-value" id="bandwidthUsage">0 MB/s</div>
+                            <div class="metric-gauge">
+                                <div class="gauge-fill" id="bandwidthGauge"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/realtime.js"></script>
+</body>
+</html>

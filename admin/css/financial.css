@@ -1,0 +1,135 @@
+/* استایل‌های پایه مالی */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f1f5f9; line-height: 1.6; display: flex; min-height: 100vh; }
+
+.sidebar { width: 300px; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 25px 20px; display: flex; flex-direction: column; border-left: 1px solid #334155; }
+.logo h2 { font-size: 1.4rem; margin-bottom: 5px; text-align: center; color: #60a5fa; }
+.logo p { font-size: 0.8rem; opacity: 0.7; text-align: center; margin-bottom: 30px; }
+
+.nav-links { flex: 1; }
+.nav-link { display: block; color: #cbd5e1; text-decoration: none; padding: 15px 20px; margin: 8px 0; border-radius: 10px; transition: all 0.3s ease; font-size: 0.9rem; border: 1px solid transparent; }
+.nav-link:hover { background: rgba(96, 165, 250, 0.1); border-color: #60a5fa; color: #60a5fa; }
+.nav-link.active { background: rgba(96, 165, 250, 0.2); border-color: #60a5fa; color: #60a5fa; }
+
+.system-status { margin-top: auto; padding-top: 20px; border-top: 1px solid #334155; }
+.status-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.8rem; color: #94a3b8; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; }
+.status-dot.online { background: #10b981; animation: pulse 2s infinite; }
+
+.balance-info { background: rgba(96, 165, 250, 0.1); padding: 12px; border-radius: 8px; border: 1px solid #60a5fa; margin-top: 10px; }
+.balance-info div { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 5px; }
+.balance-info div:last-child { margin-bottom: 0; }
+
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+/* محتوای اصلی */
+.main-content { flex: 1; display: flex; flex-direction: column; background: #0f172a; }
+.top-bar { background: #1e293b; padding: 20px 30px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+.header-title { display: flex; align-items: center; gap: 15px; }
+.header-title h1 { color: #f1f5f9; font-size: 1.6rem; margin: 0; }
+.live-indicator { display: flex; align-items: center; gap: 8px; background: #10b981; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; }
+.pulse { width: 8px; height: 8px; background: white; border-radius: 50%; animation: pulse 1.5s infinite; }
+
+.quick-stats { display: flex; gap: 20px; font-size: 0.9rem; color: #94a3b8; }
+.quick-stats span { background: rgba(96, 165, 250, 0.1); padding: 8px 12px; border-radius: 6px; }
+
+.btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease; }
+.btn-primary { background: #3b82f6; color: white; }
+.btn-success { background: #10b981; color: white; }
+.btn-warning { background: #f59e0b; color: white; }
+.btn-danger { background: #ef4444; color: white; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+
+/* کارت‌های مالی */
+.financial-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px; }
+.f-card { background: #1e293b; padding: 25px; border-radius: 15px; border: 1px solid #334155; transition: all 0.3s ease; position: relative; overflow: hidden; }
+.f-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.f-card.income::before { background: linear-gradient(90deg, #10b981, #34d399); }
+.f-card.outcome::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+.f-card.pending::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.f-card.success-rate::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+
+.f-card:hover { border-color: #60a5fa; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+
+.f-icon { font-size: 2.5rem; margin-bottom: 15px; }
+.f-info h3 { font-size: 1.8rem; margin-bottom: 5px; color: #f1f5f9; }
+.f-info p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 8px; }
+.f-trend { font-size: 0.8rem; padding: 4px 10px; border-radius: 12px; display: inline-block; }
+.f-trend.up { background: #10b981; color: white; }
+.f-trend.down { background: #ef4444; color: white; }
+
+/* نمودارها */
+.charts-row { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; margin-bottom: 30px; }
+.chart-container { background: #1e293b; padding: 25px; border-radius: 15px; border: 1px solid #334155; }
+.chart-container h3 { color: #f1f5f9; margin-bottom: 20px; font-size: 1.1rem; }
+.chart-container canvas { width: 100% !important; height: 300px !important; }
+
+/* تراکنش‌های لحظه‌ای */
+.instant-transactions { background: #1e293b; padding: 25px; border-radius: 15px; border: 1px solid #334155; }
+.transactions-live { max-height: 200px; overflow-y: auto; }
+.transaction-item { padding: 12px 0; border-bottom: 1px solid #334155; display: flex; align-items: center; gap: 15px; font-size: 0.9rem; animation: slideIn 0.5s ease; }
+.transaction-item:last-child { border-bottom: none; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+.transaction-type { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; }
+.type-deposit { background: #10b981; color: white; }
+.type-withdraw { background: #ef4444; color: white; }
+
+/* روش‌های پرداخت */
+.deposit-methods { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+.method-card { background: #1e293b; padding: 20px; border-radius: 12px; border: 2px solid #334155; cursor: pointer; transition: all 0.3s ease; text-align: center; }
+.method-card.active { border-color: #60a5fa; background: rgba(96, 165, 250, 0.1); }
+.method-card:hover { border-color: #60a5fa; transform: translateY(-2px); }
+.method-icon { font-size: 2rem; margin-bottom: 10px; }
+.method-info h4 { margin-bottom: 5px; color: #f1f5f9; }
+.method-info p { color: #94a3b8; font-size: 0.8rem; }
+
+/* فرم‌ها */
+.deposit-form, .withdraw-form { background: #1e293b; padding: 25px; border-radius: 15px; border: 1px solid #334155; margin-bottom: 30px; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; color: #f1f5f9; font-weight: 500; }
+.form-group input, .form-group select { width: 100%; padding: 12px 15px; background: #334155; border: 1px solid #475569; border-radius: 8px; color: #f1f5f9; font-size: 0.9rem; }
+.form-group input:focus, .form-group select:focus { outline: none; border-color: #60a5fa; }
+
+.wallet-address { display: flex; gap: 10px; }
+.wallet-address input { flex: 1; }
+.btn-copy { background: #475569; color: white; border: none; padding: 12px 15px; border-radius: 8px; cursor: pointer; }
+
+.deposit-info, .withdraw-limits { background: rgba(96, 165, 250, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+.info-item, .limit-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #334155; font-size: 0.9rem; }
+.info-item:last-child, .limit-item:last-child { border-bottom: none; }
+
+/* درگاه‌های پرداخت */
+.gateways-status { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
+.gateway-card { background: #1e293b; padding: 20px; border-radius: 12px; border: 2px solid; display: flex; align-items: center; gap: 15px; }
+.gateway-card.online { border-color: #10b981; }
+.gateway-card.offline { border-color: #ef4444; }
+.gateway-icon { font-size: 2rem; }
+.status-online { color: #10b981; }
+.status-offline { color: #ef4444; }
+
+.gateways-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.stat-card { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155; text-align: center; }
+.stat-card h4 { color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px; }
+.stat-value { font-size: 2rem; color: #60a5fa; font-weight: bold; }
+
+/* مودال */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; }
+.modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1e293b; padding: 30px; border-radius: 15px; border: 1px solid #334155; min-width: 400px; }
+.modal-actions { display: flex; gap: 15px; margin-top: 20px; }
+
+/* ریسپانسیو */
+@media (max-width: 1024px) {
+    .charts-row { grid-template-columns: 1fr; }
+    .financial-cards { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; }
+    .nav-links { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; }
+    .nav-link { white-space: nowrap; margin: 0; }
+    .financial-cards { grid-template-columns: 1fr; }
+    .header-actions { flex-direction: column; gap: 10px; }
+    .quick-stats { flex-direction: column; gap: 10px; }
+}

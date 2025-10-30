@@ -1,0 +1,102 @@
+/* استایل‌های پایه */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f1f5f9; line-height: 1.6; display: flex; min-height: 100vh; }
+
+/* نوار کناری */
+.sidebar { width: 280px; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 25px 20px; display: flex; flex-direction: column; border-left: 1px solid #334155; }
+.logo h2 { font-size: 1.4rem; margin-bottom: 5px; text-align: center; color: #60a5fa; }
+.logo p { font-size: 0.8rem; opacity: 0.7; text-align: center; margin-bottom: 30px; }
+
+.nav-links { flex: 1; }
+.nav-link { display: block; color: #cbd5e1; text-decoration: none; padding: 15px 20px; margin: 8px 0; border-radius: 10px; transition: all 0.3s ease; font-size: 0.9rem; border: 1px solid transparent; }
+.nav-link:hover { background: rgba(96, 165, 250, 0.1); border-color: #60a5fa; color: #60a5fa; }
+.nav-link.active { background: rgba(96, 165, 250, 0.2); border-color: #60a5fa; color: #60a5fa; }
+
+.system-status { margin-top: auto; padding-top: 20px; border-top: 1px solid #334155; }
+.status-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.8rem; color: #94a3b8; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; }
+.status-dot.online { background: #10b981; animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+.user-info { display: flex; align-items: center; justify-content: space-between; padding: 12px; background: rgba(96, 165, 250, 0.1); border-radius: 8px; font-size: 0.9rem; border: 1px solid #60a5fa; }
+.real-time-badge { background: #10b981; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; }
+
+/* محتوای اصلی */
+.main-content { flex: 1; display: flex; flex-direction: column; background: #0f172a; }
+.top-bar { background: #1e293b; padding: 20px 30px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+.header-title { display: flex; align-items: center; gap: 15px; }
+.header-title h1 { color: #f1f5f9; font-size: 1.6rem; margin: 0; }
+.live-indicator { display: flex; align-items: center; gap: 8px; background: #10b981; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; }
+.pulse { width: 8px; height: 8px; background: white; border-radius: 50%; animation: pulse 1.5s infinite; }
+
+.header-actions { display: flex; align-items: center; gap: 20px; }
+.auto-refresh { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #94a3b8; }
+.auto-refresh select { background: #334155; color: white; border: 1px solid #475569; border-radius: 6px; padding: 5px 10px; }
+
+.btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease; }
+.btn-primary { background: #3b82f6; color: white; }
+.btn-primary:hover { background: #2563eb; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+
+.datetime { font-size: 0.9rem; color: #94a3b8; }
+
+/* محتوا */
+.content { flex: 1; padding: 30px; overflow-y: auto; }
+.section { display: none; }
+.section.active { display: block; }
+
+/* کارت‌های خلاصه */
+.summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px; }
+.card { background: #1e293b; padding: 25px; border-radius: 15px; border: 1px solid #334155; transition: all 0.3s ease; position: relative; overflow: hidden; }
+.card.real-time::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #10b981, #3b82f6); animation: shimmer 3s infinite; }
+@keyframes shimmer { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+.card:hover { border-color: #60a5fa; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+
+.card-icon { width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 15px; }
+.card-icon.sales { background: linear-gradient(135deg, #10b981, #059669); }
+.card-icon.conversions { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.card-icon.crypto { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+.card-icon.users { background: linear-gradient(135deg, #ec4899, #db2777); }
+
+.card-info h3 { font-size: 1.8rem; margin-bottom: 5px; color: #f1f5f9; }
+.card-info p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 8px; }
+.trend { font-size: 0.8rem; padding: 2px 8px; border-radius: 10px; display: inline-block; }
+.trend.up { background: #10b981; color: white; }
+.trend.down { background: #ef4444; color: white; }
+
+/* نمودارها */
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
+.chart-container { background: #1e293b; padding: 25px; border-radius: 15px; border: 1px solid #334155; }
+.chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; color: #94a3b8; font-size: 0.9rem; }
+.live-badge { background: #ef4444; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; animation: pulse 1.5s infinite; }
+.chart-container h3 { color: #f1f5f9; margin-bottom: 10px; font-size: 1.1rem; }
+.chart-container canvas { width: 100% !important; height: 300px !important; }
+
+/* فعالیت‌های اخیر */
+.recent-activity { background: #1e293b; padding: 25px; border-radius: 15px; border: 1px solid #334155; }
+.activity-feed { max-height: 200px; overflow-y: auto; }
+.activity-item { padding: 12px 0; border-bottom: 1px solid #334155; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
+.activity-item:last-child { border-bottom: none; }
+.activity-time { color: #60a5fa; font-size: 0.8rem; min-width: 60px; }
+
+/* استایل‌های ریسپانسیو */
+@media (max-width: 1024px) {
+    .charts-grid { grid-template-columns: 1fr; }
+    .summary-cards { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; }
+    .nav-links { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; }
+    .nav-link { white-space: nowrap; margin: 0; }
+    .summary-cards { grid-template-columns: 1fr; }
+    .header-actions { flex-direction: column; gap: 10px; align-items: flex-start; }
+    .auto-refresh { flex-direction: column; align-items: flex-start; }
+}
+
+/* اسکرول بار سفارشی */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #1e293b; }
+::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
