@@ -1,0 +1,26 @@
+{
+  "name": "tetrashop-ui",
+  "version": "3.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5173 --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && echo 'Ready for Cloudflare deployment'"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.15.0",
+    "axios": "^1.5.0",
+    "react-hot-toast": "^2.4.1",
+    "lucide-react": "^0.288.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "vite": "^4.4.0",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0"
+  }
+}

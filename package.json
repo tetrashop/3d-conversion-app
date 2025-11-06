@@ -1,16 +1,10 @@
 {
-  "name": "tetrashop-worker",
+  "name": "tetrashop-mono-repo",
   "version": "1.0.0",
-  "description": "Tetrashop API Worker",
-  "main": "cloudflare-worker.js",
+  "private": true,
+  "workspaces": ["apps/*"],
   "scripts": {
-    "deploy": "wrangler deploy",
-    "dev": "wrangler dev"
-  },
-  "dependencies": {
-    "itty-router": "^4.0.0"
-  },
-  "devDependencies": {
-    "wrangler": "^3.0.0"
+    "dev:shop": "npm run dev --workspace=tetrashop-ui",
+    "build:shop": "npm run build --workspace=tetrashop-ui"
   }
 }

@@ -1,0 +1,10 @@
+name = "tetrashop100"
+compatibility_date = "2024-11-06"
+pages_build_output_dir = "./dist"
+
+[[env.production.vars]]
+name = "API_BASE_URL"
+value = "https://tetrashop-api.workers.dev"
+
+[env.production]
+name = "tetrashop100-production"
