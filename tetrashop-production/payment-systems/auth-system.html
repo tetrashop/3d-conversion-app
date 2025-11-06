@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به سیستم - Tetrashop100</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .auth-container {
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .tab.active {
+            border-bottom-color: #667eea;
+            color: #667eea;
+            font-weight: bold;
+        }
+        .form-container {
+            display: none;
+        }
+        .form-container.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 15px 0;
+            text-align: center;
+            display: none;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('login')">ورود</div>
+            <div class="tab" onclick="showTab('register')">ثبت‌نام</div>
+        </div>
+
+        <!-- فرم ورود -->
+        <div id="login-form" class="form-container active">
+            <h2 style="text-align: center; margin-bottom: 25px;">ورود به حساب کاربری</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-email">ایمیل:</label>
+                    <input type="email" id="login-email" required placeholder="example@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">رمز عبور:</label>
+                    <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn">ورود به سیستم</button>
+            </form>
+            <div id="login-message" class="message"></div>
+        </div>
+
+        <!-- فرم ثبت‌نام -->
+        <div id="register-form" class="form-container">
+            <h2 style="text-align: center; margin-bottom: 25px;">ایجاد حساب جدید</h2>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="register-name">نام کامل:</label>
+                    <input type="text" id="register-name" required placeholder="نام و نام خانوادگی">
+                </div>
+                <div class="form-group">
+                    <label for="register-email">ایمیل:</label>
+                    <input type="email" id="register-email" required placeholder="example@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="register-password">رمز عبور:</label>
+                    <input type="password" id="register-password" required placeholder="حداقل ۶ کاراکتر">
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm">تکرار رمز عبور:</label>
+                    <input type="password" id="register-confirm" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn">ایجاد حساب</button>
+            </form>
+            <div id="register-message" class="message"></div>
+        </div>
+    </div>
+
+    <script>
+        // مدیریت تب‌ها
+        function showTab(tabName) {
+            // غیرفعال کردن همه تب‌ها
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.form-container').forEach(form => form.classList.remove('active'));
+            
+            // فعال کردن تب انتخاب شده
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-form').classList.add('active');
+        }
+
+        // ذخیره‌سازی کاربران در localStorage
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('tetrashop_users')) || [];
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('tetrashop_users', JSON.stringify(users));
+        }
+
+        // مدیریت ثبت‌نام
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            const messageEl = document.getElementById('register-message');
+            
+            // اعتبارسنجی
+            if (password !== confirm) {
+                showMessage(messageEl, 'رمز عبور و تکرار آن مطابقت ندارند', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showMessage(messageEl, 'رمز عبور باید حداقل ۶ کاراکتر باشد', 'error');
+                return;
+            }
+            
+            const users = getUsers();
+            
+            // بررسی وجود کاربر
+            if (users.find(user => user.email === email)) {
+                showMessage(messageEl, 'این ایمیل قبلاً ثبت شده است', 'error');
+                return;
+            }
+            
+            // ثبت کاربر جدید
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                password: btoa(password), // رمزنگاری ساده
+                createdAt: new Date().toISOString(),
+                role: 'user'
+            };
+            
+            users.push(newUser);
+            saveUsers(users);
+            
+            showMessage(messageEl, 'حساب کاربری با موفقیت ایجاد شد!', 'success');
+            document.getElementById('register-form').reset();
+            
+            // انتقال به صفحه ورود بعد از 2 ثانیه
+            setTimeout(() => {
+                showTab('login');
+                document.getElementById('login-email').value = email;
+            }, 2000);
+        }
+
+        // مدیریت ورود
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            const messageEl = document.getElementById('login-message');
+            const users = getUsers();
+            
+            // پیدا کردن کاربر
+            const user = users.find(u => u.email === email && u.password === btoa(password));
+            
+            if (user) {
+                showMessage(messageEl, `خوش آمدید ${user.name}!`, 'success');
+                
+                // ذخیره session
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
+                
+                // انتقال به پنل کاربر بعد از 1 ثانیه
+                setTimeout(() => {
+                    window.location.href = 'user-dashboard.html';
+                }, 1000);
+            } else {
+                showMessage(messageEl, 'ایمیل یا رمز عبور اشتباه است', 'error');
+            }
+        }
+
+        // نمایش پیام
+        function showMessage(element, text, type) {
+            element.textContent = text;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
+            
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
+        // بررسی اگر کاربر قبلاً وارد شده
+        window.addEventListener('load', () => {
+            const currentUser = sessionStorage.getItem('currentUser');
+            if (currentUser) {
+                window.location.href = 'user-dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>

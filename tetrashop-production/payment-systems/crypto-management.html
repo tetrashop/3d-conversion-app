@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت رمزارز - Tetrashop100</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { 
+            background: rgba(255,255,255,0.95); 
+            padding: 30px; 
+            border-radius: 20px; 
+            margin-bottom: 30px; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .crypto-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 25px; 
+            margin-bottom: 30px; 
+        }
+        .crypto-card { 
+            background: rgba(255,255,255,0.95); 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .crypto-card:hover {
+            transform: translateY(-5px);
+        }
+        .price { 
+            font-size: 2.5em; 
+            font-weight: bold; 
+            margin: 15px 0; 
+        }
+        .btc { color: #f7931a; }
+        .eth { color: #627eea; }
+        .usdt { color: #26a17b; }
+        .btn { 
+            background: #667eea; 
+            color: white; 
+            padding: 15px 30px; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            margin: 8px; 
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        .btn:hover { 
+            background: #764ba2; 
+            transform: translateY(-2px); 
+        }
+        .transaction-list {
+            background: rgba(255,255,255,0.95);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 سیستم مدیریت رمزارز Tetrashop100</h1>
+            <p>مدیریت یکپارچه ارزهای دیجیتال - Bitcoin, Ethereum, Tether</p>
+        </div>
+        
+        <div class="crypto-grid">
+            <div class="crypto-card">
+                <h2>🎯 Bitcoin (BTC)</h2>
+                <div class="price btc" id="btc-price">$45,267.89</div>
+                <div>تغییر 24h: <span id="btc-change" style="color: green">+2.3%</span></div>
+                <button class="btn" onclick="buyCrypto('BTC')">🛒 خرید BTC</button>
+                <button class="btn" onclick="sellCrypto('BTC')">💰 فروش BTC</button>
+                <button class="btn" onclick="showWallet('BTC')">👛 کیف پول</button>
+            </div>
+            
+            <div class="crypto-card">
+                <h2>🔷 Ethereum (ETH)</h2>
+                <div class="price eth" id="eth-price">$2,845.67</div>
+                <div>تغییر 24h: <span id="eth-change" style="color: green">+1.8%</span></div>
+                <button class="btn" onclick="buyCrypto('ETH')">🛒 خرید ETH</button>
+                <button class="btn" onclick="sellCrypto('ETH')">💰 فروش ETH</button>
+                <button class="btn" onclick="showWallet('ETH')">👛 کیف پول</button>
+            </div>
+            
+            <div class="crypto-card">
+                <h2>💎 Tether (USDT)</h2>
+                <div class="price usdt" id="usdt-price">$1.00</div>
+                <div>تغییر 24h: <span id="usdt-change" style="color: gray">0.0%</span></div>
+                <button class="btn" onclick="buyCrypto('USDT')">🛒 خرید USDT</button>
+                <button class="btn" onclick="sellCrypto('USDT')">💰 فروش USDT</button>
+                <button class="btn" onclick="showWallet('USDT')">👛 کیف پول</button>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <h2>📊 تراکنش‌های اخیر</h2>
+            <div class="transaction-list" id="transactions">
+                <div>🟢 خرید 0.005 BTC - $225.00</div>
+                <div>🔴 فروش 2.5 ETH - $7,114.17</div>
+                <div>🟢 خرید 1000 USDT - $1,000.00</div>
+                <div>🟢 خرید 0.1 ETH - $284.56</div>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <h2>📈 نمودار قیمت</h2>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                <p>📊 نمودار زنده قیمت‌ها (شبیه‌سازی شده)</p>
+                <div style="height: 200px; background: linear-gradient(90deg, #f7931a 60%, #627eea 30%, #26a17b 10%); border-radius: 10px; margin: 15px 0;"></div>
+                <div style="display: flex; justify-content: space-around;">
+                    <span>BTC: 60%</span>
+                    <span>ETH: 30%</span>
+                    <span>USDT: 10%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // شبیه‌سازی قیمت‌های زنده
+        function updatePrices() {
+            const btcChange = (Math.random() - 0.5) * 4;
+            const ethChange = (Math.random() - 0.5) * 3;
+            
+            document.getElementById('btc-change').textContent = (btcChange > 0 ? '+' : '') + btcChange.toFixed(2) + '%';
+            document.getElementById('btc-change').style.color = btcChange >= 0 ? 'green' : 'red';
+            
+            document.getElementById('eth-change').textContent = (ethChange > 0 ? '+' : '') + ethChange.toFixed(2) + '%';
+            document.getElementById('eth-change').style.color = ethChange >= 0 ? 'green' : 'red';
+        }
+        
+        function buyCrypto(currency) {
+            const amount = prompt(`مقدار ${currency} برای خرید:`);
+            if (amount) {
+                alert(`✅ درخواست خرید ${amount} ${currency} ثبت شد`);
+                addTransaction(`🟢 خرید ${amount} ${currency}`);
+            }
+        }
+        
+        function sellCrypto(currency) {
+            const amount = prompt(`مقدار ${currency} برای فروش:`);
+            if (amount) {
+                alert(`✅ درخواست فروش ${amount} ${currency} ثبت شد`);
+                addTransaction(`🔴 فروش ${amount} ${currency}`);
+            }
+        }
+        
+        function showWallet(currency) {
+            alert(`💰 موجودی ${currency}: ${(Math.random() * 10).toFixed(4)}`);
+        }
+        
+        function addTransaction(transaction) {
+            const transactionsDiv = document.getElementById('transactions');
+            const newTransaction = document.createElement('div');
+            newTransaction.textContent = transaction;
+            transactionsDiv.insertBefore(newTransaction, transactionsDiv.firstChild);
+        }
+        
+        // بروزرسانی هر 10 ثانیه
+        setInterval(updatePrices, 10000);
+        updatePrices();
+    </script>
+</body>
+</html>

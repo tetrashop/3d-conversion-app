@@ -1,0 +1,11 @@
+node_modules/
+.env
+.DS_Store
+*.log
+.vercel
+.netlify
+dist/
+build/
+.ssh/
+*.tar.gz
+*.zip

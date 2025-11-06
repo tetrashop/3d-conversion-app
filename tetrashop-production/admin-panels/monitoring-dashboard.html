@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل رصد سامانه تبدیل 3D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-900 min-h-screen">
+    <!-- هدر رصد -->
+    <header class="bg-gray-800 border-b border-blue-500/20">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center text-white">
+                        <i class="fas fa-chart-line text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">پنل رصد سامانه 3D</h1>
+                        <p class="text-red-300 text-sm">🔍 سیستم مانیتورینگ Real-time</p>
+                    </div>
+                </div>
+                <div class="text-white">
+                    <div id="currentTime" class="text-lg font-mono"></div>
+                    <div class="text-green-400 text-sm">🟢 سیستم فعال</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <!-- متریک‌های اصلی -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-gray-800 rounded-2xl p-6 border border-green-500/20">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-2xl font-bold text-white" id="totalVisits">۰</div>
+                        <div class="text-green-300">بازدید کل</div>
+                    </div>
+                    <i class="fas fa-users text-3xl text-green-400"></i>
+                </div>
+                <div class="text-green-200 text-sm mt-2">📈 +۱۲٪ از دیروز</div>
+            </div>
+
+            <div class="bg-gray-800 rounded-2xl p-6 border border-blue-500/20">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-2xl font-bold text-white" id="activeUsers">۰</div>
+                        <div class="text-blue-300">کاربران فعال</div>
+                    </div>
+                    <i class="fas fa-user-check text-3xl text-blue-400"></i>
+                </div>
+                <div class="text-blue-200 text-sm mt-2">👥 در ۱۵ دقیقه گذشته</div>
+            </div>
+
+            <div class="bg-gray-800 rounded-2xl p-6 border border-yellow-500/20">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-2xl font-bold text-white" id="conversions">۰</div>
+                        <div class="text-yellow-300">تبدیل‌ها</div>
+                    </div>
+                    <i class="fas fa-exchange-alt text-3xl text-yellow-400"></i>
+                </div>
+                <div class="text-yellow-200 text-sm mt-2">🔄 امروز</div>
+            </div>
+
+            <div class="bg-gray-800 rounded-2xl p-6 border border-purple-500/20">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-2xl font-bold text-white" id="revenue">۰</div>
+                        <div class="text-purple-300">درآمد</div>
+                    </div>
+                    <i class="fas fa-coins text-3xl text-purple-400"></i>
+                </div>
+                <div class="text-purple-200 text-sm mt-2">💰 تومان</div>
+            </div>
+        </div>
+
+        <!-- چارت‌های رصد -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- چارت ترافیک -->
+            <div class="bg-gray-800 rounded-2xl p-6 border border-blue-500/20">
+                <h3 class="text-xl font-bold text-white mb-4">📊 ترافیک ساعتی</h3>
+                <div class="h-64">
+                    <canvas id="trafficChart"></canvas>
+                </div>
+            </div>
+
+            <!-- چارت تبدیل‌ها -->
+            <div class="bg-gray-800 rounded-2xl p-6 border border-green-500/20">
+                <h3 class="text-xl font-bold text-white mb-4">🎯 نرخ تبدیل</h3>
+                <div class="h-64">
+                    <canvas id="conversionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- لاگ‌های زنده -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- لاگ فعالیت‌ها -->
+            <div class="bg-gray-800 rounded-2xl p-6 border border-yellow-500/20">
+                <h3 class="text-xl font-bold text-white mb-4">📝 فعالیت‌های زنده</h3>
+                <div class="h-80 overflow-y-auto space-y-3" id="activityLog">
+                    <!-- لاگ‌ها به صورت داینامیک -->
+                </div>
+            </div>
+
+            <!-- وضعیت سیستم -->
+            <div class="bg-gray-800 rounded-2xl p-6 border border-red-500/20">
+                <h3 class="text-xl font-bold text-white mb-4">🛡️ وضعیت سیستم</h3>
+                <div class="space-y-4" id="systemStatus">
+                    <!-- وضعیت‌ها به صورت داینامیک -->
+                </div>
+            </div>
+        </div>
+
+        <!-- رصد کاربران آنلاین -->
+        <div class="mt-8 bg-gray-800 rounded-2xl p-6 border border-purple-500/20">
+            <h3 class="text-xl font-bold text-white mb-4">👥 کاربران آنلاین</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="onlineUsers">
+                <!-- کاربران آنلاین -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // سیستم رصد Real-time
+        class MonitoringSystem {
+            constructor() {
+                this.metrics = {
+                    totalVisits: 0,
+                    activeUsers: 0,
+                    conversions: 0,
+                    revenue: 0
+                };
+                
+                this.charts = {};
+                this.init();
+            }
+
+            init() {
+                this.initializeCharts();
+                this.startRealTimeUpdates();
+                this.startActivitySimulation();
+                this.updateTime();
+            }
+
+            // راه‌اندازی چارت‌ها
+            initializeCharts() {
+                // چارت ترافیک
+                const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+                this.charts.traffic = new Chart(trafficCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['۰۸:۰۰', '۱۰:۰۰', '۱۲:۰۰', '۱۴:۰۰', '۱۶:۰۰', '۱۸:۰۰', '۲۰:۰۰'],
+                        datasets: [{
+                            label: 'بازدید',
+                            data: [65, 59, 80, 81, 56, 55, 40],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } },
+                            x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } }
+                        }
+                    }
+                });
+
+                // چارت تبدیل
+                const conversionCtx = document.getElementById('conversionChart').getContext('2d');
+                this.charts.conversion = new Chart(conversionCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['استاندارد', 'پریمیوم', 'اکسپرس'],
+                        datasets: [{
+                            data: [45, 35, 20],
+                            backgroundColor: ['#3b82f6', '#10b981', '#8b5cf6']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { color: 'white', font: { size: 12 } } }
+                        }
+                    }
+                });
+            }
+
+            // بروزرسانی Real-time
+            startRealTimeUpdates() {
+                setInterval(() => {
+                    this.updateMetrics();
+                    this.updateCharts();
+                    this.updateSystemStatus();
+                }, 3000);
+
+                // بروزرسانی اولیه
+                this.updateMetrics();
+            }
+
+            // بروزرسانی متریک‌ها
+            updateMetrics() {
+                // شبیه‌سازی داده‌های Real-time
+                this.metrics.totalVisits += Math.floor(Math.random() * 5);
+                this.metrics.activeUsers = 15 + Math.floor(Math.random() * 10);
+                this.metrics.conversions += Math.floor(Math.random() * 2);
+                this.metrics.revenue = 1250000 + Math.floor(Math.random() * 500000);
+
+                // بروزرسانی نمایش
+                document.getElementById('totalVisits').textContent = 
+                    this.metrics.totalVisits.toLocaleString();
+                document.getElementById('activeUsers').textContent = 
+                    this.metrics.activeUsers.toLocaleString();
+                document.getElementById('conversions').textContent = 
+                    this.metrics.conversions.toLocaleString();
+                document.getElementById('revenue').textContent = 
+                    this.metrics.revenue.toLocaleString();
+            }
+
+            // بروزرسانی چارت‌ها
+            updateCharts() {
+                // بروزرسانی چارت ترافیک
+                const newData = this.charts.traffic.data.datasets[0].data.map(value => 
+                    Math.max(10, value + Math.floor(Math.random() * 10 - 5))
+                );
+                this.charts.traffic.data.datasets[0].data = newData;
+                this.charts.traffic.update('none');
+            }
+
+            // شبیه سازی فعالیت
+            startActivitySimulation() {
+                const activities = [
+                    'کاربر جدید ثبت نام کرد',
+                    'فایل آپلود شد',
+                    'تبدیل آغاز شد',
+                    'پرداخت موفق',
+                    'فایل دانلود شد',
+                    'پشتیبانی تماس گرفت'
+                ];
+
+                setInterval(() => {
+                    const activity = activities[Math.floor(Math.random() * activities.length)];
+                    const timestamp = new Date().toLocaleTimeString('fa-IR');
+                    this.addActivityLog(`${timestamp} - ${activity}`);
+                }, 5000);
+            }
+
+            // اضافه کردن لاگ فعالیت
+            addActivityLog(message) {
+                const logContainer = document.getElementById('activityLog');
+                const logEntry = document.createElement('div');
+                logEntry.className = 'bg-gray-700/50 rounded-lg p-3 text-white text-sm';
+                logEntry.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 bg-green-400 rounded-full ml-2"></div>
+                        ${message}
+                    </div>
+                `;
+                
+                logContainer.prepend(logEntry);
+                
+                // محدود کردن تعداد لاگ‌ها
+                if (logContainer.children.length > 10) {
+                    logContainer.removeChild(logContainer.lastChild);
+                }
+            }
+
+            // بروزرسانی وضعیت سیستم
+            updateSystemStatus() {
+                const statusContainer = document.getElementById('systemStatus');
+                const statuses = [
+                    { name: 'سرور اصلی', status: 'active', value: '۹۹.۹٪' },
+                    { name: 'پایگاه داده', status: 'active', value: '۱۰۰٪' },
+                    { name: 'شبکه', status: 'warning', value: '۹۵٪' },
+                    { name: 'فضای ذخیره‌سازی', status: 'active', value: '۷۸٪' }
+                ];
+
+                statusContainer.innerHTML = statuses.map(status => `
+                    <div class="flex items-center justify-between p-3 bg-gray-700/30 rounded-lg">
+                        <span class="text-white">${status.name}</span>
+                        <div class="flex items-center space-x-2 space-x-reverse">
+                            <span class="text-${status.status === 'active' ? 'green' : 'yellow'}-400">${status.value}</span>
+                            <div class="w-3 h-3 bg-${status.status === 'active' ? 'green' : 'yellow'}-400 rounded-full"></div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // بروزرسانی زمان
+            updateTime() {
+                setInterval(() => {
+                    document.getElementById('currentTime').textContent = 
+                        new Date().toLocaleTimeString('fa-IR');
+                }, 1000);
+            }
+        }
+
+        // شبیه‌سازی کاربران آنلاین
+        function simulateOnlineUsers() {
+            const users = [
+                { name: 'علی محمدی', location: 'تهران', plan: 'پریمیوم' },
+                { name: 'شرکت طراحی', location: 'اصفهان', plan: 'اکسپرس' },
+                { name: 'فریبرز رضایی', location: 'مشهد', plan: 'استاندارد' },
+                { name: 'استودیو هنر', location: 'شیراز', plan: 'پریمیوم' }
+            ];
+
+            const container = document.getElementById('onlineUsers');
+            container.innerHTML = users.map(user => `
+                <div class="bg-gray-700/50 rounded-xl p-4">
+                    <div class="flex items-center space-x-3 space-x-reverse mb-2">
+                        <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                        <div class="text-white font-semibold">${user.name}</div>
+                    </div>
+                    <div class="text-gray-400 text-sm">
+                        <div>📍 ${user.location}</div>
+                        <div>🎯 ${user.plan}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // راه‌اندازی سیستم رصد
+        document.addEventListener('DOMContentLoaded', () => {
+            const monitor = new MonitoringSystem();
+            simulateOnlineUsers();
+            
+            console.log('✅ سیستم رصد با موفقیت راه‌اندازی شد');
+        });
+    </script>
+</body>
+</html>

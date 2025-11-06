@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت رمزارز - Tetrashop100</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: rgba(255,255,255,0.95); padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+        .crypto-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .crypto-card { background: rgba(255,255,255,0.95); padding: 25px; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+        .price { font-size: 2em; font-weight: bold; margin: 10px 0; }
+        .btc { color: #f7931a; }
+        .eth { color: #627eea; }
+        .usdt { color: #26a17b; }
+        .btn { background: #667eea; color: white; padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; margin: 5px; transition: all 0.3s; }
+        .btn:hover { background: #764ba2; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 پنل مدیریت رمزارز - Tetrashop100</h1>
+            <p>مدیریت یکپارچه Bitcoin, Ethereum, Tether</p>
+        </div>
+        
+        <div class="crypto-grid">
+            <div class="crypto-card">
+                <h2>🎯 Bitcoin (BTC)</h2>
+                <div class="price btc" id="btc-price">$0.00</div>
+                <button class="btn" onclick="buyCrypto('BTC')">خرید BTC</button>
+                <button class="btn" onclick="sellCrypto('BTC')">فروش BTC</button>
+            </div>
+            
+            <div class="crypto-card">
+                <h2>🔷 Ethereum (ETH)</h2>
+                <div class="price eth" id="eth-price">$0.00</div>
+                <button class="btn" onclick="buyCrypto('ETH')">خرید ETH</button>
+                <button class="btn" onclick="sellCrypto('ETH')">فروش ETH</button>
+            </div>
+            
+            <div class="crypto-card">
+                <h2>💎 Tether (USDT)</h2>
+                <div class="price usdt" id="usdt-price">$1.00</div>
+                <button class="btn" onclick="buyCrypto('USDT')">خرید USDT</button>
+                <button class="btn" onclick="sellCrypto('USDT')">فروش USDT</button>
+            </div>
+        </div>
+
+        <div class="crypto-card">
+            <h2>📊 تراکنش‌های اخیر</h2>
+            <div id="transactions">در حال بارگذاری...</div>
+        </div>
+    </div>
+
+    <script>
+        // شبیه‌سازی قیمت‌های زنده
+        function updatePrices() {
+            document.getElementById('btc-price').textContent = '$' + (Math.random() * 1000 + 35000).toFixed(2);
+            document.getElementById('eth-price').textContent = '$' + (Math.random() * 100 + 2500).toFixed(2);
+        }
+        
+        function buyCrypto(currency) {
+            alert(`درخواست خرید ${currency} ثبت شد`);
+        }
+        
+        function sellCrypto(currency) {
+            alert(`درخواست فروش ${currency} ثبت شد`);
+        }
+        
+        // بروزرسانی هر 5 ثانیه
+        setInterval(updatePrices, 5000);
+        updatePrices();
+    </script>
+</body>
+</html>
