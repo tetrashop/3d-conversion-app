@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت رصد سامانه</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-900 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-white mb-2">پنل مدیریت رصد سامانه</h1>
+            <p class="text-blue-300">سامانه: https://b505c963.3d-conversion-app5.pages.dev/</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gray-800 rounded-2xl p-6">
+                <h3 class="text-lg font-bold text-white mb-4">🔧 تنظیمات رصد</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-blue-300 block mb-2">بازه زمانی:</label>
+                        <select class="w-full bg-gray-700 text-white rounded-lg p-2">
+                            <option>۲۴ ساعت گذشته</option>
+                            <option>۷ روز گذشته</option>
+                            <option>۳۰ روز گذشته</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-blue-300 block mb-2">متریک‌های فعال:</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center text-white">
+                                <input type="checkbox" checked class="ml-2">
+                                عملکرد سامانه
+                            </label>
+                            <label class="flex items-center text-white">
+                                <input type="checkbox" checked class="ml-2">
+                                تعامل کاربران
+                            </label>
+                            <label class="flex items-center text-white">
+                                <input type="checkbox" checked class="ml-2">
+                                امنیت
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-2xl p-6">
+                <h3 class="text-lg font-bold text-white mb-4">📈 گزارش فوری</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between text-white">
+                        <span>وضعیت سامانه:</span>
+                        <span class="text-green-400">فعال ✅</span>
+                    </div>
+                    <div class="flex justify-between text-white">
+                        <span>زمان پاسخ:</span>
+                        <span class="text-blue-400">۱۴۲ms</span>
+                    </div>
+                    <div class="flex justify-between text-white">
+                        <span>کاربران آنلاین:</span>
+                        <span class="text-yellow-400">۲۳ نفر</span>
+                    </div>
+                    <div class="flex justify-between text-white">
+                        <span>خطاها:</span>
+                        <span class="text-red-400">۲ مورد</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-2xl p-6">
+                <h3 class="text-lg font-bold text-white mb-4">🚨 هشدارها</h3>
+                <div class="space-y-3">
+                    <div class="bg-yellow-500/20 rounded-lg p-3">
+                        <div class="flex items-center text-yellow-300">
+                            <i class="fas fa-exclamation-triangle ml-2"></i>
+                            <span>افزایش ناگهانی ترافیک</span>
+                        </div>
+                    </div>
+                    <div class="bg-red-500/20 rounded-lg p-3">
+                        <div class="flex items-center text-red-300">
+                            <i class="fas fa-shield-alt ml-2"></i>
+                            <span>تلاش دسترسی غیرمجاز</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gray-800 rounded-2xl p-6">
+            <h3 class="text-xl font-bold text-white mb-4">📋 گزارش کامل رصد</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-white">
+                    <thead>
+                        <tr class="border-b border-gray-600">
+                            <th class="py-3 text-right">زمان</th>
+                            <th class="py-3 text-right">نوع رویداد</th>
+                            <th class="py-3 text-right">جزئیات</th>
+                            <th class="py-3 text-right">وضعیت</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monitoringLogs">
+                        <!-- لاگ‌ها به صورت داینامیک -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // شبیه‌سازی داده‌های رصد
+        const monitoringData = [
+            { time: '۱۴:۳۰:۲۵', type: 'PERFORMANCE', details: 'زمان بارگذاری صفحه: ۱.۲s', status: 'normal' },
+            { time: '۱۴:۲۸:۱۰', type: 'SECURITY', details: 'تلاش دسترسی از IP غیرمعمول', status: 'warning' },
+            { time: '۱۴:۲۵:۴۵', type: 'USER_ACTION', details: 'کاربر جدید ثبت نام کرد', status: 'normal' },
+            { time: '۱۴:۲۲:۳۰', type: 'ERROR', details: 'خطای ۴۰۴ در آدرس /api/convert', status: 'error' },
+            { time: '۱۴:۲۰:۱۵', type: 'PERFORMANCE', details: 'استفاده از CPU: ۴۵٪', status: 'normal' }
+        ];
+
+        function populateMonitoringLogs() {
+            const container = document.getElementById('monitoringLogs');
+            container.innerHTML = monitoringData.map(log => `
+                <tr class="border-b border-gray-700">
+                    <td class="py-3 px-4">${log.time}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-1 rounded text-xs ${
+                            log.type === 'SECURITY' ? 'bg-red-500/20 text-red-300' :
+                            log.type === 'ERROR' ? 'bg-red-500/20 text-red-300' :
+                            log.type === 'PERFORMANCE' ? 'bg-blue-500/20 text-blue-300' :
+                            'bg-green-500/20 text-green-300'
+                        }">${log.type}</span>
+                    </td>
+                    <td class="py-3 px-4">${log.details}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-1 rounded text-xs ${
+                            log.status === 'normal' ? 'bg-green-500/20 text-green-300' :
+                            log.status === 'warning' ? 'bg-yellow-500/20 text-yellow-300' :
+                            'bg-red-500/20 text-red-300'
+                        }">${log.status === 'normal' ? 'عادی' : log.status === 'warning' ? 'هشدار' : 'خطا'}</span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // راه‌اندازی اولیه
+        document.addEventListener('DOMContentLoaded', () => {
+            populateMonitoringLogs();
+            
+            // بروزرسانی Real-time
+            setInterval(() => {
+                // اضافه کردن رویداد جدید
+                const newEvent = {
+                    time: new Date().toLocaleTimeString('fa-IR'),
+                    type: ['PERFORMANCE', 'USER_ACTION', 'SECURITY'][Math.floor(Math.random() * 3)],
+                    details: 'رویداد Real-time جدید',
+                    status: Math.random() > 0.8 ? 'warning' : 'normal'
+                };
+                
+                monitoringData.unshift(newEvent);
+                if (monitoringData.length > 10) monitoringData.pop();
+                populateMonitoringLogs();
+            }, 10000);
+        });
+    </script>
+</body>
+</html>

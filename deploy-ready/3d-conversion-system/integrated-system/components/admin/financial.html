@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستم مالی بلادرنگ - واریز و برداشت</title>
+    <link rel="stylesheet" href="css/financial.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h2>💳 سیستم مالی</h2>
+            <p>واریز و برداشت لحظه‌ای</p>
+        </div>
+        
+        <nav class="nav-links">
+            <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">📊 داشبورد مالی</a>
+            <a href="#deposit" class="nav-link" onclick="showSection('deposit')">💰 واریز لحظه‌ای</a>
+            <a href="#withdraw" class="nav-link" onclick="showSection('withdraw')">💸 برداشت لحظه‌ای</a>
+            <a href="#transactions" class="nav-link" onclick="showSection('transactions')">📋 تراکنش‌های زنده</a>
+            <a href="#gateways" class="nav-link" onclick="showSection('gateways')">🌐 درگاه‌های پرداخت</a>
+        </nav>
+
+        <div class="system-status">
+            <div class="status-item">
+                <span class="status-dot online"></span>
+                <span>سیستم مالی: <span id="financialStatus">فعال</span></span>
+            </div>
+            <div class="balance-info">
+                <div>موجودی کل: <strong id="totalBalance">0 تومان</strong></div>
+                <div>در انتظار تایید: <strong id="pendingBalance">0 تومان</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header class="top-bar">
+            <div class="header-title">
+                <h1 id="pageTitle">داشبورد مالی بلادرنگ</h1>
+                <div class="live-indicator">
+                    <span class="pulse"></span>
+                    <span>زنده</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="quick-stats">
+                    <span>واریز امروز: <strong id="todayDeposits">0</strong></span>
+                    <span>برداشت امروز: <strong id="todayWithdrawals">0</strong></span>
+                </div>
+                <button class="btn btn-primary" onclick="syncFinancialData()">
+                    🔄 همگام‌سازی
+                </button>
+            </div>
+        </header>
+
+        <main class="content">
+            <!-- داشبورد مالی -->
+            <section id="dashboard-section" class="section active">
+                <div class="financial-cards">
+                    <div class="f-card income">
+                        <div class="f-icon">💰</div>
+                        <div class="f-info">
+                            <h3 id="totalDeposits">0 تومان</h3>
+                            <p>کل واریزها</p>
+                            <div class="f-trend up">+12%</div>
+                        </div>
+                    </div>
+
+                    <div class="f-card outcome">
+                        <div class="f-icon">💸</div>
+                        <div class="f-info">
+                            <h3 id="totalWithdrawals">0 تومان</h3>
+                            <p>کل برداشت‌ها</p>
+                            <div class="f-trend down">-5%</div>
+                        </div>
+                    </div>
+
+                    <div class="f-card pending">
+                        <div class="f-icon">⏳</div>
+                        <div class="f-info">
+                            <h3 id="pendingTransactions">0</h3>
+                            <p>در انتظار تایید</p>
+                            <div class="f-trend">±0%</div>
+                        </div>
+                    </div>
+
+                    <div class="f-card success-rate">
+                        <div class="f-icon">✅</div>
+                        <div class="f-info">
+                            <h3 id="successRate">0%</h3>
+                            <p>نرخ موفقیت</p>
+                            <div class="f-trend up">+2%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <h3>📈 جریان مالی لحظه‌ای</h3>
+                        <canvas id="cashflowChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>🎯 وضعیت تراکنش‌ها</h3>
+                        <canvas id="transactionsPieChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- تراکنش‌های فوری -->
+                <div class="instant-transactions">
+                    <h3>⚡ تراکنش‌های لحظه‌ای</h3>
+                    <div class="transactions-live" id="transactionsLive">
+                        <!-- تراکنش‌ها به صورت زنده نمایش داده می‌شوند -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش واریز -->
+            <section id="deposit-section" class="section">
+                <div class="deposit-container">
+                    <h2>💰 واریز لحظه‌ای</h2>
+                    
+                    <div class="deposit-methods">
+                        <div class="method-card active" data-method="crypto">
+                            <div class="method-icon">₿</div>
+                            <div class="method-info">
+                                <h4>رمز ارز</h4>
+                                <p>واریز فوری با کریپتو</p>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-method="bank">
+                            <div class="method-icon">🏦</div>
+                            <div class="method-info">
+                                <h4>درگاه بانکی</h4>
+                                <p>واریز تومانی</p>
+                            </div>
+                        </div>
+
+                        <div class="method-card" data-method="wallet">
+                            <div class="method-icon">👛</div>
+                            <div class="method-info">
+                                <h4>کیف پول</h4>
+                                <p>انتقال داخلی</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- فرم واریز رمز ارز -->
+                    <div class="deposit-form" id="cryptoForm">
+                        <h3>واریز رمز ارز</h3>
+                        <div class="form-group">
+                            <label>انتخاب ارز:</label>
+                            <select id="cryptoCurrency">
+                                <option value="btc">بیت‌کوین (BTC)</option>
+                                <option value="eth">اتریوم (ETH)</option>
+                                <option value="usdt">تتر (USDT)</option>
+                                <option value="trx">ترون (TRX)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>مبلغ (تومان):</label>
+                            <input type="number" id="depositAmount" placeholder="مبلغ به تومان">
+                        </div>
+
+                        <div class="form-group">
+                            <label>آدرس کیف پول:</label>
+                            <div class="wallet-address">
+                                <input type="text" id="walletAddress" readonly value="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa">
+                                <button class="btn-copy" onclick="copyWalletAddress()">📋</button>
+                            </div>
+                            <small>فقط به این آدرس واریز کنید</small>
+                        </div>
+
+                        <div class="deposit-info">
+                            <div class="info-item">
+                                <span>حداقل واریز:</span>
+                                <span>500,000 تومان</span>
+                            </div>
+                            <div class="info-item">
+                                <span>کارمزد شبکه:</span>
+                                <span>0.0005 BTC</span>
+                            </div>
+                            <div class="info-item">
+                                <span>زمان تایید:</span>
+                                <span>2-30 دقیقه</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-success" onclick="initiateDeposit()">
+                            🚀 شروع واریز
+                        </button>
+                    </div>
+
+                    <!-- وضعیت واریز زنده -->
+                    <div class="deposit-status">
+                        <h3>📊 وضعیت واریزهای اخیر</h3>
+                        <div class="status-list" id="depositStatusList">
+                            <!-- وضعیت واریزها -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش برداشت -->
+            <section id="withdraw-section" class="section">
+                <div class="withdraw-container">
+                    <h2>💸 برداشت لحظه‌ای</h2>
+
+                    <div class="withdraw-form">
+                        <div class="form-group">
+                            <label>روش برداشت:</label>
+                            <select id="withdrawMethod">
+                                <option value="crypto">رمز ارز</option>
+                                <option value="bank">کارت به کارت</option>
+                                <option value="wallet">کیف پول داخلی</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>مبلغ برداشت (تومان):</label>
+                            <input type="number" id="withdrawAmount" placeholder="مبلغ به تومان">
+                            <div class="balance-info">
+                                موجودی قابل برداشت: <span id="availableBalance">0</span> تومان
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="cryptoWithdrawInfo">
+                            <label>آدرس مقصد:</label>
+                            <input type="text" id="withdrawAddress" placeholder="آدرس کیف پول مقصد">
+                        </div>
+
+                        <div class="form-group" id="bankWithdrawInfo" style="display: none;">
+                            <label>شماره کارت:</label>
+                            <input type="text" id="cardNumber" placeholder="۶۲۱۹-XXXX-XXXX-XXXX">
+                        </div>
+
+                        <div class="withdraw-limits">
+                            <div class="limit-item">
+                                <span>حداکثر روزانه:</span>
+                                <span>50,000,000 تومان</span>
+                            </div>
+                            <div class="limit-item">
+                                <span>کارمزد:</span>
+                                <span id="withdrawFee">0 تومان</span>
+                            </div>
+                            <div class="limit-item">
+                                <span>دریافتی نهایی:</span>
+                                <span id="finalAmount">0 تومان</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-warning" onclick="initiateWithdrawal()">
+                            💸 درخواست برداشت
+                        </button>
+                    </div>
+
+                    <!-- تاریخچه برداشت -->
+                    <div class="withdraw-history">
+                        <h3>📋 درخواست‌های برداشت</h3>
+                        <div class="history-list" id="withdrawHistoryList">
+                            <!-- تاریخچه برداشت -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- تراکنش‌های زنده -->
+            <section id="transactions-section" class="section">
+                <h2>📊 تراکنش‌های مالی زنده</h2>
+                
+                <div class="transactions-controls">
+                    <div class="filter-group">
+                        <label>فیلتر:</label>
+                        <select id="transactionFilter">
+                            <option value="all">همه</option>
+                            <option value="deposit">واریز</option>
+                            <option value="withdraw">برداشت</option>
+                            <option value="pending">در انتظار</option>
+                            <option value="completed">تکمیل شده</option>
+                        </select>
+                    </div>
+                    <div class="search-group">
+                        <input type="text" id="transactionSearch" placeholder="جستجوی تراکنش...">
+                    </div>
+                </div>
+
+                <div class="transactions-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>زمان</th>
+                                <th>شناسه</th>
+                                <th>نوع</th>
+                                <th>مبلغ</th>
+                                <th>وضعیت</th>
+                                <th>جزئیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTableBody">
+                            <!-- تراکنش‌ها -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- درگاه‌های پرداخت -->
+            <section id="gateways-section" class="section">
+                <h2>🌐 درگاه‌های پرداخت</h2>
+                
+                <div class="gateways-status">
+                    <div class="gateway-card online">
+                        <div class="gateway-icon">💎</div>
+                        <div class="gateway-info">
+                            <h4>زرین‌پال</h4>
+                            <p>وضعیت: <span class="status-online">فعال</span></p>
+                            <p>تراکنش‌های موفق: <span>1,245</span></p>
+                        </div>
+                    </div>
+
+                    <div class="gateway-card online">
+                        <div class="gateway-icon">🔵</div>
+                        <div class="gateway-info">
+                            <h4>آی‌دی پی</h4>
+                            <p>وضعیت: <span class="status-online">فعال</span></p>
+                            <p>تراکنش‌های موفق: <span>892</span></p>
+                        </div>
+                    </div>
+
+                    <div class="gateway-card offline">
+                        <div class="gateway-icon">⚡</div>
+                        <div class="gateway-info">
+                            <h4>نکست پی</h4>
+                            <p>وضعیت: <span class="status-offline">غیرفعال</span></p>
+                            <p>تراکنش‌های موفق: <span>567</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gateways-stats">
+                    <div class="stat-card">
+                        <h4>میانگین زمان تایید</h4>
+                        <div class="stat-value">۴۵ ثانیه</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>نرخ موفقیت</h4>
+                        <div class="stat-value">۹۸.۲%</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>تراکنش‌های امروز</h4>
+                        <div class="stat-value">۱۲۷</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- مودال تایید تراکنش -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <h3>✅ تایید تراکنش</h3>
+            <div id="modalDetails"></div>
+            <div class="modal-actions">
+                <button class="btn btn-success" onclick="confirmTransaction()">تایید</button>
+                <button class="btn btn-danger" onclick="cancelTransaction()">لغو</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/financial.js"></script>
+</body>
+</html>

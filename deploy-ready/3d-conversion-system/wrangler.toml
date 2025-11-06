@@ -1,0 +1,34 @@
+name = "3d-conversion-api"
+compatibility_date = "2023-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+account_id = "1234567890abcdef1234567890abcdef"  # جایگزین کن
+workers_dev = false
+
+[[routes]]
+pattern = "api.3d-convert.com/*"
+custom_domain = true
+
+[vars]
+API_VERSION = "1.0.0"
+MAX_FILE_SIZE = "104857600"
+CONVERSION_TIMEOUT = "300"
+SERVICE_NAME = "3D Conversion API"
+
+[env.production.vars]
+NODE_ENV = "production"
+LOG_LEVEL = "info"
+
+[env.production.d1_databases]
+binding = "DB"
+database_name = "3d-conversion-db"
+database_id = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"  # جایگزین کن
+
+[env.production.r2_buckets]
+binding = "FILE_BUCKET"
+bucket_name = "3d-conversion-files"
+
+[env.production.queues]
+binding = "CONVERSION_QUEUE"
+queue_name = "conversion-queue"

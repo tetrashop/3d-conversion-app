@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>مدیریت سرویس 3D</title>
+    <style>
+        body { font-family: Arial; margin: 40px; background: #f0f8ff; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; margin-bottom: 30px; }
+        .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }
+        .stat { background: #3498db; color: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0; }
+        .menu-btn { background: #27ae60; color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; }
+        .content { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px; min-height: 200px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛠 پنل مدیریت سرویس 3D</h1>
+        
+        <div class="stats">
+            <div class="stat">
+                <h3>📊 کل درخواست‌ها</h3>
+                <p id="totalRequests">۱۲۴۷</p>
+            </div>
+            <div class="stat">
+                <h3>💰 درآمد امروز</h3>
+                <p id="todayIncome">۵۷۵,۰۰۰ تومان</p>
+            </div>
+        </div>
+
+        <div class="menu">
+            <button class="menu-btn" onclick="showSection('requests')">📨 درخواست‌ها</button>
+            <button class="menu-btn" onclick="showSection('users')">👥 کاربران</button>
+            <button class="menu-btn" onclick="showSection('stats')">📈 آمار</button>
+        </div>
+
+        <div id="content" class="content">
+            <h3>✅ پنل مدیریت فعال شد</h3>
+            <p>همین الان می‌توانی سرویس را مدیریت کنی</p>
+            <p><strong>آدرس سرویس:</strong> https://3d-conversion-app.pages.dev/</p>
+        </div>
+    </div>
+
+    <script>
+        function showSection(section) {
+            const content = document.getElementById('content');
+            const sections = {
+                requests: `<h3>📨 آخرین درخواست‌ها</h3>
+                          <p>• کاربر #۱ - تبدیل مدل - ✅ موفق</p>
+                          <p>• کاربر #۲ - در حال پردازش - ⏳</p>
+                          <p>• کاربر #۳ - تبدیل تصویر - ✅ موفق</p>`,
+                
+                users: `<h3>👥 کاربران فعال</h3>
+                       <p>• کاربر۱ - ۱۲ درخواست</p>
+                       <p>• کاربر۲ - ۸ درخواست</p>
+                       <p>• کاربر۳ - ۱۵ درخواست</p>`,
+                
+                stats: `<h3>📈 آمار عملکرد</h3>
+                       <p>✅ ۹۷% موفقیت</p>
+                       <p>⏳ ۲% در حال پردازش</p>
+                       <p>❌ ۱% خطا</p>
+                       <p>💰 ۳۸,۵۵۰,۰۰۰ تومان درآمد کل</p>`
+            };
+            content.innerHTML = sections[section] || '<p>بخش یافت نشد</p>';
+        }
+    </script>
+</body>
+</html>

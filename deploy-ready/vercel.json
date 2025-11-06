@@ -1,0 +1,43 @@
+{
+  "version": 2,
+  "name": "tetrashop100",
+  "builds": [
+    {
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/web-apps/index.html"
+    },
+    {
+      "src": "/3d",
+      "dest": "/3d-conversion-system/simple-3d-converter.html"
+    },
+    {
+      "src": "/auth",
+      "dest": "/payment-systems/auth-system.html"
+    },
+    {
+      "src": "/financial",
+      "dest": "/payment-systems/financial-management.html"
+    },
+    {
+      "src": "/crypto",
+      "dest": "/payment-systems/crypto-management.html"
+    },
+    {
+      "src": "/user",
+      "dest": "/payment-systems/user-dashboard.html"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

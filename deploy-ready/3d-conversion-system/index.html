@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل رمزارز - 3D Conversion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-8">🚀 پنل مدیریت رمزارز</h1>
+        
+        <!-- قیمت‌های لحظه‌ای -->
+        <div class="bg-white rounded-lg shadow border p-4 mb-6">
+            <h3 class="text-lg font-semibold mb-4">💰 قیمت‌های لحظه‌ای</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center p-3 bg-orange-50 rounded-lg">
+                    <div class="font-bold text-orange-600">BTC</div>
+                    <div class="text-lg">$34,850</div>
+                    <div class="text-sm text-green-500">+2.3%</div>
+                </div>
+                <div class="text-center p-3 bg-purple-50 rounded-lg">
+                    <div class="font-bold text-purple-600">ETH</div>
+                    <div class="text-lg">$1,850</div>
+                    <div class="text-sm text-green-500">+1.7%</div>
+                </div>
+                <div class="text-center p-3 bg-blue-50 rounded-lg">
+                    <div class="font-bold text-blue-600">USDT</div>
+                    <div class="text-lg">$1.00</div>
+                    <div class="text-sm text-gray-500">0.0%</div>
+                </div>
+                <div class="text-center p-3 bg-yellow-50 rounded-lg">
+                    <div class="font-bold text-yellow-600">IRT</div>
+                    <div class="text-lg">59,500</div>
+                    <div class="text-sm text-red-500">-0.5%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- والت‌ها و موجودی -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow border">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="p-3 bg-green-100 text-green-600 rounded-lg ml-4">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold">۱۲.۴۵M</div>
+                            <div class="text-gray-600">تومان</div>
+                        </div>
+                    </div>
+                    <span class="text-green-500">+۳.۲٪</span>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow border">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="p-3 bg-orange-100 text-orange-600 rounded-lg ml-4">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold">۰.۰۴۵</div>
+                            <div class="text-gray-600">بیت‌کوین</div>
+                        </div>
+                    </div>
+                    <span class="text-green-500">+۸.۵٪</span>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow border">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="p-3 bg-purple-100 text-purple-600 rounded-lg ml-4">
+                            <i class="fab fa-ethereum"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold">۰.۸۵</div>
+                            <div class="text-gray-600">اتریوم</div>
+                        </div>
+                    </div>
+                    <span class="text-green-500">+۵.۱٪</span>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow border">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="p-3 bg-blue-100 text-blue-600 rounded-lg ml-4">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold">۱۸.۵٪</div>
+                            <div class="text-gray-600">سود ماه</div>
+                        </div>
+                    </div>
+                    <span class="text-green-500">📈</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- نمودار -->
+            <div class="lg:col-span-2 bg-white rounded-lg shadow border p-6">
+                <h3 class="text-lg font-semibold mb-4">📊 پرتفولیو رمزارز</h3>
+                <canvas id="portfolioChart" height="250"></canvas>
+            </div>
+            
+            <!-- تراکنش سریع -->
+            <div class="bg-white rounded-lg shadow border p-6">
+                <h3 class="text-lg font-semibold mb-4">⚡ تراکنش سریع</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">نوع تراکنش:</label>
+                        <select class="w-full p-2 border rounded" id="txType">
+                            <option value="buy">خرید رمزارز</option>
+                            <option value="sell">فروش رمزارز</option>
+                            <option value="convert">تبدیل ارز</option>
+                            <option value="withdraw">برداشت تومان</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">ارز مبدأ:</label>
+                        <select class="w-full p-2 border rounded" id="fromCurrency">
+                            <option value="irt">تومان (IRT)</option>
+                            <option value="btc">بیت‌کوین (BTC)</option>
+                            <option value="eth">اتریوم (ETH)</option>
+                            <option value="usdt">تتر (USDT)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">ارز مقصد:</label>
+                        <select class="w-full p-2 border rounded" id="toCurrency">
+                            <option value="btc">بیت‌کوین (BTC)</option>
+                            <option value="eth">اتریوم (ETH)</option>
+                            <option value="usdt">تتر (USDT)</option>
+                            <option value="irt">تومان (IRT)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">مبلغ:</label>
+                        <input type="number" class="w-full p-2 border rounded" placeholder="0.00" id="amount">
+                    </div>
+                    <button class="w-full bg-green-500 text-white py-3 rounded-lg font-semibold" onclick="executeTransaction()">
+                        اجرای تراکنش
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- تاریخچه تراکنش‌ها -->
+        <div class="bg-white rounded-lg shadow border">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h3 class="text-lg font-semibold">📋 تاریخچه تراکنش‌ها</h3>
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm">فیلتر</button>
+                    <button class="bg-gray-500 text-white px-4 py-2 rounded-lg text-sm">خروجی Excel</button>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-right py-3 px-4">تاریخ</th>
+                                <th class="text-right py-3 px-4">نوع</th>
+                                <th class="text-right py-3 px-4">از</th>
+                                <th class="text-right py-3 px-4">به</th>
+                                <th class="text-right py-3 px-4">مبلغ</th>
+                                <th class="text-right py-3 px-4">کارمزد</th>
+                                <th class="text-right py-3 px-4">وضعیت</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTable">
+                            <!-- داده‌ها با JavaScript پر می‌شوند -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // داده‌های نمونه
+        const transactions = [
+            { date: '۱۴۰۲/۰۸/۰۶ - ۱۴:۳۰', type: 'خرید', from: 'IRT', to: 'BTC', amount: '۰.۰۲', fee: '۰.۰۰۱', status: 'completed' },
+            { date: '۱۴۰۲/۰۸/۰۵ - ۱۱:۱۵', type: 'تبدیل', from: 'ETH', to: 'USDT', amount: '۰.۵', fee: '۰.۰۰۵', status: 'completed' },
+            { date: '۱۴۰۲/۰۸/۰۴ - ۰۹:۴۵', type: 'برداشت', from: 'IRT', to: 'بانک', amount: '۲,۰۰۰,۰۰۰', fee: '۵,۰۰۰', status: 'completed' },
+            { date: '۱۴۰۲/۰۸/۰۳ - ۱۶:۲۰', type: 'فروش', from: 'BTC', to: 'IRT', amount: '۰.۰۱', fee: '۰.۰۰۰۵', status: 'pending' }
+        ];
+
+        // نمودار پرتفولیو
+        const ctx = document.getElementById('portfolioChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['بیت‌کوین', 'اتریوم', 'تتر', 'تومان'],
+                datasets: [{
+                    data: [45, 25, 15, 15],
+                    backgroundColor: ['#F7931A', '#627EEA', '#26A17B', '#4CAF50']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // پر کردن جدول تراکنش‌ها
+        function loadTransactions() {
+            const table = document.getElementById('transactionsTable');
+            table.innerHTML = transactions.map(tx => `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="py-3 px-4">${tx.date}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-1 rounded-full text-xs ${
+                            tx.type === 'خرید' ? 'bg-green-100 text-green-800' :
+                            tx.type === 'فروش' ? 'bg-red-100 text-red-800' :
+                            'bg-blue-100 text-blue-800'
+                        }">${tx.type}</span>
+                    </td>
+                    <td class="py-3 px-4">${tx.from}</td>
+                    <td class="py-3 px-4">${tx.to}</td>
+                    <td class="py-3 px-4 font-medium">${tx.amount}</td>
+                    <td class="py-3 px-4 text-gray-500">${tx.fee}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-1 rounded-full text-xs ${
+                            tx.status === 'completed' ? 'bg-green-100 text-green-800' :
+                            'bg-yellow-100 text-yellow-800'
+                        }">${tx.status === 'completed' ? 'تکمیل شده' : 'در انتظار'}</span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // اجرای تراکنش
+        function executeTransaction() {
+            const type = document.getElementById('txType').value;
+            const from = document.getElementById('fromCurrency').value;
+            const to = document.getElementById('toCurrency').value;
+            const amount = document.getElementById('amount').value;
+            
+            if (!amount || amount <= 0) {
+                alert('لطفا مبلغ معتبر وارد کنید');
+                return;
+            }
+
+            alert(`تراکنش ${type} با موفقیت ثبت شد!\n${amount} ${from} → ${to}`);
+            document.getElementById('amount').value = '';
+        }
+
+        // بارگذاری اولیه
+        loadTransactions();
+
+        // به‌روزرسانی خودکار قیمت‌ها
+        setInterval(() => {
+            // شبیه‌سازی تغییرات قیمت
+            document.querySelectorAll('.text-green-500, .text-red-500').forEach(el => {
+                const change = (Math.random() - 0.5) * 4;
+                el.textContent = change >= 0 ? `+${change.toFixed(1)}%` : `${change.toFixed(1)}%`;
+                el.className = change >= 0 ? 'text-green-500' : 'text-red-500';
+            });
+        }, 5000);
+    </script>
+</body>
+</html>

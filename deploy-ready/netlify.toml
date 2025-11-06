@@ -1,0 +1,31 @@
+[build]
+  publish = "."
+  command = "echo 'No build needed'"
+
+[build.environment]
+  NODE_ENV = "production"
+
+[[redirects]]
+  from = "/*"
+  to = "/web-apps/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/3d"
+  to = "/3d-conversion-system/simple-3d-converter.html"
+
+[[redirects]]
+  from = "/auth" 
+  to = "/payment-systems/auth-system.html"
+
+[[redirects]]
+  from = "/financial"
+  to = "/payment-systems/financial-management.html"
+
+[[redirects]]
+  from = "/crypto"
+  to = "/payment-systems/crypto-management.html"
+
+[[redirects]]
+  from = "/user"
+  to = "/payment-systems/user-dashboard.html"

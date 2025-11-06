@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "include": [
+    "/*"
+  ],
+  "exclude": [
+    "/health-dashboard/*",
+    "/admin-login/*", 
+    "/admin-panel/*",
+    "/finance-panel/*",
+    "/assets/*"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "admin-panel",
+  "version": "1.0.0",
+  "description": "3D Conversion Admin Panel",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 3000",
+    "build": "echo 'No build process needed for static HTML'"
+  }
+}

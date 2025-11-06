@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت مالی ساده - سرویس 3D</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid #3498db;
+        }
+        
+        .stat-card.income { border-left-color: #27ae60; }
+        .stat-card.profit { border-left-color: #3498db; }
+        .stat-card.pending { border-left-color: #f39c12; }
+        .stat-card.withdrawal { border-left-color: #e74c3c; }
+        
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #2c3e50;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-success { background: #27ae60; color: white; }
+        .btn-primary { background: #3498db; color: white; }
+        .btn-warning { background: #f39c12; color: white; }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .transactions {
+            margin-top: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 مدیریت مالی ساده</h1>
+        
+        <div class="stats">
+            <div class="stat-card income">
+                <h3>کل درآمد</h3>
+                <div class="stat-number" id="totalRevenue">1250.50 $</div>
+            </div>
+            
+            <div class="stat-card profit">
+                <h3>سود شما (30%)</h3>
+                <div class="stat-number" id="yourProfit">375.15 $</div>
+            </div>
+            
+            <div class="stat-card pending">
+                <h3>در انتظار تأیید</h3>
+                <div class="stat-number" id="pendingProfit">60.00 $</div>
+            </div>
+            
+            <div class="stat-card withdrawal">
+                <h3>قابل برداشت</h3>
+                <div class="stat-number" id="availableWithdrawal">375.15 $</div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn-success" onclick="addPayment(100)">+۱۰۰$ پرداخت</button>
+            <button class="btn-primary" onclick="simulateWithdrawal()">برداشت سود</button>
+            <button class="btn-warning" onclick="showTransactions()">نمایش تراکنش‌ها</button>
+        </div>
+
+        <div class="transactions">
+            <h3>آخرین تراکنش‌ها</h3>
+            <table id="transactionsTable">
+                <tr>
+                    <th>تاریخ</th>
+                    <th>مبلغ</th>
+                    <th>سود شما</th>
+                    <th>وضعیت</th>
+                </tr>
+                <tr>
+                    <td>۱۴۰۲/۱۰/۱۵</td>
+                    <td>۱۰۰ $</td>
+                    <td style="color: #27ae60;">۳۰ $</td>
+                    <td style="color: #27ae60;">✅ تکمیل شده</td>
+                </tr>
+                <tr>
+                    <td>۱۴۰۲/۱۰/۱۴</td>
+                    <td>۱۵۰ $</td>
+                    <td style="color: #27ae60;">۴۵ $</td>
+                    <td style="color: #27ae60;">✅ تکمیل شده</td>
+                </tr>
+                <tr>
+                    <td>۱۴۰۲/۱۰/۱۳</td>
+                    <td>۲۰۰ $</td>
+                    <td style="color: #27ae60;">۶۰ $</td>
+                    <td style="color: #f39c12;">⏳ در انتظار</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let financialData = {
+            totalRevenue: 1250.50,
+            yourProfit: 375.15,
+            pendingProfit: 60.00,
+            availableWithdrawal: 375.15
+        };
+
+        function updateDisplay() {
+            document.getElementById('totalRevenue').textContent = financialData.totalRevenue.toFixed(2) + ' $';
+            document.getElementById('yourProfit').textContent = financialData.yourProfit.toFixed(2) + ' $';
+            document.getElementById('pendingProfit').textContent = financialData.pendingProfit.toFixed(2) + ' $';
+            document.getElementById('availableWithdrawal').textContent = financialData.availableWithdrawal.toFixed(2) + ' $';
+        }
+
+        function addPayment(amount) {
+            const profit = amount * 0.30;
+            
+            financialData.totalRevenue += amount;
+            financialData.yourProfit += profit;
+            financialData.availableWithdrawal += profit;
+            financialData.pendingProfit += profit;
+            
+            updateDisplay();
+            
+            // اضافه کردن به جدول
+            const table = document.getElementById('transactionsTable');
+            const newRow = table.insertRow(1);
+            newRow.innerHTML = `
+                <td>${new Date().toLocaleDateString('fa-IR')}</td>
+                <td>${amount} $</td>
+                <td style="color: #27ae60;">${profit} $</td>
+                <td style="color: #f39c12;">⏳ در انتظار</td>
+            `;
+            
+            alert(`✅ پرداخت ${amount} $ ثبت شد!\nسود شما: ${profit} $`);
+        }
+
+        function simulateWithdrawal() {
+            if (financialData.availableWithdrawal < 10) {
+                alert('❌ موجودی کافی نیست! حداقل برداشت 10 دلار است.');
+                return;
+            }
+            
+            const amount = parseFloat(prompt(`مبلغ برداشت را وارد کنید (حداکثر ${financialData.availableWithdrawal.toFixed(2)} $):`, "50"));
+            
+            if (amount && amount > 0 && amount <= financialData.availableWithdrawal) {
+                financialData.availableWithdrawal -= amount;
+                updateDisplay();
+                alert(`✅ درخواست برداشت ${amount} $ ثبت شد!\n\nپرداخت طی 24 ساعت انجام خواهد شد.`);
+            }
+        }
+
+        function showTransactions() {
+            alert('📊 سیستم تراکنش‌ها به صورت Real-time کار می‌کند!\n\nبرای تست از دکمه "پرداخت" استفاده کنید.');
+        }
+
+        // بارگذاری اولیه
+        document.addEventListener('DOMContentLoaded', updateDisplay);
+    </script>
+</body>
+</html>

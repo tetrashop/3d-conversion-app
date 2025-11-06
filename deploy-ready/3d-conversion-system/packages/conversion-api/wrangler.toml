@@ -1,0 +1,29 @@
+name = "3d-conversion-api"
+compatibility_date = "2023-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+account_id = "${CLOUDFLARE_ACCOUNT_ID}"
+workers_dev = true
+
+[vars]
+NODE_ENV = "production"
+APP_VERSION = "2.0.0"
+MAX_FILE_SIZE = "104857600"
+
+[env.production.vars]
+NODE_ENV = "production"
+LOG_LEVEL = "info"
+
+[env.production.d1_databases]
+binding = "DB"
+database_name = "3d-conversion-db"
+database_id = "your_database_id_here"
+
+[env.production.r2_buckets]
+binding = "FILE_BUCKET"
+bucket_name = "3d-conversion-files"
+
+[env.production.queues]
+binding = "CONVERSION_QUEUE"
+queue_name = "conversion-queue"

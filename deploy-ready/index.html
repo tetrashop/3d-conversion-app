@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetrashop100 - سیستم یکپارچه</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { 
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .deploy-badge {
+            background: linear-gradient(135deg, #ff6b35, #f7931a);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        .system-grid { 
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .system-card { 
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .system-card:hover { transform: translateY(-5px); }
+        .btn { 
+            background: #667eea;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 8px 5px;
+            transition: all 0.3s;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn:hover { 
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .platform-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Tetrashop100</h1>
+            <div class="deploy-badge">آماده استقرار روی همه پلتفرم‌ها</div>
+            <p>سیستم کامل مدیریت کسب‌وکار - بهینه‌شده برای استقرار آسان</p>
+        </div>
+        
+        <div class="system-grid">
+            <div class="system-card">
+                <h2>🎯 تبدیل 3D</h2>
+                <p>تبدیل تصاویر 2D به مدل‌های سه‌بعدی</p>
+                <a href="/3d-conversion-system/simple-3d-converter.html" class="btn">ورود به سیستم 3D</a>
+            </div>
+            
+            <div class="system-card">
+                <h2>💰 مدیریت مالی</h2>
+                <p>سیستم حسابداری و گزارش‌گیری پیشرفته</p>
+                <a href="/payment-systems/financial-management.html" class="btn">پنل مالی</a>
+            </div>
+            
+            <div class="system-card">
+                <h2>🔐 مدیریت رمزارز</h2>
+                <p>پشتیبانی از Bitcoin, Ethereum, Tether</p>
+                <a href="/payment-systems/crypto-management.html" class="btn">پنل رمزارز</a>
+            </div>
+            
+            <div class="system-card">
+                <h2>👤 احراز هویت</h2>
+                <p>سیستم امن ثبت‌نام و ورود</p>
+                <a href="/payment-systems/auth-system.html" class="btn">ورود / ثبت‌نام</a>
+            </div>
+        </div>
+
+        <div class="system-card">
+            <h2>☁️ پلتفرم‌های استقرار</h2>
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <h3>▲ Vercel</h3>
+                    <p>استقرار فوری</p>
+                    <button class="btn" onclick="deployVercel()">استقرار</button>
+                </div>
+                <div class="platform-card">
+                    <h3>🔗 Netlify</h3>
+                    <p>CDN جهانی</p>
+                    <button class="btn" onclick="deployNetlify()">استقرار</button>
+                </div>
+                <div class="platform-card">
+                    <h3>☁️ Cloudflare</h3>
+                    <p>Edge Network</p>
+                    <button class="btn" onclick="deployCloudflare()">استقرار</button>
+                </div>
+                <div class="platform-card">
+                    <h3>📁 GitHub Pages</h3>
+                    <p>رایگان</p>
+                    <button class="btn" onclick="deployGitHub()">استقرار</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="system-card">
+            <h2>📊 وضعیت سیستم</h2>
+            <div id="system-status" style="text-align: left; line-height: 2;">
+                <p>✅ تمام کامپوننت‌ها بهینه‌سازی شدند</p>
+                <p>✅ پیکربندی استقرار اضافه شد</p>
+                <p>✅ مسیرهای نسبی اصلاح شدند</p>
+                <p>✅ آماده استقرار روی هر پلتفرم</p>
+                <p>🕐 آخرین به‌روزرسانی: <span id="timestamp"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('timestamp').textContent = new Date().toLocaleString('fa-IR');
+        
+        function deployVercel() {
+            alert('▲ برای استقرار روی Vercel:\n\n1. پروژه را به GitHub پوش کنید\n2. به vercel.com بروید\n3. از GitHub import کنید\n4. Deploy را بزنید');
+        }
+        
+        function deployNetlify() {
+            alert('🔗 برای استقرار روی Netlify:\n\n1. پروژه را به GitHub پوش کنید\n2. به netlify.com بروید\n3. از GitHub deploy کنید\n4. آدرس خود را دریافت کنید');
+        }
+        
+        function deployCloudflare() {
+            alert('☁️ برای استقرار روی Cloudflare Pages:\n\n1. به dash.cloudflare.com بروید\n2. Pages → Create project\n3. از GitHub connect کنید\n4. Deploy را بزنید');
+        }
+        
+        function deployGitHub() {
+            alert('📁 برای استقرار روی GitHub Pages:\n\n1. Settings → Pages\n2. Source: GitHub Actions\n3. آدرس: username.github.io/tetrashop100');
+        }
+
+        // تست دسترسی به کامپوننت‌ها
+        async function testComponents() {
+            const components = [
+                '/3d-conversion-system/simple-3d-converter.html',
+                '/payment-systems/auth-system.html',
+                '/payment-systems/financial-management.html',
+                '/payment-systems/crypto-management.html'
+            ];
+            
+            for (let component of components) {
+                try {
+                    const response = await fetch(component);
+                    if (response.ok) {
+                        console.log(`✅ ${component}: در دسترس`);
+                    }
+                } catch (error) {
+                    console.log(`❌ ${component}: خطا`);
+                }
+            }
+        }
+        
+        testComponents();
+    </script>
+</body>
+</html>

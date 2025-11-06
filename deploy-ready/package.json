@@ -1,0 +1,28 @@
+{
+  "name": "tetrashop100",
+  "version": "2.0.0",
+  "description": "سیستم کامل مدیریت مالی، رمزارز و تبدیل 3D",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 3000",
+    "start": "python3 -m http.server 3000",
+    "build": "echo 'No build process needed'",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod --dir=.",
+    "deploy:cloudflare": "echo 'Deploy manually to Cloudflare Pages'"
+  },
+  "keywords": [
+    "financial",
+    "crypto", 
+    "3d-conversion",
+    "authentication",
+    "dashboard"
+  ],
+  "author": "Tetrashop Team",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
