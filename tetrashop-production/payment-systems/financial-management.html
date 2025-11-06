@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت مالی - Tetrashop100</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header { 
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .dashboard-grid { 
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .card { 
+            background: rgba(255,255,255,0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .stat-card { text-align: center; }
+        .stat-number { 
+            font-size: 2.5em; 
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .revenue { color: #27ae60; }
+        .expenses { color: #e74c3c; }
+        .profit { color: #3498db; }
+        .btn { 
+            background: #2a5298;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        .btn:hover { 
+            background: #1e3c72;
+            transform: translateY(-2px);
+        }
+        .transaction-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .transaction-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .positive { color: #27ae60; }
+        .negative { color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 پنل مدیریت مالی Tetrashop100</h1>
+            <p>سیستم یکپارچه مدیریت مالی و حسابداری</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card stat-card">
+                <h3>📈 درآمد کل</h3>
+                <div class="stat-number revenue" id="total-revenue">۱۲,۴۵۰,۰۰۰ تومان</div>
+                <p>ماه جاری</p>
+            </div>
+            
+            <div class="card stat-card">
+                <h3>📉 هزینه‌ها</h3>
+                <div class="stat-number expenses" id="total-expenses">۳,۲۱۰,۰۰۰ تومان</div>
+                <p>ماه جاری</p>
+            </div>
+            
+            <div class="card stat-card">
+                <h3>💎 سود خالص</h3>
+                <div class="stat-number profit" id="net-profit">۹,۲۴۰,۰۰۰ تومان</div>
+                <p>ماه جاری</p>
+            </div>
+            
+            <div class="card stat-card">
+                <h3>👥 مشتریان</h3>
+                <div class="stat-number" id="total-customers">۱,۲۴۷ نفر</div>
+                <p>فعال</p>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>💳 تراکنش‌های اخیر</h3>
+                <div class="transaction-list" id="transactions">
+                    <div class="transaction-item">
+                        <span>فروش محصول A</span>
+                        <span class="positive">+۴۵۰,۰۰۰ تومان</span>
+                    </div>
+                    <div class="transaction-item">
+                        <span>خرید مواد اولیه</span>
+                        <span class="negative">-۱۸۰,۰۰۰ تومان</span>
+                    </div>
+                    <div class="transaction-item">
+                        <span>فروش محصول B</span>
+                        <span class="positive">+۶۲۰,۰۰۰ تومان</span>
+                    </div>
+                    <div class="transaction-item">
+                        <span>حقوق کارکنان</span>
+                        <span class="negative">-۲,۵۰۰,۰۰۰ تومان</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>📊 نمودار مالی</h3>
+                <div style="height: 200px; background: linear-gradient(90deg, #27ae60 60%, #e74c3c 25%, #3498db 15%); 
+                           border-radius: 10px; margin: 15px 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                    📈 نمودار درآمد و هزینه
+                </div>
+                <div style="display: flex; justify-content: space-around; text-align: center;">
+                    <div>
+                        <div style="width: 20px; height: 20px; background: #27ae60; display: inline-block; margin-right: 5px;"></div>
+                        درآمد: 60%
+                    </div>
+                    <div>
+                        <div style="width: 20px; height: 20px; background: #e74c3c; display: inline-block; margin-right: 5px;"></div>
+                        هزینه: 25%
+                    </div>
+                    <div>
+                        <div style="width: 20px; height: 20px; background: #3498db; display: inline-block; margin-right: 5px;"></div>
+                        سود: 15%
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🎯 اقدامات سریع</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
+                <button class="btn" onclick="addTransaction()">➕ ثبت تراکنش</button>
+                <button class="btn" onclick="generateReport()">📄 گزارش مالی</button>
+                <button class="btn" onclick="manageInvoices()">🧾 مدیریت فاکتورها</button>
+                <button class="btn" onclick="taxCalculation()">🧮 محاسبه مالیات</button>
+                <button class="btn" onclick="openCryptoPanel()">💰 پنل رمزارز</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // شبیه‌سازی داده‌های زنده
+        function updateFinancialData() {
+            const revenueChange = (Math.random() - 0.3) * 10;
+            const expensesChange = (Math.random() - 0.2) * 8;
+            
+            document.getElementById('total-revenue').textContent = 
+                (12450000 + revenueChange * 100000).toLocaleString('fa-IR') + ' تومان';
+            document.getElementById('total-expenses').textContent = 
+                (3210000 + expensesChange * 50000).toLocaleString('fa-IR') + ' تومان';
+            document.getElementById('net-profit').textContent = 
+                (9240000 + (revenueChange - expensesChange) * 50000).toLocaleString('fa-IR') + ' تومان';
+        }
+        
+        function addTransaction() {
+            const type = prompt('نوع تراکنش (درآمد/هزینه):');
+            const amount = prompt('مبلغ:');
+            const description = prompt('شرح:');
+            
+            if (type && amount && description) {
+                const transactionList = document.getElementById('transactions');
+                const newItem = document.createElement('div');
+                newItem.className = 'transaction-item';
+                newItem.innerHTML = `
+                    <span>${description}</span>
+                    <span class="${type === 'درآمد' ? 'positive' : 'negative'}">
+                        ${type === 'درآمد' ? '+' : '-'}${parseInt(amount).toLocaleString('fa-IR')} تومان
+                    </span>
+                `;
+                transactionList.insertBefore(newItem, transactionList.firstChild);
+                alert('✅ تراکنش ثبت شد');
+                updateFinancialData();
+            }
+        }
+        
+        function generateReport() {
+            alert('📊 گزارش مالی ماهانه در حال تولید...');
+        }
+        
+        function manageInvoices() {
+            alert('🧾 انتقال به بخش مدیریت فاکتورها...');
+        }
+        
+        function taxCalculation() {
+            alert('🧮 محاسبه مالیات در حال انجام...');
+        }
+        
+        function openCryptoPanel() {
+            window.open('http://localhost:3001/crypto-management.html', '_blank');
+        }
+        
+        // بروزرسانی هر 30 ثانیه
+        setInterval(updateFinancialData, 30000);
+        updateFinancialData();
+        
+        // نمایش تاریخ و ساعت
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('datetime').textContent = now.toLocaleString('fa-IR');
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+    </script>
+</body>
+</html>

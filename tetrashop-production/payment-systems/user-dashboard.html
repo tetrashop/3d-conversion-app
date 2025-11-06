@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل کاربری - Tetrashop100</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        .header {
+            background: rgba(255,255,255,0.95);
+            padding: 20px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: rgba(255,255,255,0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .user-info {
+            text-align: center;
+            padding: 30px;
+        }
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: #667eea;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+        .btn-logout {
+            background: #e74c3c;
+        }
+        .transaction-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .positive { color: #27ae60; }
+        .negative { color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>👤 پنل کاربری Tetrashop100</h1>
+        <div>
+            <span id="user-greeting"></span>
+            <button class="btn btn-logout" onclick="logout()">خروج</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="dashboard-grid">
+            <div class="card user-info">
+                <div class="avatar">👤</div>
+                <h2 id="user-name"></h2>
+                <p id="user-email"></p>
+                <p>عضویت از: <span id="join-date"></span></p>
+            </div>
+
+            <div class="card">
+                <h3>💰 موجودی حساب</h3>
+                <div style="font-size: 2em; font-weight: bold; color: #27ae60; margin: 15px 0;">
+                    <span id="user-balance">۰ تومان</span>
+                </div>
+                <button class="btn" onclick="chargeAccount()">➕ افزایش موجودی</button>
+            </div>
+
+            <div class="card">
+                <h3>📊 آمار فعالیت</h3>
+                <div style="line-height: 2.5;">
+                    <p>🔹 تعداد تراکنش‌ها: <strong id="transaction-count">۰</strong></p>
+                    <p>🔸 آخرین فعالیت: <strong id="last-activity">-</strong></p>
+                    <p>🔹 سطح کاربری: <strong id="user-level">معمولی</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📋 تراکنش‌های اخیر</h3>
+            <div id="transactions-list">
+                <div class="transaction-item">
+                    <span>شارژ حساب</span>
+                    <span class="positive">+۵۰۰,۰۰۰ تومان</span>
+                    <small>امروز - ۱۴:۳۰</small>
+                </div>
+                <div class="transaction-item">
+                    <span>خرید از فروشگاه</span>
+                    <span class="negative">-۱۵۰,۰۰۰ تومان</span>
+                    <small>دیروز - ۱۰:۱۵</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>🎯 دسترسی سریع</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                    <a href="../financial-management.html" class="btn">💰 پنل مدیریت مالی</a>
+                    <a href="../crypto-management.html" class="btn">🔐 پنل رمزارز</a>
+                    <a href="../auth-system.html" class="btn">⚙️ تنظیمات حساب</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🛡️ امنیت حساب</h3>
+                <div style="line-height: 2;">
+                    <p>✅ احراز هویت دو مرحله‌ای: <strong>غیرفعال</strong></p>
+                    <p>✅ آخرین ورود: <strong id="last-login">-</strong></p>
+                    <button class="btn" onclick="changePassword()">تغییر رمز عبور</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بررسی لاگین بودن کاربر
+        window.addEventListener('load', () => {
+            const currentUser = sessionStorage.getItem('currentUser');
+            
+            if (!currentUser) {
+                window.location.href = 'auth-system.html';
+                return;
+            }
+            
+            const user = JSON.parse(currentUser);
+            displayUserInfo(user);
+            loadUserData(user);
+        });
+
+        function displayUserInfo(user) {
+            document.getElementById('user-greeting').textContent = `خوش آمدید، ${user.name}`;
+            document.getElementById('user-name').textContent = user.name;
+            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('join-date').textContent = new Date(user.createdAt).toLocaleDateString('fa-IR');
+            document.getElementById('last-login').textContent = new Date().toLocaleString('fa-IR');
+        }
+
+        function loadUserData(user) {
+            // بارگذاری داده‌های کاربر از localStorage
+            const userData = JSON.parse(localStorage.getItem(`user_${user.id}`)) || {
+                balance: 0,
+                transactions: [],
+                level: 'معمولی'
+            };
+            
+            document.getElementById('user-balance').textContent = userData.balance.toLocaleString('fa-IR') + ' تومان';
+            document.getElementById('transaction-count').textContent = userData.transactions.length;
+            document.getElementById('user-level').textContent = userData.level;
+        }
+
+        function chargeAccount() {
+            const amount = prompt('مبلغ مورد نظر برای شارژ (تومان):');
+            if (amount && !isNaN(amount)) {
+                const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+                let userData = JSON.parse(localStorage.getItem(`user_${currentUser.id}`)) || { balance: 0, transactions: [] };
+                
+                userData.balance += parseInt(amount);
+                userData.transactions.push({
+                    type: 'charge',
+                    amount: parseInt(amount),
+                    date: new Date().toISOString(),
+                    description: 'شارژ حساب'
+                });
+                
+                localStorage.setItem(`user_${currentUser.id}`, JSON.stringify(userData));
+                alert(`✅ حساب شما به مبلغ ${parseInt(amount).toLocaleString('fa-IR')} تومان شارژ شد`);
+                location.reload();
+            }
+        }
+
+        function changePassword() {
+            alert('🛡️ بخش تغییر رمز عبور به زودی فعال می‌شود');
+        }
+
+        function logout() {
+            sessionStorage.removeItem('currentUser');
+            window.location.href = 'auth-system.html';
+        }
+    </script>
+</body>
+</html>
