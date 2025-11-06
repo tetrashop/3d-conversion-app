@@ -1,0 +1,15 @@
+title: "Tetrashop100 - سیستم مدیریت مالی و رمزارز"
+description: "سیستم کامل مدیریت مالی، رمزارز و احراز هویت"
+baseurl: "/tetrashop100"
+url: "https://your-username.github.io"
+github_username: your-username
+
+# تنظیمات
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# فارسی
+lang: fa
+rtl: true
