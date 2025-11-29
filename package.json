@@ -1,12 +1,12 @@
 {
   "name": "3d-conversion-app",
-  "version": "3.0.0",
-  "description": "سیستم تبدیل 2D به 3D - نسخه پایدار",
-  "main": "server.js",
+  "version": "1.0.0",
+  "description": "سیستم تبدیل 2D به 3D - سرور خالص Node.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node index.js",
+    "dev": "node index.js"
   },
   "engines": {
     "node": ">=18.0.0"

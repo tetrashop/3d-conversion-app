@@ -1,9 +1,8 @@
 .git
 .gitignore
 README.md
-CONTRIBUTING.md
-LICENSE
-deploy.sh
-screenshots/
 *.log
 .env
+.npmrc
+.next/
+node_modules/
