@@ -1,0 +1,14 @@
+{
+  "users": {
+    "admin": {
+      "password": "admin123",
+      "role": "admin",
+      "name": "مدیر سیستم"
+    },
+    "user": {
+      "password": "user123", 
+      "role": "user",
+      "name": "کاربر عادی"
+    }
+  }
+}
