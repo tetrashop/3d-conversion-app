@@ -1,0 +1,9 @@
+.git
+.gitignore
+README.md
+CONTRIBUTING.md
+LICENSE
+deploy.sh
+screenshots/
+*.log
+.env

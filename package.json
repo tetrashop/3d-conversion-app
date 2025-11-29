@@ -1,19 +1,34 @@
 {
   "name": "3d-conversion-app",
-  "version": "2.0.0",
+  "version": "1.0.0",
+  "description": "سیستم تبدیل تصاویر 2D به مدل‌های 3D با رابط کاربری فارسی",
+  "main": "server-with-auth.js",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run dev:api\" \"npm run dev:admin\"",
-    "dev:api": "cd packages/conversion-api && npm run dev",
-    "dev:admin": "cd apps/admin-panel && npm run dev",
-    "build": "npm run build:api && npm run build:apps",
-    "start": "node server.cjs"
+    "start": "node server-with-auth.js",
+    "dev": "node --watch server-with-auth.js",
+    "build": "echo 'No build step required for Node.js server'",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "express": "^4.18.2",
-    "@vercel/postgres": "^0.8.0"
+  "keywords": [
+    "3d",
+    "conversion",
+    "2d-to-3d",
+    "nodejs",
+    "authentication",
+    "persian"
+  ],
+  "author": {
+    "name": "Developer",
+    "email": "developer@example.com",
+    "url": "https://github.com/tetrashop"
   },
-  "devDependencies": {
-    "concurrently": "^8.2.0"
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tetrashop/3d-conversion-app.git"
   }
 }

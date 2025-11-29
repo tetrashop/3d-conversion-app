@@ -11,10 +11,5 @@
       "src": "/(.*)",
       "dest": "server-with-auth.js"
     }
-  ],
-  "functions": {
-    "server-with-auth.js": {
-      "maxDuration": 30
-    }
-  }
+  ]
 }
