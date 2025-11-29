@@ -1,17 +1,24 @@
 {
   "name": "3d-conversion-app",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
-    "dev": "node index.js",
-    "start": "node index.js",
-    "build": "echo 'No build step needed for Vercel'"
+    "dev": "node --expose-gc index.js",
+    "start": "node --expose-gc index.js",
+    "build": "echo 'No build process needed'",
+    "test:health": "curl -f http://localhost:3000/health || exit 1"
   },
   "dependencies": {},
-  "keywords": ["3d", "conversion", "vercel"],
-  "author": "3d-conversion-app",
+  "keywords": [
+    "3d",
+    "conversion",
+    "vercel",
+    "nodejs",
+    "server"
+  ],
+  "author": "3D Conversion System",
   "license": "MIT"
 }

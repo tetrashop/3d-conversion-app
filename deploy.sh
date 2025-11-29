@@ -1,21 +1,38 @@
 #!/bin/bash
 
-echo "🚀 شروع فرآیند استقرار..."
+echo "🚀 Starting Advanced Deployment Process..."
+echo "==========================================="
 
-# حذف node_modules برای شروع تمیز
+# Clean installation
+echo "🧹 Cleaning previous installations..."
 rm -rf node_modules package-lock.json
 
-# نصب وابستگی‌ها
-echo "📦 نصب وابستگی‌ها..."
+# Install dependencies
+echo "📦 Installing dependencies..."
 npm install
 
-# ساخت پروژه
-echo "🔨 ساخت پروژه..."
-npm run build
+# Test locally first
+echo "🔍 Testing server locally..."
+timeout 30s node --expose-gc index.js &
+SERVER_PID=$!
+sleep 5
 
-# استقرار روی Vercel
-echo "🌐 استقرار روی Vercel..."
-vercel --prod
+# Health check
+echo "❤️  Performing health check..."
+if curl -f http://localhost:3000/health > /dev/null 2>&1; then
+    echo "✅ Local health check PASSED"
+    kill $SERVER_PID 2>/dev/null
+else
+    echo "❌ Local health check FAILED"
+    kill $SERVER_PID 2>/dev/null
+    exit 1
+fi
 
-echo "✅ فرآیند استقرار کامل شد!"
-echo "🔍 برای بررسی لاگ‌ها: vercel logs"
+# Deploy to Vercel
+echo "🌐 Deploying to Vercel..."
+vercel --prod --confirm
+
+echo "==========================================="
+echo "✅ Deployment completed successfully!"
+echo "🔍 Check logs: vercel logs"
+echo "❤️  Health URL: https://your-app.vercel.app/health"
