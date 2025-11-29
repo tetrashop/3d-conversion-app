@@ -1,34 +1,24 @@
 {
   "name": "3d-conversion-app",
-  "version": "1.0.0",
-  "description": "سیستم تبدیل تصاویر 2D به مدل‌های 3D با رابط کاربری فارسی",
-  "main": "server-with-auth.js",
+  "version": "2.0.0",
+  "description": "سیستم کامل تبدیل تصاویر 2D به مدل‌های 3D با نمایشگر واقعی",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server-with-auth.js",
-    "dev": "node --watch server-with-auth.js",
-    "build": "echo 'No build step required for Node.js server'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "keywords": [
     "3d",
     "conversion",
     "2d-to-3d",
+    "threejs",
     "nodejs",
-    "authentication",
-    "persian"
+    "authentication"
   ],
-  "author": {
-    "name": "Developer",
-    "email": "developer@example.com",
-    "url": "https://github.com/tetrashop"
-  },
+  "author": "tetrashop",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tetrashop/3d-conversion-app.git"
   }
 }

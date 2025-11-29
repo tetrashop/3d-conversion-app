@@ -2,18 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "server-with-auth.js",
+      "src": "server.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "server-with-auth.js"
+      "dest": "server.js"
     }
   ],
   "functions": {
-    "server-with-auth.js": {
+    "server.js": {
       "maxDuration": 30
     }
   }
