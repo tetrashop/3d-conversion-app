@@ -1,24 +1,17 @@
 {
   "name": "3d-conversion-app",
-  "version": "2.0.0",
-  "description": "سیستم کامل تبدیل تصاویر 2D به مدل‌های 3D با نمایشگر واقعی",
+  "version": "3.0.0",
+  "description": "سیستم تبدیل 2D به 3D - نسخه پایدار",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"
   },
-  "keywords": [
-    "3d",
-    "conversion",
-    "2d-to-3d",
-    "threejs",
-    "nodejs",
-    "authentication"
-  ],
-  "author": "tetrashop",
-  "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "keywords": ["3d", "conversion", "nodejs"],
+  "author": "tetrashop",
+  "license": "MIT"
 }
