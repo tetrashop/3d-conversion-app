@@ -30,7 +30,7 @@ fi
 
 # Deploy to Vercel
 echo "🌐 Deploying to Vercel..."
-vercel --prod --confirm
+vercel --prod --yes
 
 echo "==========================================="
 echo "✅ Deployment completed successfully!"
