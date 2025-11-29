@@ -1,17 +1,17 @@
 {
   "name": "3d-conversion-app",
   "version": "1.0.0",
-  "description": "سیستم تبدیل 2D به 3D - سرور خالص Node.js",
-  "main": "index.js",
   "type": "module",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "node index.js"
-  },
   "engines": {
     "node": ">=18.0.0"
   },
-  "keywords": ["3d", "conversion", "nodejs"],
-  "author": "tetrashop",
+  "scripts": {
+    "dev": "node index.js",
+    "start": "node index.js",
+    "build": "echo 'No build step needed for Vercel'"
+  },
+  "dependencies": {},
+  "keywords": ["3d", "conversion", "vercel"],
+  "author": "3d-conversion-app",
   "license": "MIT"
 }
