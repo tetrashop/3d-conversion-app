@@ -1,15 +1,14 @@
 {
   "name": "3d-conversion-app",
-  "version": "3.0.0",
-  "description": "سیستم تبدیل هوشمند 2D به 3D با معماری Serverless",
-  "type": "module",
+  "version": "1.0.0",
   "scripts": {
-    "dev": "vercel dev"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
-  "keywords": ["3d", "conversion", "vercel", "serverless", "persian"],
-  "author": "raminedjlal",
-  "license": "MIT",
-  "engines": {
-    "node": ">=18.0.0"
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   }
 }

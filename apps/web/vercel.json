@@ -1,19 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "cd apps/web && npm run build",
-  "outputDirectory": "apps/web/.next",
-  "installCommand": "cd apps/web && npm install",
   "framework": "nextjs",
   "functions": {
-    "apps/web/**/*.js": {
-      "maxDuration": 30,
-      "memory": 1024
+    "**/*.js": {
+      "maxDuration": 30
     }
-  },
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/apps/web/$1"
-    }
-  ]
+  }
 }

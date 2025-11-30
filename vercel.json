@@ -1,34 +1,9 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "apps/web/package.json",
-      "use": "@vercel/next"
-    },
-    {
-      "src": "api/index.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/apps/web/$1"
-    }
-  ],
+  "framework": "nextjs",
   "functions": {
-    "api/index.js": {
-      "maxDuration": 30,
-      "memory": 1024
-    },
-    "apps/web/**/*.js": {
-      "maxDuration": 30,
-      "memory": 1024
+    "**/*.js": {
+      "maxDuration": 30
     }
-  },
-  "outputDirectory": "apps/web"
+  }
 }
