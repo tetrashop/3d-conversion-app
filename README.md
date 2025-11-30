@@ -1,30 +1,41 @@
-# 🎯 سیستم تبدیل 2D به 3D
+# 🎯 سیستم تبدیل هوشمند 2D به 3D
 
-یک سیستم پیشرفته تبدیل تصاویر 2D به مدل‌های سه بعدی با رابط کاربری فارسی و سیستم احراز هویت.
+یک سیستم پیشرفته برای تبدیل تصاویر 2D به مدل‌های سه بعدی با استفاده از تحلیل هوشمند فایل
 
-![3D Conversion System](https://img.shields.io/badge/3D-Conversion-blue)
-![Node.js](https://img.shields.io/badge/Node.js-18+-green)
-![Authentication](https://img.shields.io/badge/Authentication-Secure-red)
+![3D Conversion](https://img.shields.io/badge/3D-Conversion-green)
+![Node.js](https://img.shields.io/badge/Node.js-18+-success)
+![Persian](https://img.shields.io/badge/زبان-فارسی-blue)
 
-## ✨ ویژگی‌ها
+## ✨ ویژگی‌های اصلی
 
-- 🔐 **سیستم احراز هویت پیشرفته** با session management
-- 🎨 **رابط کاربری فارسی** با طراحی مدرن و واکنش‌گرا
-- 📤 **آپلود آسان تصاویر** با پیش‌نمایش
-- 🎯 **پیش‌نمایش 3D تعاملی** پس از تبدیل
-- 📊 **نمایش آمار دقیق** مدل تولید شده
-- 👥 **مدیریت کاربران** با سطوح دسترسی مختلف
-- 📁 **دانلود چندفرمی** (OBJ, STL)
-- 🖱️ **کنترل‌های لمسی** برای چرخش مدل
+### 🎨 تحلیل هوشمند
+- تشخیص خودکار نوع مدل بر اساس نام فایل
+- محاسبه پیچیدگی بر اساس سایز و متادیتا
+- استخراج رنگ‌های غالب برای مدل نهایی
+
+### 🖥️ پیش‌نمایش زنده
+- نمایش 3D تعاملی با کنترل‌های کامل
+- انیمیشن چرخش خودکار
+- تغییر نماهای مختلف (جلو، بالا، کنار)
+- حالت‌های نمایش مختلف (جامد، مش‌بندی)
+
+### 🔧 فناوری‌ها
+- **Backend**: Node.js + HTTP Server
+- **Frontend**: Pure JavaScript + CSS 3D
+- **تحلیل**: الگوریتم‌های هوشمند مبتنی بر محتوا
+- **امنیت**: سیستم احراز هویت و مدیریت session
 
 ## 🚀 نصب و راه‌اندازی
 
-### پیش‌نیازها
-- Node.js 18 یا بالاتر
-- NPM یا Yarn
-
-### نصب
 ```bash
+# کلون ریپوزیتوری
 git clone https://github.com/your-username/3d-conversion-app.git
-cd 3d-conversion-app
+
+# ورود به دایرکتوری
+cd 3d-conversion-app/3d-conversion-app
+
+# نصب dependencies
 npm install
+
+# راه‌اندازی سرور
+node index.js
