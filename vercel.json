@@ -2,12 +2,12 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.js",
-      "use": "@vercel/node"
+      "src": "apps/web/package.json",
+      "use": "@vercel/next"
     },
     {
-      "src": "index.html",
-      "use": "@vercel/static"
+      "src": "api/index.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -17,12 +17,18 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/apps/web/$1"
     }
   ],
   "functions": {
     "api/index.js": {
-      "maxDuration": 30
+      "maxDuration": 30,
+      "memory": 1024
+    },
+    "apps/web/**/*.js": {
+      "maxDuration": 30,
+      "memory": 1024
     }
-  }
+  },
+  "outputDirectory": "apps/web"
 }

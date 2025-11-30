@@ -1,9 +1,7 @@
-.git
-.gitignore
-node_modules
-*.log
-.DS_Store
-README.md
-.env
-.vercel
-*.local
+apps/tetrashop-ui/
+tetrashop-production/
+modules/
+*.backup.js
+money.js
+revenue.js
+server.js
