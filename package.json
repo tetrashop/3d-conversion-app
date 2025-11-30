@@ -1,14 +1,12 @@
 {
   "name": "3d-conversion-app",
-  "version": "2.0.0",
-  "description": "سیستم تبدیل هوشمند 2D به 3D با احراز هویت سریع",
-  "main": "index.js",
+  "version": "3.0.0",
+  "description": "سیستم تبدیل هوشمند 2D به 3D با معماری Serverless",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node index.js"
+    "dev": "vercel dev"
   },
-  "keywords": ["3d", "conversion", "nodejs", "persian", "authentication"],
+  "keywords": ["3d", "conversion", "vercel", "serverless", "persian"],
   "author": "raminedjlal",
   "license": "MIT",
   "engines": {
