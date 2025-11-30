@@ -1,15 +1,14 @@
 {
   "name": "3d-conversion-app",
-  "version": "1.0.0",
-  "description": "سیستم تبدیل هوشمند 2D به 3D",
+  "version": "2.0.0",
+  "description": "سیستم تبدیل هوشمند 2D به 3D با احراز هویت سریع",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "node index.js",
-    "build": "echo 'No build needed for Node.js server'"
+    "dev": "node index.js"
   },
-  "keywords": ["3d", "conversion", "nodejs", "persian"],
+  "keywords": ["3d", "conversion", "nodejs", "persian", "authentication"],
   "author": "raminedjlal",
   "license": "MIT",
   "engines": {

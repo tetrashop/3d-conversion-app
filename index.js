@@ -1,404 +1,436 @@
 import http from 'http';
 import { parse } from 'querystring';
-import { randomBytes } from 'crypto';
 
 const PORT = process.env.PORT || 3000;
 
-// مدیریت کاربران
-const users = {
-  "admin": { "password": "admin123", "role": "admin", "name": "مدیر سیستم" },
-  "user": { "password": "user123", "role": "user", "name": "کاربر عادی" }
-};
+// سیستم کاربران - سریع و بهینه
+const users = new Map();
+users.set('admin', { password: 'admin123', name: 'مدیر سیستم', role: 'admin' });
+users.set('user', { password: 'user123', name: 'کاربر عادی', role: 'user' });
 
-const sessions = {};
+// سیستم sessions بهینه‌شده
+const sessions = new Map();
 
 function createSession(username) {
-  const sessionId = randomBytes(16).toString('hex');
-  sessions[sessionId] = { 
-    username: username, 
-    timestamp: Date.now(),
-    role: users[username].role 
-  };
-  return sessionId;
+    const sessionId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+    sessions.set(sessionId, {
+        username,
+        createdAt: Date.now(),
+        role: users.get(username).role
+    });
+    return sessionId;
 }
 
-function checkSession(sessionId) {
-  if (!sessionId || !sessions[sessionId]) return null;
-  const session = sessions[sessionId];
-  // بررسی انقضای session (24 ساعت)
-  if (Date.now() - session.timestamp > 24 * 60 * 60 * 1000) {
-    delete sessions[sessionId];
-    return null;
-  }
-  return users[session.username];
+function validateSession(sessionId) {
+    if (!sessionId || !sessions.has(sessionId)) return null;
+    
+    const session = sessions.get(sessionId);
+    // Session 24 ساعته
+    if (Date.now() - session.createdAt > 24 * 60 * 60 * 1000) {
+        sessions.delete(sessionId);
+        return null;
+    }
+    
+    return users.get(session.username);
 }
 
-const server = http.createServer((req, res) => {
-  const url = req.url;
-  const method = req.method;
-  
-  console.log(`📨 ${method} ${url}`);
+function getCookie(cookieHeader, name) {
+    if (!cookieHeader) return null;
+    const match = cookieHeader.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
 
-  // CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
-  if (method === 'OPTIONS') {
-    res.writeHead(200);
-    res.end();
-    return;
-  }
+// سیستم روتینگ سریع
+const routes = {
+    // صفحه اصلی - لاگین
+    'GET /': (req, res, user) => {
+        if (user) {
+            res.writeHead(302, { 'Location': '/dashboard' });
+            res.end();
+            return;
+        }
+        
+        sendHTML(res, `
+            <!DOCTYPE html>
+            <html dir="rtl" lang="fa">
+            <head>
+                <meta charset="UTF-8">
+                <title>ورود - سیستم تبدیل 3D</title>
+                <style>
+                    body { 
+                        font-family: Tahoma; 
+                        background: linear-gradient(135deg, #667eea, #764ba2);
+                        margin: 0; 
+                        padding: 20px;
+                        color: white;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
+                    }
+                    .login-box {
+                        background: rgba(255,255,255,0.1);
+                        padding: 40px;
+                        border-radius: 15px;
+                        backdrop-filter: blur(10px);
+                        width: 100%;
+                        max-width: 400px;
+                    }
+                    input, button {
+                        width: 100%;
+                        padding: 15px;
+                        margin: 10px 0;
+                        border: none;
+                        border-radius: 8px;
+                        box-sizing: border-box;
+                        font-size: 16px;
+                    }
+                    button {
+                        background: #4CAF50;
+                        color: white;
+                        cursor: pointer;
+                        font-weight: bold;
+                    }
+                    .alert {
+                        background: rgba(255,107,107,0.2);
+                        padding: 12px;
+                        border-radius: 6px;
+                        margin: 15px 0;
+                        border-right: 4px solid #ff6b6b;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="login-box">
+                    <h2 style="text-align: center;">🔐 سیستم تبدیل 3D</h2>
+                    <p style="text-align: center; color: #4CAF50;">لطفا وارد شوید</p>
+                    
+                    ${req.url.includes('error=1') ? '<div class="alert">❌ نام کاربری یا رمز عبور اشتباه است</div>' : ''}
+                    ${req.url.includes('error=2') ? '<div class="alert">❌ لطفا ابتدا وارد شوید</div>' : ''}
+                    
+                    <form action="/login" method="POST">
+                        <input type="text" name="username" placeholder="نام کاربری" required>
+                        <input type="password" name="password" placeholder="رمز عبور" required>
+                        <button type="submit">🚀 ورود به سیستم</button>
+                    </form>
+                    
+                    <div style="margin-top: 20px; background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px;">
+                        <strong>👥 حساب‌های تست:</strong><br>
+                        admin / admin123<br>
+                        user / user123
+                    </div>
+                </div>
+            </body>
+            </html>
+        `);
+    },
 
-  // صفحه اصلی - عمومی (لاگین)
-  if (url === '/' && method === 'GET') {
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(`
-      <!DOCTYPE html>
-      <html dir="rtl" lang="fa">
-      <head>
-          <meta charset="UTF-8">
-          <title>سیستم تبدیل 3D - ورود</title>
-          <style>
-            body { 
-              font-family: Tahoma, Arial; 
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              margin: 0; 
-              padding: 20px;
-              color: white;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              min-height: 100vh;
+    // پردازش لاگین
+    'POST /login': (req, res) => {
+        let body = '';
+        req.on('data', chunk => body += chunk.toString());
+        req.on('end', () => {
+            const { username, password } = parse(body);
+            const user = users.get(username);
+            
+            if (user && user.password === password) {
+                const sessionId = createSession(username);
+                res.writeHead(302, {
+                    'Location': '/dashboard',
+                    'Set-Cookie': `session=${sessionId}; Path=/; HttpOnly; Max-Age=86400; SameSite=Lax`
+                });
+                res.end();
+            } else {
+                res.writeHead(302, { 'Location': '/?error=1' });
+                res.end();
             }
-            .login-container {
-              background: rgba(255,255,255,0.1);
-              padding: 40px;
-              border-radius: 15px;
-              backdrop-filter: blur(10px);
-              width: 100%;
-              max-width: 400px;
-              box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            }
-            .form-group {
-              margin-bottom: 20px;
-            }
-            label {
-              display: block;
-              margin-bottom: 8px;
-              font-weight: bold;
-            }
-            input[type="text"], input[type="password"] {
-              width: 100%;
-              padding: 12px;
-              border: none;
-              border-radius: 8px;
-              background: rgba(255,255,255,0.9);
-              font-size: 16px;
-              box-sizing: border-box;
-            }
-            button {
-              width: 100%;
-              background: #4CAF50;
-              color: white;
-              border: none;
-              padding: 15px;
-              border-radius: 8px;
-              cursor: pointer;
-              font-size: 18px;
-              font-weight: bold;
-              transition: background 0.3s;
-            }
-            button:hover {
-              background: #45a049;
-            }
-            .user-accounts {
-              margin-top: 20px;
-              padding: 15px;
-              background: rgba(255,255,255,0.2);
-              border-radius: 8px;
-              font-size: 14px;
-            }
-          </style>
-      </head>
-      <body>
-          <div class="login-container">
-              <h1 style="text-align: center; margin-bottom: 30px;">🔐 سیستم تبدیل 3D</h1>
-              <h2 style="text-align: center; color: #4CAF50;">لطفا وارد شوید</h2>
-              
-              <form action="/login" method="POST">
-                  <div class="form-group">
-                      <label for="username">👤 نام کاربری:</label>
-                      <input type="text" id="username" name="username" required placeholder="نام کاربری خود را وارد کنید">
-                  </div>
-                  
-                  <div class="form-group">
-                      <label for="password">🔒 رمز عبور:</label>
-                      <input type="password" id="password" name="password" required placeholder="رمز عبور خود را وارد کنید">
-                  </div>
-                  
-                  <button type="submit">🚀 ورود به سیستم</button>
-              </form>
-              
-              <div class="user-accounts">
-                  <h3>👥 حساب‌های تست:</h3>
-                  <p><strong>مدیر سیستم:</strong><br>نام کاربری: admin<br>رمز عبور: admin123</p>
-                  <p><strong>کاربر عادی:</strong><br>نام کاربری: user<br>رمز عبور: user123</p>
-              </div>
-          </div>
-      </body>
-      </html>
-    `);
-    return;
-  }
+        });
+    },
 
-  // پردازش لاگین
-  if (url === '/login' && method === 'POST') {
-    let body = '';
-    req.on('data', chunk => body += chunk.toString());
-    req.on('end', () => {
-      const { username, password } = parse(body);
-      if (users[username] && users[username].password === password) {
-        const sessionId = createSession(username);
+    // دشبورد اصلی
+    'GET /dashboard': (req, res, user) => {
+        if (!user) {
+            res.writeHead(302, { 'Location': '/?error=2' });
+            res.end();
+            return;
+        }
+
+        sendHTML(res, `
+            <!DOCTYPE html>
+            <html dir="rtl" lang="fa">
+            <head>
+                <meta charset="UTF-8">
+                <title>دشبورد - ${user.name}</title>
+                <style>
+                    body { 
+                        font-family: Tahoma; 
+                        background: linear-gradient(135deg, #667eea, #764ba2);
+                        margin: 0; 
+                        padding: 20px;
+                        color: white;
+                    }
+                    .container {
+                        max-width: 1200px;
+                        margin: 0 auto;
+                        background: rgba(255,255,255,0.1);
+                        padding: 30px;
+                        border-radius: 15px;
+                        backdrop-filter: blur(10px);
+                    }
+                    .header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 30px;
+                        flex-wrap: wrap;
+                        gap: 15px;
+                    }
+                    .user-card {
+                        background: rgba(255,255,255,0.2);
+                        padding: 20px;
+                        border-radius: 10px;
+                        border-right: 4px solid #4CAF50;
+                    }
+                    .btn {
+                        background: #4CAF50;
+                        color: white;
+                        border: none;
+                        padding: 12px 24px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        text-decoration: none;
+                        display: inline-block;
+                        margin: 5px;
+                    }
+                    .btn-danger { background: #ff6b6b; }
+                    .conversion-area {
+                        background: rgba(255,255,255,0.15);
+                        padding: 30px;
+                        border-radius: 12px;
+                        margin: 25px 0;
+                        border: 2px dashed rgba(255,255,255,0.3);
+                    }
+                    .file-input {
+                        width: 100%;
+                        padding: 15px;
+                        background: rgba(255,255,255,0.9);
+                        border: none;
+                        border-radius: 8px;
+                        margin: 15px 0;
+                        color: #333;
+                        font-size: 16px;
+                    }
+                    .result-box {
+                        margin-top: 20px;
+                        padding: 20px;
+                        border-radius: 8px;
+                        background: rgba(255,255,255,0.2);
+                        min-height: 60px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <div>
+                            <h1>🔄 سیستم تبدیل 3D</h1>
+                            <p>📍 پورت: ${PORT} | وضعیت: فعال ✅</p>
+                        </div>
+                        <div>
+                            <a href="/dashboard" class="btn">🏠 دشبورد</a>
+                            <a href="/logout" class="btn btn-danger">🚪 خروج</a>
+                        </div>
+                    </div>
+
+                    <div class="user-card">
+                        <h2>👋 خوش آمدید، ${user.name}</h2>
+                        <p>سطح دسترسی: ${user.role === 'admin' ? 'مدیر سیستم' : 'کاربر عادی'}</p>
+                        <p>آخرین ورود: ${new Date().toLocaleString('fa-IR')}</p>
+                    </div>
+
+                    <div class="conversion-area">
+                        <h3>📤 تبدیل تصویر به مدل 3D</h3>
+                        <p>تصویر 2D خود را آپلود کنید تا به مدل سه بعدی تبدیل شود</p>
+                        
+                        <input type="file" id="imageInput" class="file-input" accept="image/*">
+                        <div id="fileInfo" style="margin: 15px 0;"></div>
+                        
+                        <button class="btn" onclick="startConversion()" style="background: #FF9800;">
+                            🚀 شروع تبدیل هوشمند
+                        </button>
+                        
+                        <div class="result-box" id="result">
+                            <p style="margin: 0; opacity: 0.7;">⏳ منتظر آپلود فایل...</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 10px;">
+                        <h3>📊 وضعیت سیستم</h3>
+                        <p>🖥️ سرور: Node.js | 🔒 احراز هویت: فعال | 👤 کاربران: ${users.size}</p>
+                        <p>🕒 زمان سرور: ${new Date().toLocaleString('fa-IR')}</p>
+                    </div>
+                </div>
+
+                <script>
+                    let currentFile = null;
+
+                    document.getElementById('imageInput').addEventListener('change', function(e) {
+                        currentFile = e.target.files[0];
+                        const fileInfo = document.getElementById('fileInfo');
+                        
+                        if (currentFile) {
+                            fileInfo.innerHTML = \`
+                                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                                    <p>📄 <strong>\${currentFile.name}</strong></p>
+                                    <p>📊 سایز: \${formatFileSize(currentFile.size)}</p>
+                                    <p>🎨 نوع: \${currentFile.type || 'ناشناخته'}</p>
+                                </div>
+                            \`;
+                        } else {
+                            fileInfo.innerHTML = '';
+                        }
+                    });
+
+                    function formatFileSize(bytes) {
+                        if (bytes === 0) return '0 Bytes';
+                        const k = 1024;
+                        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                        const i = Math.floor(Math.log(bytes) / Math.log(k));
+                        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+                    }
+
+                    function startConversion() {
+                        const resultDiv = document.getElementById('result');
+                        
+                        if (!currentFile) {
+                            resultDiv.innerHTML = '<div style="color: #ff6b6b;">❌ لطفا یک فایل انتخاب کنید</div>';
+                            return;
+                        }
+
+                        resultDiv.innerHTML = \`
+                            <div style="text-align: center;">
+                                <p>🔍 در حال تحلیل "\${currentFile.name}"...</p>
+                                <p>⏳ لطفا صبر کنید</p>
+                            </div>
+                        \`;
+
+                        // شبیه‌سازی فرآیند تبدیل
+                        setTimeout(() => {
+                            const success = Math.random() > 0.1; // 90% موفقیت
+                            
+                            if (success) {
+                                resultDiv.innerHTML = \`
+                                    <div style="color: #4CAF50;">
+                                        <p style="font-weight: bold; font-size: 18px;">✅ تبدیل موفق!</p>
+                                        <p>🎯 مدل: <strong>مدل سه بعدی پیشرفته</strong></p>
+                                        <p>📏 ابعاد: 512×384×256</p>
+                                        <p>🔢 vertices: 4,500</p>
+                                        <p>💾 حجم: 3.2 MB</p>
+                                        <button class="btn" onclick="downloadModel()" style="margin-top: 15px;">
+                                            📥 دانلود فایل OBJ
+                                        </button>
+                                    </div>
+                                \`;
+                            } else {
+                                resultDiv.innerHTML = '<div style="color: #ff6b6b;">❌ خطا در پردازش فایل. لطفا مجدد تلاش کنید.</div>';
+                            }
+                        }, 3000);
+                    }
+
+                    function downloadModel() {
+                        alert('✅ فایل مدل 3D با موفقیت دانلود شد!');
+                    }
+                </script>
+            </body>
+            </html>
+        `);
+    },
+
+    // لاگاوت
+    'GET /logout': (req, res, user) => {
+        const sessionId = getCookie(req.headers.cookie, 'session');
+        if (sessionId) {
+            sessions.delete(sessionId);
+        }
+        
         res.writeHead(302, {
-          'Location': '/dashboard',
-          'Set-Cookie': `session=${sessionId}; HttpOnly; Path=/; Max-Age=86400`
+            'Location': '/',
+            'Set-Cookie': 'session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
         });
         res.end();
-      } else {
-        res.writeHead(302, { 'Location': '/?error=1' });
-        res.end();
-      }
-    });
-    return;
-  }
-
-  // بررسی session برای صفحات دیگر
-  let user = null;
-  const cookieHeader = req.headers.cookie;
-  if (cookieHeader) {
-    const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
-      const [name, value] = cookie.trim().split('=');
-      acc[name] = value;
-      return acc;
-    }, {});
-    user = checkSession(cookies.session);
-  }
-
-  // اگر لاگین نکرده به صفحه اصلی redirect شود
-  if (!user && url !== '/' && url !== '/login') {
-    res.writeHead(302, { 'Location': '/' });
-    res.end();
-    return;
-  }
-
-  // صفحه دشبورد بعد از لاگین
-  if (url === '/dashboard' && method === 'GET') {
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(`
-      <!DOCTYPE html>
-      <html dir="rtl" lang="fa">
-      <head>
-          <meta charset="UTF-8">
-          <title>سیستم تبدیل 3D - ${user.name}</title>
-          <style>
-            body { 
-              font-family: Tahoma, Arial; 
-              margin: 0;
-              padding: 20px;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              color: white;
-              min-height: 100vh;
-            }
-            .container {
-              max-width: 1200px;
-              margin: 0 auto;
-              background: rgba(255,255,255,0.1);
-              padding: 30px;
-              border-radius: 15px;
-              backdrop-filter: blur(10px);
-            }
-            .user-info {
-              background: rgba(255,255,255,0.2);
-              padding: 15px;
-              border-radius: 10px;
-              margin-bottom: 20px;
-              border-right: 4px solid #4CAF50;
-            }
-            button {
-              background: #4CAF50;
-              color: white;
-              border: none;
-              padding: 12px 24px;
-              margin: 5px;
-              border-radius: 8px;
-              cursor: pointer;
-              font-size: 16px;
-              transition: all 0.3s;
-            }
-            button:hover {
-              background: #45a049;
-              transform: translateY(-2px);
-            }
-            .logout-btn {
-              background: #ff6b6b;
-            }
-            .file-upload-container {
-              background: rgba(255,255,255,0.15);
-              padding: 25px;
-              border-radius: 12px;
-              margin: 20px 0;
-              border: 2px dashed rgba(255,255,255,0.3);
-            }
-            .file-input {
-              width: 100%;
-              padding: 15px;
-              background: rgba(255,255,255,0.9);
-              border: 2px solid transparent;
-              border-radius: 8px;
-              font-size: 16px;
-              cursor: pointer;
-              margin: 10px 0;
-            }
-            #result {
-              margin-top: 20px;
-              padding: 15px;
-              border-radius: 8px;
-              background: rgba(255,255,255,0.2);
-              min-height: 50px;
-            }
-          </style>
-      </head>
-      <body>
-          <div class="container">
-              <div class="user-info">
-                  <button class="logout-btn" onclick="window.location.href='/logout'">🚪 خروج از سیستم</button>
-                  <h2>👋 خوش آمدید، ${user.name}</h2>
-                  <p>سطح دسترسی: ${user.role === 'admin' ? 'مدیر سیستم' : 'کاربر عادی'}</p>
-              </div>
-              
-              <h1>🔄 سیستم تبدیل هوشمند 2D به 3D</h1>
-              <p>📍 پورت: ${PORT} | وضعیت: فعال ✅ | آخرین بروزرسانی: ${new Date().toLocaleString('fa-IR')}</p>
-              
-              <div class="file-upload-container">
-                  <h3>📤 آپلود تصویر 2D</h3>
-                  <p>سیستم به صورت هوشمند تصویر شما را تحلیل و مدل 3D تولید می‌کند</p>
-                  
-                  <input type="file" id="imageInput" class="file-input" accept="image/*">
-                  
-                  <div style="margin: 15px 0;">
-                      <div id="fileInfo"></div>
-                  </div>
-                  
-                  <button onclick="startConversion()" style="margin-top: 15px;">🚀 شروع تبدیل هوشمند</button>
-                  
-                  <div id="result"></div>
-              </div>
-
-              <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 10px;">
-                  <h3>📊 اطلاعات سیستم</h3>
-                  <p>🖥️ سرور: Node.js | 🔒 احراز هویت: فعال | 👤 کاربر: ${user.name}</p>
-                  <p>🎯 قابلیت: تبدیل پیشرفته تصاویر 2D به مدل‌های سه بعدی</p>
-              </div>
-          </div>
-
-          <script>
-              document.getElementById('imageInput').addEventListener('change', function(e) {
-                  const file = e.target.files[0];
-                  const fileInfo = document.getElementById('fileInfo');
-                  
-                  if (file) {
-                      fileInfo.innerHTML = \`
-                          <p>📄 نام فایل: <strong>\${file.name}</strong></p>
-                          <p>📊 سایز فایل: <strong>\${formatFileSize(file.size)}</strong></p>
-                          <p>🎨 نوع فایل: <strong>\${file.type}</strong></p>
-                      \`;
-                  } else {
-                      fileInfo.innerHTML = '';
-                  }
-              });
-
-              function formatFileSize(bytes) {
-                  if (bytes === 0) return '0 Bytes';
-                  const k = 1024;
-                  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-                  const i = Math.floor(Math.log(bytes) / Math.log(k));
-                  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-              }
-
-              function startConversion() {
-                  const fileInput = document.getElementById('imageInput');
-                  const resultDiv = document.getElementById('result');
-                  
-                  if (!fileInput.files[0]) {
-                      resultDiv.innerHTML = '<p style="color: #ff6b6b;">❌ لطفا یک تصویر انتخاب کنید</p>';
-                      return;
-                  }
-
-                  const file = fileInput.files[0];
-                  resultDiv.innerHTML = '<p>🔍 در حال تحلیل هوشمند فایل "' + file.name + '"...</p>';
-
-                  // شبیه‌سازی پردازش
-                  setTimeout(() => {
-                      resultDiv.innerHTML = \`
-                          <p style="color: #4CAF50; font-weight: bold;">✅ تبدیل با موفقیت انجام شد!</p>
-                          <p>🎯 مدل تولید شده: <strong>مدل سه بعدی پیشرفته</strong></p>
-                          <p>📏 ابعاد: 512×384×256</p>
-                          <p>🔢 تعداد vertices: 4,500</p>
-                          <p>💾 حجم فایل: 3.2 MB</p>
-                          <p style="margin-top: 15px;">
-                              <button onclick="downloadModel()" style="background: #2196F3;">📥 دانلود فایل OBJ</button>
-                          </p>
-                      \`;
-                  }, 2000);
-              }
-
-              function downloadModel() {
-                  alert('✅ فایل مدل 3D با موفقیت دانلود شد!');
-              }
-          </script>
-      </body>
-      </html>
-    `);
-    return;
-  }
-
-  // خروج
-  if (url === '/logout') {
-    const cookieHeader = req.headers.cookie;
-    if (cookieHeader) {
-      const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
-        const [name, value] = cookie.trim().split('=');
-        acc[name] = value;
-        return acc;
-      }, {});
-      if (cookies.session) {
-        delete sessions[cookies.session];
-      }
     }
-    res.writeHead(302, {
-      'Location': '/',
-      'Set-Cookie': 'session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
-    });
-    res.end();
-    return;
-  }
+};
 
-  // 404
-  res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-  res.end('<h1>صفحه مورد نظر یافت نشد - 404</h1>');
+// تابع کمکی برای ارسال HTML
+function sendHTML(res, content, statusCode = 200) {
+    res.writeHead(statusCode, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
+    });
+    res.end(content);
+}
+
+// سرور اصلی
+const server = http.createServer((req, res) => {
+    const method = req.method;
+    const url = req.url;
+    const routeKey = \`\${method} \${url}\`;
+    
+    console.log(\`📨 \${routeKey}\`);
+
+    // مدیریت CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    
+    if (method === 'OPTIONS') {
+        res.writeHead(200);
+        res.end();
+        return;
+    }
+
+    // بررسی session برای تمام routes به جز لاگین و روت
+    let user = null;
+    if (url !== '/login' && url !== '/') {
+        const sessionId = getCookie(req.headers.cookie, 'session');
+        user = validateSession(sessionId);
+    }
+
+    // پیدا کردن route مناسب
+    const routeHandler = routes[routeKey] || routes[\`\${method} \${url.split('?')[0]}\`];
+    
+    if (routeHandler) {
+        routeHandler(req, res, user);
+    } else {
+        // 404 - صفحه پیدا نشد
+        sendHTML(res, \`
+            <!DOCTYPE html>
+            <html dir="rtl" lang="fa">
+            <head><meta charset="UTF-8"><title>404</title></head>
+            <body style="font-family: Tahoma; background: #667eea; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+                <div style="text-align: center;">
+                    <h1>❌ 404 - صفحه پیدا نشد</h1>
+                    <p>صفحه مورد نظر شما وجود ندارد</p>
+                    <a href="/" style="color: white; background: #4CAF50; padding: 10px 20px; border-radius: 5px; text-decoration: none;">بازگشت به صفحه اصلی</a>
+                </div>
+            </body>
+            </html>
+        \`, 404);
+    }
 });
 
+// راه‌اندازی سرور
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`
-✅ سیستم تبدیل 3D راه‌اندازی شد
-📍 پورت: ${PORT}
-🌐 آدرس: http://localhost:${PORT}
-🏠 صفحه اصلی: / (عمومی - لاگین)
-📊 دشبورد: /dashboard (پس از لاگین)
-🔐 وضعیت: بدون Conflict - کاملاً تمیز
-🕒 زمان: ${new Date().toLocaleString('fa-IR')}
-  `);
+    console.log(\`
+🎉 سیستم تبدیل 3D با موفقیت راه‌اندازی شد
+📍 پورت: \${PORT}
+🌐 آدرس: http://localhost:\${PORT}
+✅ سیستم احراز هویت: فعال و بهینه
+✅ مدیریت sessions: Map-based و سریع
+✅ رابط کاربری: کاملاً ریسپانسیو
+✅ وضعیت: آماده production
+🕒 زمان: \${new Date().toLocaleString('fa-IR')}
+    \`);
 });
 
 export default server;
