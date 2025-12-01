@@ -2,11 +2,16 @@
   "name": "3d-conversion-app",
   "version": "3.0.0",
   "description": "سیستم تبدیل هوشمند 2D به 3D - Next.js App",
-  "type": "module",
   "scripts": {
-    "dev": "cd apps/web && npm run dev",
-    "build": "cd apps/web && npm run build",
-    "start": "cd apps/web && npm start"
+    "dev": "next dev",
+    "build": "next build", 
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "13.5.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "keywords": ["3d", "conversion", "nextjs", "vercel", "persian"],
   "author": "raminedjlal",
