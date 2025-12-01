@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 export default function Login() {
@@ -6,7 +6,26 @@ export default function Login() {
   const [password, setPassword] = useState('admin123');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [apiStatus, setApiStatus] = useState('checking...');
   const router = useRouter();
+
+  // تست وضعیت API هنگام بارگذاری صفحه
+  useEffect(() => {
+    checkAPIStatus();
+  }, []);
+
+  const checkAPIStatus = async () => {
+    try {
+      const response = await fetch('/api/simple-test');
+      if (response.ok) {
+        setApiStatus('✅ فعال');
+      } else {
+        setApiStatus('❌ غیرفعال');
+      }
+    } catch (err) {
+      setApiStatus('❌ خطا در ارتباط');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,64 +33,65 @@ export default function Login() {
     setLoading(true);
 
     try {
-      console.log('🚀 Sending login request...');
+      console.log('Sending login request to /api/auth/login');
       
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
         },
         body: JSON.stringify({ email, password }),
       });
 
-      console.log('📨 Response status:', response.status);
-      
-      // Check if response is OK
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const data = await response.json();
-      console.log('📦 Response data:', data);
+      console.log('API Response:', data);
 
       if (data.success) {
-        // Store in localStorage
+        // ذخیره در localStorage
         if (typeof window !== 'undefined') {
           localStorage.setItem('user', JSON.stringify(data.user));
           localStorage.setItem('token', data.token);
-          localStorage.setItem('login_time', new Date().toISOString());
         }
         
-        // Redirect to dashboard
+        // هدایت به داشبورد
         router.push('/dashboard');
       } else {
         setError(data.message || 'ورود ناموفق بود');
       }
     } catch (err) {
-      console.error('❌ Login error details:', err);
-      
-      // Better error messages
-      if (err.message.includes('Failed to fetch')) {
-        setError('خطا در اتصال به سرور. لطفاً اینترنت خود را بررسی کنید.');
-      } else if (err.message.includes('HTTP error')) {
-        setError(`خطای سرور (${err.message}). لطفاً بعداً تلاش کنید.`);
-      } else {
-        setError('خطای ناشناخته. لطفاً دوباره تلاش کنید.');
-      }
+      console.error('Login error:', err);
+      setError('خطا در اتصال به سرور API');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const testAPI = async () => {
+    try {
+      const response = await fetch('/api/simple-test');
+      const data = await response.json();
+      alert(`API Test Result:\n${JSON.stringify(data, null, 2)}`);
+    } catch (err) {
+      alert(`API Test Failed: ${err.message}`);
     }
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.loginBox}>
-        <h1 style={styles.title}>🔐 ورود به سیستم 3D</h1>
-        
+        <div style={styles.header}>
+          <h1>🔄 سیستم تبدیل 3D</h1>
+          <div style={styles.status}>
+            <span>وضعیت API: </span>
+            <span style={apiStatus.includes('✅') ? styles.statusGood : styles.statusBad}>
+              {apiStatus}
+            </span>
+          </div>
+        </div>
+
         {error && (
           <div style={styles.error}>
-            <strong>❌ خطا:</strong> {error}
+            ❌ {error}
           </div>
         )}
 
@@ -82,7 +102,6 @@ export default function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="ایمیل خود را وارد کنید"
               style={styles.input}
               required
               disabled={loading}
@@ -95,7 +114,6 @@ export default function Login() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="رمز عبور"
               style={styles.input}
               required
               disabled={loading}
@@ -105,38 +123,29 @@ export default function Login() {
           <button 
             type="submit" 
             style={styles.button}
-            disabled={loading}
+            disabled={loading || apiStatus.includes('❌')}
           >
-            {loading ? '⏳ در حال ورود...' : '🚀 ورود'}
+            {loading ? '⏳ در حال ورود...' : '🚀 ورود به سیستم'}
           </button>
         </form>
 
-        <div style={styles.testSection}>
-          <h4>🧪 حساب‌های تست:</h4>
-          <div style={styles.accounts}>
-            <div style={styles.account}>
-              <strong>admin@tetrashop.com</strong><br/>
-              <code>admin123</code>
-            </div>
-            <div style={styles.account}>
-              <strong>user@tetrashop.com</strong><br/>
-              <code>user123</code>
-            </div>
-          </div>
+        <div style={styles.actions}>
+          <button onClick={testAPI} style={styles.testButton}>
+            🧪 تست API
+          </button>
+          <button onClick={checkAPIStatus} style={styles.refreshButton}>
+            🔄 بررسی وضعیت
+          </button>
         </div>
 
-        <div style={styles.debug}>
-          <button 
-            onClick={() => {
-              fetch('/api/test')
-                .then(r => r.json())
-                .then(d => alert(JSON.stringify(d, null, 2)))
-                .catch(e => alert('Error: ' + e.message));
-            }}
-            style={styles.testButton}
-          >
-            تست اتصال API
-          </button>
+        <div style={styles.instructions}>
+          <h3>📋 راهنمای عیب‌یابی:</h3>
+          <ol>
+            <li>اگر API غیرفعال است، منتظر دیپلوی کامل باشید</li>
+            <li>کش مرورگر را پاک کنید (Ctrl+Shift+R)</li>
+            <li>صفحه را مجدداً بارگذاری کنید</li>
+            <li>از حالت ناشناس مرورگر استفاده کنید</li>
+          </ol>
         </div>
       </div>
     </div>
@@ -151,23 +160,34 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     padding: '20px',
-    fontFamily: 'Tahoma, sans-serif',
+    fontFamily: 'Tahoma, Arial, sans-serif',
   },
   loginBox: {
     background: 'white',
-    borderRadius: '15px',
+    borderRadius: '20px',
     padding: '40px',
     width: '100%',
-    maxWidth: '400px',
-    boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+    maxWidth: '500px',
+    boxShadow: '0 15px 50px rgba(0,0,0,0.2)',
   },
-  title: {
+  header: {
     textAlign: 'center',
     marginBottom: '30px',
-    color: '#333',
+  },
+  status: {
+    marginTop: '10px',
+    fontSize: '14px',
+  },
+  statusGood: {
+    color: '#4CAF50',
+    fontWeight: 'bold',
+  },
+  statusBad: {
+    color: '#f44336',
+    fontWeight: 'bold',
   },
   form: {
-    marginBottom: '30px',
+    marginBottom: '20px',
   },
   inputGroup: {
     marginBottom: '20px',
@@ -175,17 +195,16 @@ const styles = {
   label: {
     display: 'block',
     marginBottom: '8px',
-    color: '#555',
     fontWeight: 'bold',
+    color: '#333',
   },
   input: {
     width: '100%',
-    padding: '12px 15px',
+    padding: '12px',
     border: '2px solid #ddd',
     borderRadius: '8px',
     fontSize: '16px',
     boxSizing: 'border-box',
-    transition: 'border 0.3s',
   },
   button: {
     width: '100%',
@@ -197,7 +216,28 @@ const styles = {
     fontSize: '16px',
     fontWeight: 'bold',
     cursor: 'pointer',
-    transition: 'background 0.3s',
+  },
+  testButton: {
+    padding: '10px 20px',
+    background: '#2196F3',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    marginRight: '10px',
+  },
+  refreshButton: {
+    padding: '10px 20px',
+    background: '#FF9800',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  },
+  actions: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '20px',
   },
   error: {
     background: '#ffebee',
@@ -205,36 +245,13 @@ const styles = {
     padding: '15px',
     borderRadius: '8px',
     marginBottom: '20px',
-    borderLeft: '4px solid #c62828',
+    textAlign: 'center',
   },
-  testSection: {
-    marginTop: '30px',
+  instructions: {
+    marginTop: '20px',
     padding: '20px',
     background: '#f5f5f5',
     borderRadius: '10px',
-  },
-  accounts: {
-    display: 'grid',
-    gap: '10px',
-    marginTop: '10px',
-  },
-  account: {
-    background: 'white',
-    padding: '15px',
-    borderRadius: '8px',
-    fontSize: '14px',
-  },
-  debug: {
-    marginTop: '20px',
-    textAlign: 'center',
-  },
-  testButton: {
-    background: '#2196F3',
-    color: 'white',
-    border: 'none',
-    padding: '10px 15px',
-    borderRadius: '5px',
-    cursor: 'pointer',
     fontSize: '14px',
   },
 };

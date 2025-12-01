@@ -2,23 +2,26 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  poweredByHeader: false,
   
-  // برای جلوگیری از خطای 404 در API routes
-  async rewrites() {
+  // جلوگیری از کش API routes
+  async headers() {
     return [
       {
         source: '/api/:path*',
-        destination: '/api/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store, max-age=0' },
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+        ],
       },
     ];
   },
   
-  // جلوگیری از static optimization برای API routes
-  experimental: {
-    outputFileTracingExcludes: {
-      '*': ['node_modules/**/*'],
-    },
+  // برای دیباگ API
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      console.log('🔧 Building API routes...');
+    }
+    return config;
   },
 };
 
