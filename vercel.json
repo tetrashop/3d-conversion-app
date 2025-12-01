@@ -9,12 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/apps/web/$1"
+      "dest": "apps/web/$1"
     }
-  ],
-  "functions": {
-    "apps/web/**/*.js": {
-      "maxDuration": 30
-    }
-  }
+  ]
 }
