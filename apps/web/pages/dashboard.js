@@ -3,32 +3,41 @@ import { useRouter } from 'next/router';
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
+  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    // بررسی احراز هویت
-    const token = localStorage.getItem('token');
-    const savedUser = localStorage.getItem('user');
+    setIsClient(true);
+    
+    // فقط در کلاینت localStorage را بررسی کن
+    if (typeof window !== 'undefined') {
+      const savedUser = localStorage.getItem('user');
+      
+      if (!savedUser) {
+        router.push('/login');
+        return;
+      }
 
-    if (!token || !savedUser) {
-      router.push('/login');
-      return;
-    }
-
-    try {
-      setUser(JSON.parse(savedUser));
-    } catch (err) {
-      router.push('/login');
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (err) {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        router.push('/login');
+      }
     }
   }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+    }
     router.push('/login');
   };
 
-  if (!user) {
+  // Loading state برای سرور
+  if (!isClient) {
     return (
       <div style={styles.loading}>
         🔒 در حال بررسی احراز هویت...
@@ -36,43 +45,61 @@ export default function Dashboard() {
     );
   }
 
+  if (!user) {
+    return (
+      <div style={styles.loading}>
+        🔒 در حال انتقال به صفحه ورود...
+      </div>
+    );
+  }
+
   return (
-    <div dir="rtl" style={styles.container}>
+    <div style={styles.container}>
       <div style={styles.header}>
         <div>
           <h1>🔄 سیستم تبدیل 3D</h1>
-          <p>خوش آمدید، {user.name} ({user.email})</p>
+          <p>ورژن: ۲.۰ | وضعیت: فعال ✅</p>
         </div>
-        <div>
+        <div style={styles.userInfo}>
+          <span>👤 {user.name}</span>
           <button onClick={handleLogout} style={styles.logoutButton}>
             🚪 خروج
           </button>
         </div>
       </div>
 
-      <div style={styles.dashboard}>
-        <div style={styles.card}>
-          <h3>👤 اطلاعات کاربر</h3>
-          <p><strong>نام:</strong> {user.name}</p>
+      <div style={styles.content}>
+        <div style={styles.welcomeCard}>
+          <h2>🎉 خوش آمدید!</h2>
+          <p>سیستم تبدیل تصاویر ۲D به مدل‌های ۳D آماده استفاده است.</p>
           <p><strong>ایمیل:</strong> {user.email}</p>
           <p><strong>نقش:</strong> {user.role}</p>
-          <p><strong>آخرین ورود:</strong> {new Date().toLocaleString('fa-IR')}</p>
         </div>
 
-        <div style={styles.card}>
-          <h3>📤 تبدیل تصویر به 3D</h3>
-          <input type="file" style={styles.fileInput} />
-          <button style={styles.convertButton}>
-            🚀 شروع تبدیل
-          </button>
+        <div style={styles.features}>
+          <h3>✨ امکانات سیستم</h3>
+          <div style={styles.featureGrid}>
+            <div style={styles.featureCard}>
+              <div style={styles.featureIcon}>🖼️</div>
+              <h4>آپلود تصویر</h4>
+              <p>تصاویر ۲D خود را آپلود کنید</p>
+            </div>
+            <div style={styles.featureCard}>
+              <div style={styles.featureIcon}>⚙️</div>
+              <h4>تبدیل هوشمند</h4>
+              <p>تبدیل خودکار به مدل ۳D</p>
+            </div>
+            <div style={styles.featureCard}>
+              <div style={styles.featureIcon}>📥</div>
+              <h4>دانلود خروجی</h4>
+              <p>دریافت فایل‌های OBJ, STL</p>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div style={styles.card}>
-          <h3>📊 آمار سیستم</h3>
-          <p>✅ احراز هویت: فعال</p>
-          <p>🔒 ورود با ایمیل: فعال</p>
-          <p>👥 کاربران: ۳ حساب فعال</p>
-        </div>
+      <div style={styles.footer}>
+        <p>© ۲۰۲۳ سیستم تبدیل ۳D | پشتیبانی: support@tetrashop.com</p>
       </div>
     </div>
   );
@@ -81,10 +108,8 @@ export default function Dashboard() {
 const styles = {
   container: {
     minHeight: '100vh',
-    background: 'linear-gradient(135deg, #667eea, #764ba2)',
-    padding: '20px',
+    background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
     fontFamily: 'Tahoma, Arial, sans-serif',
-    color: 'white',
   },
   loading: {
     display: 'flex',
@@ -92,15 +117,20 @@ const styles = {
     alignItems: 'center',
     height: '100vh',
     fontSize: '20px',
+    color: '#333',
   },
   header: {
+    background: 'white',
+    padding: '20px 40px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '40px',
-    background: 'rgba(255, 255, 255, 0.1)',
-    padding: '20px',
-    borderRadius: '10px',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+  },
+  userInfo: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '20px',
   },
   logoutButton: {
     background: '#ff6b6b',
@@ -109,34 +139,50 @@ const styles = {
     padding: '10px 20px',
     borderRadius: '5px',
     cursor: 'pointer',
-    fontSize: '16px',
+    fontSize: '14px',
   },
-  dashboard: {
+  content: {
+    padding: '40px',
+    maxWidth: '1200px',
+    margin: '0 auto',
+  },
+  welcomeCard: {
+    background: 'white',
+    padding: '30px',
+    borderRadius: '15px',
+    boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+    marginBottom: '40px',
+  },
+  features: {
+    marginTop: '40px',
+  },
+  featureGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
     gap: '20px',
+    marginTop: '20px',
   },
-  card: {
-    background: 'rgba(255, 255, 255, 0.1)',
+  featureCard: {
+    background: 'white',
     padding: '25px',
     borderRadius: '10px',
-    backdropFilter: 'blur(10px)',
+    textAlign: 'center',
+    boxShadow: '0 3px 10px rgba(0,0,0,0.1)',
+    transition: 'transform 0.3s',
+    '&:hover': {
+      transform: 'translateY(-5px)',
+    },
   },
-  fileInput: {
-    width: '100%',
-    padding: '10px',
-    margin: '10px 0',
-    borderRadius: '5px',
-    border: 'none',
+  featureIcon: {
+    fontSize: '40px',
+    marginBottom: '15px',
   },
-  convertButton: {
-    background: '#4CAF50',
-    color: 'white',
-    border: 'none',
-    padding: '12px 24px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontSize: '16px',
-    width: '100%',
+  footer: {
+    textAlign: 'center',
+    padding: '20px',
+    background: 'white',
+    marginTop: '40px',
+    color: '#666',
+    fontSize: '14px',
   },
 };

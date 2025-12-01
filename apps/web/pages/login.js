@@ -2,90 +2,141 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('admin@tetrashop.com');
+  const [password, setPassword] = useState('admin123');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     try {
+      console.log('🚀 Sending login request...');
+      
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
+      console.log('📨 Response status:', response.status);
+      
+      // Check if response is OK
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-      if (response.ok) {
-        // ذخیره توکن در localStorage یا cookie
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
+      const data = await response.json();
+      console.log('📦 Response data:', data);
+
+      if (data.success) {
+        // Store in localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('login_time', new Date().toISOString());
+        }
         
-        // هدایت به داشبورد
+        // Redirect to dashboard
         router.push('/dashboard');
       } else {
         setError(data.message || 'ورود ناموفق بود');
       }
     } catch (err) {
-      setError('خطا در ارتباط با سرور');
+      console.error('❌ Login error details:', err);
+      
+      // Better error messages
+      if (err.message.includes('Failed to fetch')) {
+        setError('خطا در اتصال به سرور. لطفاً اینترنت خود را بررسی کنید.');
+      } else if (err.message.includes('HTTP error')) {
+        setError(`خطای سرور (${err.message}). لطفاً بعداً تلاش کنید.`);
+      } else {
+        setError('خطای ناشناخته. لطفاً دوباره تلاش کنید.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div dir="rtl" style={styles.container}>
+    <div style={styles.container}>
       <div style={styles.loginBox}>
-        <h2 style={styles.title}>🔐 ورود به سیستم تبدیل 3D</h2>
+        <h1 style={styles.title}>🔐 ورود به سیستم 3D</h1>
         
         {error && (
           <div style={styles.error}>
-            ❌ {error}
+            <strong>❌ خطا:</strong> {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>ایمیل:</label>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>ایمیل</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="ایمیل خود را وارد کنید"
               style={styles.input}
-              placeholder="example@email.com"
               required
+              disabled={loading}
             />
           </div>
 
-          <div style={styles.formGroup}>
-            <label style={styles.label}>رمز عبور:</label>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>رمز عبور</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="رمز عبور"
               style={styles.input}
               required
+              disabled={loading}
             />
           </div>
 
-          <button type="submit" style={styles.button}>
-            🚀 ورود به سیستم
+          <button 
+            type="submit" 
+            style={styles.button}
+            disabled={loading}
+          >
+            {loading ? '⏳ در حال ورود...' : '🚀 ورود'}
           </button>
         </form>
 
-        <div style={styles.testAccounts}>
-          <h4>👥 حساب‌های تست:</h4>
-          <p><strong>حساب ۱:</strong> admin@tetrashop.com / admin123</p>
-          <p><strong>حساب ۲:</strong> user@tetrashop.com / user123</p>
-          <p><strong>حساب ۳:</strong> support@tetrashop.com / support123</p>
+        <div style={styles.testSection}>
+          <h4>🧪 حساب‌های تست:</h4>
+          <div style={styles.accounts}>
+            <div style={styles.account}>
+              <strong>admin@tetrashop.com</strong><br/>
+              <code>admin123</code>
+            </div>
+            <div style={styles.account}>
+              <strong>user@tetrashop.com</strong><br/>
+              <code>user123</code>
+            </div>
+          </div>
         </div>
 
-        <div style={styles.note}>
-          💡 اگر حساب کاربری ندارید، از ایمیل‌های تست بالا استفاده کنید
+        <div style={styles.debug}>
+          <button 
+            onClick={() => {
+              fetch('/api/test')
+                .then(r => r.json())
+                .then(d => alert(JSON.stringify(d, null, 2)))
+                .catch(e => alert('Error: ' + e.message));
+            }}
+            style={styles.testButton}
+          >
+            تست اتصال API
+          </button>
         </div>
       </div>
     </div>
@@ -95,41 +146,46 @@ export default function Login() {
 const styles = {
   container: {
     minHeight: '100vh',
-    background: 'linear-gradient(135deg, #667eea, #764ba2)',
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     padding: '20px',
-    fontFamily: 'Tahoma, Arial, sans-serif',
+    fontFamily: 'Tahoma, sans-serif',
   },
   loginBox: {
-    background: 'rgba(255, 255, 255, 0.1)',
-    backdropFilter: 'blur(10px)',
-    padding: '40px',
+    background: 'white',
     borderRadius: '15px',
+    padding: '40px',
     width: '100%',
     maxWidth: '400px',
-    color: 'white',
+    boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
   },
   title: {
     textAlign: 'center',
     marginBottom: '30px',
+    color: '#333',
   },
-  formGroup: {
+  form: {
+    marginBottom: '30px',
+  },
+  inputGroup: {
     marginBottom: '20px',
   },
   label: {
     display: 'block',
     marginBottom: '8px',
-    fontSize: '14px',
+    color: '#555',
+    fontWeight: 'bold',
   },
   input: {
     width: '100%',
-    padding: '12px',
+    padding: '12px 15px',
+    border: '2px solid #ddd',
     borderRadius: '8px',
-    border: 'none',
     fontSize: '16px',
     boxSizing: 'border-box',
+    transition: 'border 0.3s',
   },
   button: {
     width: '100%',
@@ -141,26 +197,44 @@ const styles = {
     fontSize: '16px',
     fontWeight: 'bold',
     cursor: 'pointer',
-    marginTop: '10px',
+    transition: 'background 0.3s',
   },
   error: {
-    background: 'rgba(255, 107, 107, 0.2)',
-    padding: '12px',
-    borderRadius: '6px',
+    background: '#ffebee',
+    color: '#c62828',
+    padding: '15px',
+    borderRadius: '8px',
     marginBottom: '20px',
-    borderRight: '4px solid #ff6b6b',
+    borderLeft: '4px solid #c62828',
   },
-  testAccounts: {
+  testSection: {
     marginTop: '30px',
-    background: 'rgba(255, 255, 255, 0.15)',
     padding: '20px',
+    background: '#f5f5f5',
     borderRadius: '10px',
+  },
+  accounts: {
+    display: 'grid',
+    gap: '10px',
+    marginTop: '10px',
+  },
+  account: {
+    background: 'white',
+    padding: '15px',
+    borderRadius: '8px',
     fontSize: '14px',
   },
-  note: {
+  debug: {
     marginTop: '20px',
     textAlign: 'center',
+  },
+  testButton: {
+    background: '#2196F3',
+    color: 'white',
+    border: 'none',
+    padding: '10px 15px',
+    borderRadius: '5px',
+    cursor: 'pointer',
     fontSize: '14px',
-    opacity: '0.8',
   },
 };

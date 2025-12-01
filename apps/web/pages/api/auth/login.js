@@ -1,61 +1,69 @@
 export default function handler(req, res) {
+  console.log('🔐 LOGIN API called:', req.method);
+  
+  // Allow CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
+  // Handle OPTIONS for CORS preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
-  }
-
-  const { email, password } = req.body;
-
-  // کاربران سیستم (می‌توانید از دیتابیس استفاده کنید)
-  const users = [
-    {
-      id: 1,
-      email: 'admin@tetrashop.com',
-      password: 'admin123',
-      name: 'مدیر سیستم',
-      role: 'admin',
-    },
-    {
-      id: 2,
-      email: 'user@tetrashop.com',
-      password: 'user123',
-      name: 'کاربر عادی',
-      role: 'user',
-    },
-    {
-      id: 3,
-      email: 'support@tetrashop.com',
-      password: 'support123',
-      name: 'پشتیبانی',
-      role: 'support',
-    },
-  ];
-
-  // پیدا کردن کاربر با ایمیل
-  const user = users.find(u => u.email === email);
-
-  if (!user) {
-    return res.status(401).json({ 
-      message: 'ایمیل یا رمز عبور اشتباه است' 
+    return res.status(405).json({ 
+      success: false, 
+      message: 'Method not allowed' 
     });
   }
-
-  // بررسی رمز عبور
-  if (user.password !== password) {
-    return res.status(401).json({ 
-      message: 'ایمیل یا رمز عبور اشتباه است' 
+  
+  try {
+    const { email, password } = req.body || {};
+    
+    console.log('Login attempt:', { email });
+    
+    // Simple validation
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'ایمیل و رمز عبور الزامی است'
+      });
+    }
+    
+    // Test accounts
+    const testAccounts = {
+      'admin@tetrashop.com': { password: 'admin123', name: 'مدیر', role: 'admin' },
+      'user@tetrashop.com': { password: 'user123', name: 'کاربر', role: 'user' }
+    };
+    
+    const user = testAccounts[email];
+    
+    if (!user || user.password !== password) {
+      return res.status(401).json({
+        success: false,
+        message: 'ایمیل یا رمز عبور اشتباه است'
+      });
+    }
+    
+    // Success
+    return res.status(200).json({
+      success: true,
+      message: 'ورود موفقیت‌آمیز!',
+      user: {
+        email,
+        name: user.name,
+        role: user.role
+      },
+      token: `token_${Date.now()}`,
+      timestamp: new Date().toISOString()
+    });
+    
+  } catch (error) {
+    console.error('Login error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'خطای سرور'
     });
   }
-
-  // حذف رمز عبور از پاسخ
-  const { password: _, ...userWithoutPassword } = user;
-
-  // ساخت توکن ساده (در production از JWT استفاده کنید)
-  const token = Buffer.from(`${user.email}:${Date.now()}`).toString('base64');
-
-  // پاسخ موفقیت‌آمیز
-  res.status(200).json({
-    message: 'ورود موفقیت‌آمیز بود',
-    token,
-    user: userWithoutPassword,
-  });
 }
