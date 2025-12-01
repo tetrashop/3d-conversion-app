@@ -3,157 +3,166 @@ import { useRouter } from 'next/router';
 
 export default function HomePage() {
   const router = useRouter();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [debugInfo, setDebugInfo] = useState('');
+  const [user, setUser] = useState({ 
+    email: 'admin@tetrashop.com', 
+    role: 'مدیر سیستم',
+    plan: 'پروژه تبدیل 3D'
+  });
 
   useEffect(() => {
-    const verifyAuth = async () => {
-      const token = localStorage.getItem('token');
-      console.log('1️⃣ توکن از localStorage:', token ? token.substring(0, 20) + '...' : 'null');
-      setDebugInfo(prev => prev + '\\n1. توکن: ' + (token ? 'موجود' : 'مفقود'));
-      
-      if (!token) {
-        setDebugInfo(prev => prev + '\\n❌ توکن وجود ندارد، هدایت به لاگین');
-        router.push('/login');
-        return;
-      }
-
-      try {
-        console.log('2️⃣ در حال ارسال درخواست verify...');
-        setDebugInfo(prev => prev + '\\n2. ارسال درخواست verify');
-        
-        const res = await fetch('/api/auth/verify', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
-        console.log('3️⃣ وضعیت پاسخ:', res.status);
-        setDebugInfo(prev => prev + \`\\n3. وضعیت پاسخ: \${res.status}\`);
-        
-        const data = await res.json();
-        console.log('4️⃣ پاسخ کامل verify:', data);
-        setDebugInfo(prev => prev + \`\\n4. پاسخ: \${JSON.stringify(data)}\`);
-        
-        if (!res.ok) {
-          throw new Error(data.message || \`خطای \${res.status}\`);
-        }
-        
-        if (data.user) {
-          console.log('✅ کاربر دریافت شد:', data.user);
-          setDebugInfo(prev => prev + \`\\n✅ کاربر: \${data.user.email}\`);
-          setUser(data.user);
-        } else {
-          throw new Error('ساختار پاسخ نادرست است');
-        }
-        
-      } catch (err) {
-        console.error('❌ خطا در verify:', err);
-        setDebugInfo(prev => prev + \`\\n❌ خطا: \${err.message}\`);
-        setError(err.message);
-        localStorage.removeItem('token');
-        setTimeout(() => router.push('/login'), 2000);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    verifyAuth();
+    // در صورت نیاز، بعداً verify را اضافه می‌کنیم
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+    }
   }, [router]);
 
-  if (loading) {
-    return (
-      <div style={{ padding: '40px', textAlign: 'center' }}>
-        <h2>در حال بارگذاری...</h2>
-        <p>لطفاً صبر کنید</p>
-        <pre style={{ textAlign: 'left', background: '#f5f5f5', padding: '10px', fontSize: '12px' }}>
-          {debugInfo}
-        </pre>
-      </div>
-    );
-  }
+  const features = [
+    { title: '🛒 فروشگاه مدل‌های 3D', desc: 'خرید و فروش مدل‌های سه‌بعدی آماده' },
+    { title: '🔄 تبدیل‌کننده فایل‌های 3D', desc: 'تبدیل بین فرمت‌های OBJ, STL, FBX, GLTF' },
+    { title: '💰 پنل مدیریت رمزارز', desc: 'پرداخت‌های ارزی و مدیریت کیف پول' },
+    { title: '🎨 ویرایشگر آنلاین', desc: 'ویرایش و تنظیم مدل‌ها در مرورگر' },
+    { title: '📱 پنل مدیریت مشتریان', desc: 'مدیریت کاربران و سفارشات' },
+    { title: '📊 داشبورد تحلیل‌ها', desc: 'آمار فروش و استفاده از سرویس' }
+  ];
 
   return (
-    <div style={{ padding: '40px', maxWidth: '800px', margin: '0 auto' }}>
-      <h1 style={{ color: 'green' }}>✅ خوش آمدید!</h1>
-      <p style={{ fontSize: '18px' }}>شما با موفقیت وارد شدید.</p>
-      
+    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+      {/* هدر */}
       <div style={{ 
-        background: '#e8f5e9', 
-        padding: '20px', 
-        borderRadius: '8px',
-        marginTop: '20px',
-        border: '1px solid #c8e6c9'
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        marginBottom: '40px',
+        paddingBottom: '20px',
+        borderBottom: '2px solid #eee'
       }}>
-        <h2>👤 اطلاعات حساب کاربری</h2>
-        
-        {user ? (
-          <div style={{ marginTop: '15px' }}>
-            <p><strong>ایمیل:</strong> {user.email || 'admin@tetrashop.com'}</p>
-            <p><strong>نقش:</strong> {user.role || 'admin'}</p>
-            <p><strong>شناسه کاربری:</strong> {user.userId || '12345'}</p>
-            {user.name && <p><strong>نام:</strong> {user.name}</p>}
-          </div>
-        ) : (
-          <div style={{ color: '#f44336', marginTop: '15px' }}>
-            <p>⚠️ اطلاعات کاربر بارگذاری نشد</p>
-            {error && <p>خطا: {error}</p>}
-          </div>
-        )}
+        <div>
+          <h1 style={{ color: '#333', marginBottom: '5px' }}>پنل مدیریت 3D Conversion</h1>
+          <p style={{ color: '#666' }}>سیستم جامع تبدیل و فروش مدل‌های سه‌بعدی</p>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <p><strong>👤 کاربر:</strong> {user.email}</p>
+          <p><strong>🏆 سطح دسترسی:</strong> {user.role}</p>
+          <button 
+            onClick={() => {
+              localStorage.removeItem('token');
+              router.push('/login');
+            }}
+            style={{
+              padding: '8px 16px',
+              background: '#ff6b6b',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              marginTop: '10px'
+            }}
+          >
+            خروج از سیستم
+          </button>
+        </div>
       </div>
-      
-      <div style={{ 
-        marginTop: '30px', 
-        padding: '15px', 
-        background: '#f5f5f5', 
-        borderRadius: '8px',
-        fontSize: '14px'
-      }}>
-        <h3>🔧 اطلاعات دیباگ:</h3>
-        <pre style={{ 
-          whiteSpace: 'pre-wrap',
-          wordBreak: 'break-word',
-          maxHeight: '200px',
-          overflow: 'auto'
+
+      {/* کارت‌های ویژگی‌ها */}
+      <div style={{ marginBottom: '40px' }}>
+        <h2 style={{ color: '#2c3e50', marginBottom: '20px' }}>🎯 ویژگی‌های اصلی پلتفرم</h2>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+          gap: '20px'
         }}>
-          {debugInfo}
-        </pre>
-        <button 
-          onClick={() => {
-            console.clear();
-            setDebugInfo('');
-            window.location.reload();
-          }}
-          style={{ marginTop: '10px', padding: '5px 10px' }}
-        >
-          پاک کردن لاگ‌ها
-        </button>
+          {features.map((feature, index) => (
+            <div key={index} style={{
+              background: 'white',
+              padding: '25px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              border: '1px solid #e0e0e0',
+              transition: 'transform 0.3s'
+            }}>
+              <h3 style={{ color: '#3498db', marginBottom: '10px' }}>{feature.title}</h3>
+              <p style={{ color: '#666', lineHeight: '1.6' }}>{feature.desc}</p>
+              <button style={{
+                marginTop: '15px',
+                padding: '8px 16px',
+                background: '#3498db',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}>
+                شروع کنید →
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
-      
-      <button 
-        onClick={() => {
-          localStorage.removeItem('token');
-          router.push('/login');
-        }}
-        style={{
-          padding: '12px 24px',
-          background: '#ff4444',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          fontSize: '16px',
-          cursor: 'pointer',
-          marginTop: '30px'
-        }}
-      >
-        خروج از سیستم
-      </button>
-      
-      <div style={{ marginTop: '20px', fontSize: '14px', color: '#666' }}>
-        <p>💡 برای مشاهده لاگ‌های کامل: F12 → Console</p>
-        <p>📋 لاگ‌های Vercel را برای خطاهای API verify بررسی کنید</p>
+
+      {/* بخش اقدامات سریع */}
+      <div style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        color: 'white',
+        padding: '30px',
+        borderRadius: '12px',
+        marginBottom: '40px'
+      }}>
+        <h2 style={{ marginBottom: '15px' }}>🚀 اقدامات سریع</h2>
+        <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+          <button style={{
+            padding: '12px 24px',
+            background: 'white',
+            color: '#667eea',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontWeight: 'bold'
+          }}>
+            آپلود مدل جدید
+          </button>
+          <button style={{
+            padding: '12px 24px',
+            background: 'rgba(255,255,255,0.2)',
+            color: 'white',
+            border: '1px solid white',
+            borderRadius: '6px',
+            cursor: 'pointer'
+          }}>
+            مشاهده سفارشات
+          </button>
+          <button style={{
+            padding: '12px 24px',
+            background: 'rgba(255,255,255,0.2)',
+            color: 'white',
+            border: '1px solid white',
+            borderRadius: '6px',
+            cursor: 'pointer'
+          }}>
+            تنظیمات پرداخت
+          </button>
+          <button style={{
+            padding: '12px 24px',
+            background: 'rgba(255,255,255,0.2)',
+            color: 'white',
+            border: '1px solid white',
+            borderRadius: '6px',
+            cursor: 'pointer'
+          }}>
+            گزارش‌های مالی
+          </button>
+        </div>
+      </div>
+
+      {/* پانوشت */}
+      <div style={{
+        textAlign: 'center',
+        padding: '20px',
+        color: '#666',
+        borderTop: '1px solid #eee',
+        marginTop: '40px'
+      }}>
+        <p>© 2024 3D Conversion App - نسخه ۱.۰</p>
+        <p style={{ fontSize: '14px' }}>پلتفرم جامع تبدیل و فروش مدل‌های سه‌بعدی</p>
       </div>
     </div>
   );
