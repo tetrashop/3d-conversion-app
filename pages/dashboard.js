@@ -1,4 +1,24 @@
+import Link from 'next/link';
+
 export default function Dashboard() {
+  // داده‌های ویژگی‌های اصلی
+  const mainFeatures = [
+    { icon: '🛒', title: 'فروشگاه مدل‌های 3D', desc: 'خرید و فروش مدل‌های سه‌بعدی آماده', link: '/shop' },
+    { icon: '🔄', title: 'تبدیل‌کننده فایل‌های 3D', desc: 'تبدیل بین فرمت‌های OBJ, STL, FBX, GLTF', link: '/converter' },
+    { icon: '💰', title: 'پنل مدیریت رمزارز', desc: 'پرداخت‌های ارزی و مدیریت کیف پول', link: '/crypto' },
+    { icon: '🎨', title: 'ویرایشگر آنلاین', desc: 'ویرایش و تنظیم مدل‌ها در مرورگر', link: '/editor' },
+    { icon: '📱', title: 'پنل مدیریت مشتریان', desc: 'مدیریت کاربران و سفارشات', link: '/customers' },
+    { icon: '📊', title: 'داشبورد تحلیل‌ها', desc: 'آمار فروش و استفاده از سرویس', link: '/analytics' }
+  ];
+
+  // داده‌های اقدامات سریع
+  const quickActions = [
+    { text: 'آپلود مدل جدید', color: '#007bff', link: '/upload' },
+    { text: 'مشاهده سفارشات', color: '#6f42c1', link: '/orders' },
+    { text: 'تنظیمات پرداخت', color: '#fd7e14', link: '/payment-settings' },
+    { text: 'گزارش‌های مالی', color: '#20c997', link: '/reports' }
+  ];
+
   return (
     <div style={{ 
       fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -7,6 +27,7 @@ export default function Dashboard() {
       padding: '20px',
       direction: 'rtl'
     }}>
+      {/* Header */}
       <div style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         color: 'white',
@@ -23,6 +44,7 @@ export default function Dashboard() {
         </p>
       </div>
 
+      {/* User Info */}
       <div style={{
         background: '#f8f9fa',
         padding: '20px',
@@ -49,6 +71,7 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* Main Features */}
       <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>
         🎯 ویژگی‌های اصلی پلتفرم
       </h2>
@@ -59,14 +82,7 @@ export default function Dashboard() {
         gap: '20px',
         marginBottom: '40px'
       }}>
-        {[
-          { icon: '🛒', title: 'فروشگاه مدل‌های 3D', desc: 'خرید و فروش مدل‌های سه‌بعدی آماده' },
-          { icon: '🔄', title: 'تبدیل‌کننده فایل‌های 3D', desc: 'تبدیل بین فرمت‌های OBJ, STL, FBX, GLTF' },
-          { icon: '💰', title: 'پنل مدیریت رمزارز', desc: 'پرداخت‌های ارزی و مدیریت کیف پول' },
-          { icon: '🎨', title: 'ویرایشگر آنلاین', desc: 'ویرایش و تنظیم مدل‌ها در مرورگر' },
-          { icon: '📱', title: 'پنل مدیریت مشتریان', desc: 'مدیریت کاربران و سفارشات' },
-          { icon: '📊', title: 'داشبورد تحلیل‌ها', desc: 'آمار فروش و استفاده از سرویس' }
-        ].map((item, index) => (
+        {mainFeatures.map((item, index) => (
           <div key={index} style={{
             background: 'white',
             border: '1px solid #e9ecef',
@@ -79,7 +95,7 @@ export default function Dashboard() {
               <h3 style={{ fontSize: '20px', fontWeight: 'bold' }}>{item.title}</h3>
             </div>
             <p style={{ color: '#6c757d', marginBottom: '20px' }}>{item.desc}</p>
-            <button style={{
+            <Link href={item.link} style={{
               background: '#28a745',
               color: 'white',
               border: 'none',
@@ -87,14 +103,18 @@ export default function Dashboard() {
               borderRadius: '5px',
               cursor: 'pointer',
               width: '100%',
-              fontSize: '16px'
+              fontSize: '16px',
+              display: 'block',
+              textAlign: 'center',
+              textDecoration: 'none'
             }}>
               شروع کنید →
-            </button>
+            </Link>
           </div>
         ))}
       </div>
 
+      {/* Quick Actions */}
       <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>
         🚀 اقدامات سریع
       </h2>
@@ -105,26 +125,29 @@ export default function Dashboard() {
         gap: '15px',
         marginBottom: '40px'
       }}>
-        {[
-          { text: 'آپلود مدل جدید', color: '#007bff' },
-          { text: 'مشاهده سفارشات', color: '#6f42c1' },
-          { text: 'تنظیمات پرداخت', color: '#fd7e14' },
-          { text: 'گزارش‌های مالی', color: '#20c997' }
-        ].map((item, index) => (
-          <button key={index} style={{
-            background: item.color,
-            color: 'white',
-            border: 'none',
-            padding: '15px',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            fontSize: '16px'
-          }}>
+        {quickActions.map((item, index) => (
+          <Link 
+            key={index}
+            href={item.link}
+            style={{
+              background: item.color,
+              color: 'white',
+              border: 'none',
+              padding: '15px',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              textAlign: 'center',
+              display: 'block',
+              textDecoration: 'none'
+            }}
+          >
             {item.text}
-          </button>
+          </Link>
         ))}
       </div>
 
+      {/* Footer */}
       <div style={{
         textAlign: 'center',
         padding: '20px',
