@@ -1,18 +1,20 @@
-import Header from '../components/Header';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-export default function Home() {
+export default function HomePage() {
+  const router = useRouter();
+  
+  useEffect(() => {
+    // ریدایرکت به پنل مدیریت
+    router.push('/admin');
+  }, [router]);
+  
   return (
-    <div>
-      <Header />
-      <main style={{ padding: '20px' }}>
-        <h1>خوش آمدید به تتراشاپ</h1>
-        <p>این صفحه اصلی فروشگاه ماست</p>
-        <div style={{ marginTop: '20px' }}>
-          <a href="/products" style={{ marginRight: '15px' }}>مشاهده محصولات</a>
-          <a href="/login" style={{ color: 'blue' }}>ورود به حساب کاربری</a>
-        </div>
-      </main>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div style={{ textAlign: 'center' }}>
+        <h1>در حال انتقال به پنل مدیریت...</h1>
+        <p>لطفاً چند لحظه صبر کنید</p>
+      </div>
     </div>
   );
 }
-// Build timestamp: Tue Dec  2 19:07:22 +0330 2025
