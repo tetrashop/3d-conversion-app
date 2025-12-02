@@ -1,0 +1,23 @@
+[33mcommit 05bf8a3ac7906915a7cdee62ff6a15dc080d6013[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: tetrashop <ramin.edjlal1359@gmail.com>
+Date:   Tue Dec 2 18:30:27 2025 +0330
+
+    به‌روزرسانی برای اجبار Vercel به rebuild
+
+pages/dashboard.js
+
+[33mcommit 7eacc78753e3e884be7200b71201d8d987442e12[m
+Author: tetrashop <ramin.edjlal1359@gmail.com>
+Date:   Tue Dec 2 18:00:40 2025 +0330
+
+    ایجاد dashboard.js ساده
+
+pages/dashboard.js
+
+[33mcommit 2dcd274aac3b64cd5c3debd796f5dd151732da4a[m
+Author: tetrashop <ramin.edjlal1359@gmail.com>
+Date:   Tue Dec 2 18:00:40 2025 +0330
+
+    حذف فایل dashboard.js مشکل‌دار
+
+pages/dashboard.js
