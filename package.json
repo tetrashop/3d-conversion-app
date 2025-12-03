@@ -8,10 +8,13 @@
   },
   "dependencies": {
     "@next/swc-android-arm64": "^13.2.4",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.4.2",
     "@types/node": "^20.19.25",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "lucide-react": "^0.288.0",
+    "axios": "^1.13.2",
+    "lucide-react": "^0.555.0",
     "next": "^14.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
