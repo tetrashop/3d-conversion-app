@@ -1,0 +1,13 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js",
+  "/admin": "pages/admin.js",
+  "/converter": "pages/converter.js",
+  "/shop": "pages/shop.js",
+  "/api/shop/search": "pages/api/shop/search.js",
+  "/crypto": "pages/crypto.js",
+  "/admin/customers": "pages/admin/customers.js",
+  "/admin/analytics": "pages/admin/analytics.js"
+}

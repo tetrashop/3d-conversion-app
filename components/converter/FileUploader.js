@@ -1,98 +1,102 @@
-import { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useState, useCallback } from 'react';
 
-export default function FileUploader({ onFileUpload }) {
-  const [dragActive, setDragActive] = useState(false);
-  
-  const onDrop = useCallback((acceptedFiles) => {
-    if (acceptedFiles.length > 0) {
-      const file = acceptedFiles[0];
-      
-      // بررسی فرمت فایل
-      const allowedFormats = ['.obj', '.fbx', '.stl', '.gltf', '.glb', '.blend', '.3ds', '.dae'];
-      const fileExt = '.' + file.name.split('.').pop().toLowerCase();
-      
-      if (!allowedFormats.includes(fileExt)) {
-        alert('❌ فرمت فایل پشتیبانی نمی‌شود. لطفاً فایل ۳D معتبر آپلود کنید.');
+export default function FileUploader({ onFileUpload, acceptedFormats, maxSize }) {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [error, setError] = useState('');
+
+  const handleFileChange = useCallback(
+    (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      // اعتبارسنجی فرمت (در صورت تعیین)
+      if (acceptedFormats) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        const allowed = acceptedFormats.map(f => f.replace('.', ''));
+        if (!allowed.includes(ext)) {
+          setError(`فرمت فایل پشتیبانی نمی‌شود. فرمت‌های مجاز: ${acceptedFormats.join(', ')}`);
+          setSelectedFile(null);
+          return;
+        }
+      }
+
+      // اعتبارسنجی حجم (در صورت تعیین)
+      if (maxSize && file.size > maxSize) {
+        setError(`حجم فایل بیش از حد مجاز است (حداکثر ${(maxSize / 1024 / 1024).toFixed(2)} MB)`);
+        setSelectedFile(null);
         return;
       }
-      
-      // بررسی حجم فایل (حداکثر 50MB)
-      const maxSize = 50 * 1024 * 1024; // 50MB
-      if (file.size > maxSize) {
-        alert('❌ حجم فایل بیش از حد مجاز است (حداکثر 50 مگابایت).');
-        return;
-      }
-      
-      onFileUpload(file);
-    }
-  }, [onFileUpload]);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      'model/obj': ['.obj'],
-      'model/fbx': ['.fbx'],
-      'model/stl': ['.stl'],
-      'model/gltf+json': ['.gltf'],
-      'model/gltf-binary': ['.glb'],
-      'application/x-blender': ['.blend'],
-      'application/x-3ds': ['.3ds'],
-      'model/vnd.collada+xml': ['.dae']
+      setError('');
+      setSelectedFile(file);
+      if (onFileUpload) onFileUpload(file);
     },
-    maxFiles: 1,
-    maxSize: 50 * 1024 * 1024, // 50MB
-  });
+    [onFileUpload, acceptedFormats, maxSize]
+  );
 
-  const handleClick = () => {
-    document.getElementById('file-input').click();
+  const removeFile = () => {
+    setSelectedFile(null);
+    if (onFileUpload) onFileUpload(null);
   };
 
   return (
-    <div
-      {...getRootProps()}
-      style={{
-        border: `2px dashed ${isDragActive ? '#3498db' : '#ddd'}`,
-        borderRadius: '12px',
-        padding: '40px 20px',
-        textAlign: 'center',
-        background: isDragActive ? '#f0f8ff' : '#fafafa',
-        cursor: 'pointer',
-        transition: 'all 0.3s ease'
-      }}
-      onClick={handleClick}
-    >
-      <input {...getInputProps()} id="file-input" />
-      
-      <div style={{ fontSize: '48px', marginBottom: '20px' }}>
-        📤
-      </div>
-      
-      <h3 style={{ marginBottom: '10px', color: '#2c3e50' }}>
-        {isDragActive ? 'فایل را رها کنید' : 'فایل ۳D خود را آپلود کنید'}
-      </h3>
-      
-      <p style={{ color: '#666', marginBottom: '20px' }}>
-        فایل را به اینجا بکشید یا برای انتخاب فایل کلیک کنید
-      </p>
-      
-      <div style={{
-        display: 'inline-block',
-        padding: '12px 30px',
-        background: '#3498db',
-        color: 'white',
-        borderRadius: '8px',
-        fontWeight: 'bold',
-        fontSize: '16px'
-      }}>
-        انتخاب فایل
-      </div>
-      
-      <div style={{ marginTop: '20px', fontSize: '14px', color: '#999' }}>
-        فرمت‌های پشتیبانی شده: OBJ, FBX, STL, GLTF, GLB, BLEND, 3DS, DAE
-        <br />
-        حداکثر حجم: 50 مگابایت
-      </div>
+    <div>
+      <label
+        htmlFor="file-upload"
+        style={{
+          display: 'block',
+          border: '2px dashed #ccc',
+          borderRadius: '10px',
+          padding: '30px',
+          textAlign: 'center',
+          cursor: 'pointer',
+          backgroundColor: '#f9f9f9',
+          marginBottom: '10px',
+        }}
+      >
+        {selectedFile ? (
+          <div>
+            <strong>{selectedFile.name}</strong>
+            <br />
+            <span style={{ color: '#666' }}>
+              {(selectedFile.size / 1024).toFixed(2)} KB
+            </span>
+          </div>
+        ) : (
+          <div>
+            <div style={{ fontSize: '2rem' }}>📁</div>
+            <p>فایل 3D خود را بکشید و رها کنید یا کلیک کنید</p>
+          </div>
+        )}
+        <input
+          id="file-upload"
+          type="file"
+          accept={acceptedFormats ? acceptedFormats.join(',') : '.obj,.stl,.fbx,.gltf,.glb,.blend,.3ds,.dae'}
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+        />
+      </label>
+
+      {error && (
+        <p style={{ color: 'red', fontSize: '0.9rem' }}>❌ {error}</p>
+      )}
+
+      {selectedFile && (
+        <button
+          type="button"
+          onClick={removeFile}
+          style={{
+            backgroundColor: '#dc3545',
+            color: 'white',
+            border: 'none',
+            padding: '5px 15px',
+            borderRadius: '5px',
+            cursor: 'pointer',
+          }}
+        >
+          حذف فایل
+        </button>
+      )}
     </div>
   );
 }

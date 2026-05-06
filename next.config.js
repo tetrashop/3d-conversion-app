@@ -1,11 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // غیرفعال کردن minification توسط SWC
-    swcMinify: false,
-    // اجبار به استفاده از Babel برای کامپایل
-    compiler: {
-        // می‌توانید تنظیمات اضافی Babel را اینجا قرار دهید
-    },
-}
+  // اجازه دسترسی از IPهای دیگر در حالت توسعه (برای جلوگیری از خطای cross-origin)
+  allowedDevOrigins: ['192.168.1.101'],
+  // swcMinify در Next.js 16 حذف شده، بنابراین نیازی به ذکر آن نیست
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
