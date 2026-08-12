@@ -1,41 +1,46 @@
-# 🎯 سیستم تبدیل هوشمند 2D به 3D
+# 3d Conversion App
 
-یک سیستم پیشرفته برای تبدیل تصاویر 2D به مدل‌های سه بعدی با استفاده از تحلیل هوشمند فایل
+## 📋 درباره پروژه
+این پروژه بخشی از اکوسیستم **TetraShop** است.
 
-![3D Conversion](https://img.shields.io/badge/3D-Conversion-green)
-![Node.js](https://img.shields.io/badge/Node.js-18+-success)
-![Persian](https://img.shields.io/badge/زبان-فارسی-blue)
+- **نوع:** NODEJS
+- **تعداد فایل‌ها:** 7406
 
-## ✨ ویژگی‌های اصلی
+## 🚀 ویژگی‌ها
+- کد تمیز و بهینه
+- آماده برای توسعه
+- پشتیبانی از آخرین تکنولوژی‌ها
 
-### 🎨 تحلیل هوشمند
-- تشخیص خودکار نوع مدل بر اساس نام فایل
-- محاسبه پیچیدگی بر اساس سایز و متادیتا
-- استخراج رنگ‌های غالب برای مدل نهایی
+## 📦 نصب و راه‌اندازی
 
-### 🖥️ پیش‌نمایش زنده
-- نمایش 3D تعاملی با کنترل‌های کامل
-- انیمیشن چرخش خودکار
-- تغییر نماهای مختلف (جلو، بالا، کنار)
-- حالت‌های نمایش مختلف (جامد، مش‌بندی)
+### پیش‌نیازها
+- Node.js 16+
 
-### 🔧 فناوری‌ها
-- **Backend**: Node.js + HTTP Server
-- **Frontend**: Pure JavaScript + CSS 3D
-- **تحلیل**: الگوریتم‌های هوشمند مبتنی بر محتوا
-- **امنیت**: سیستم احراز هویت و مدیریت session
-
-## 🚀 نصب و راه‌اندازی
-
+### نصب
 ```bash
-# کلون ریپوزیتوری
-git clone https://github.com/your-username/3d-conversion-app.git
-
-# ورود به دایرکتوری
-cd 3d-conversion-app/3d-conversion-app
-
-# نصب dependencies
+git clone https://github.com/tetrashop/3d-conversion-app.git
+cd 3d-conversion-app
 npm install
+```
 
-# راه‌اندازی سرور
-node index.js
+## 🔧 استفاده
+```bash
+npm start
+```
+
+## 🤝 مشارکت
+1. Fork کنید
+2. Branch جدید: `git checkout -b feature/your-feature`
+3. Commit: `git commit -m 'Add feature'`
+4. Push: `git push origin feature/your-feature`
+5. Pull Request باز کنید
+
+## 📝 مجوز
+MIT License
+
+## 🌐 ارتباط با ما
+- **وبسایت:** [tetrashop.ir](https://tetrashop.ir)
+- **گیت‌هاب:** [github.com/tetrashop](https://github.com/tetrashop)
+
+---
+**آخرین به‌روزرسانی:** 2026-08-12
