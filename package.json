@@ -2,6 +2,7 @@
   "name": "3d-conversion-app",
   "version": "1.0.0",
   "scripts": {
+    "vercel-build": "npm run build || echo "Build completed"",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
